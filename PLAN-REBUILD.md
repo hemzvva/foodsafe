@@ -29,6 +29,14 @@ OpenCode will only write code. It gets: the kit zip (decisions, specs, task card
 - Ambiguity rule (one rule, everywhere): the agent decides from the documented default, logs the call in `05-PLAN/QUESTIONS.md`, and keeps going. It stops only for things that cannot be undone or cannot be verified from the kit (signing, store submission, spending, a missing owner input).
 - Leaner than the lost kit: no duplicated tables, no day-by-day schedules, no padding. Complete for coding; nothing decorative.
 
+## 2b. Scope rule (owner clarification, overrides section 5 where it conflicts)
+"Not over-complicated" means: do not build a company's worth of machinery around the app. It does NOT mean lower quality. Every document and rule that OpenCode needs to build a correct, App Store-ready, delightful app stays, and stays precise. What goes is anything that only polishes the kit itself.
+- **Keep (full quality):** product spec and decisions, business rules with the rule oracle and test vectors, data model, surface specs for all 19 surfaces, the 30-recipe content spec and data, design direction (motion, haptics, delight, accessibility), architecture, Core API, testing, coding standards (short), platform facts with sources, a compact field-quality system (the owner asked for it), build and signing guide, App Store submission pack, task cards, the master prompt.
+- **Merge:** one product-spec document instead of separate decisions/IA/journeys files; one store pack instead of five files; one design-direction document instead of motion + delight + contrast + style lock (contrast values go in the design system table).
+- **Drop:** the mutation tool (keep the oracle's hand-checked self-test and vectors; add the hole-closing cases from section 7 directly), `kitlint.py`, `art_gate.py`, `asc_pull.py`, the three-reviewer set (one review prompt instead), `.opencode/commands` beyond three, the research-basis and slop-prevention essays, the day-by-day anything.
+- **Tools that stay:** `rules_reference.py`, `factcheck_kit.py`, `validate_content.py`, one `kit_check.py` (runs the others, checks that every referenced file exists, last line `kit_check: OK`).
+- Task cards: only as many as the code needs (target about 20); each short and exact.
+
 ## 3. Inputs that survive
 - `FoodSafe-Project/design.md` (1000+ lines, visual contract), `reference/SCREEN-COORDINATE-MASTER.json` (text runs and coordinates per screen), `reference/SCREEN-MEASUREMENT-ATLAS.md`, `reference/SCREEN-TEXT-COORDINATE-ATLAS.md`, `reference/rectified/` (13 screen images), the board, the prototype, asset research/license notes, fonts (two .otf).
 - `reference-attachments/` (design.md copy, three text files, mockup PNG).
