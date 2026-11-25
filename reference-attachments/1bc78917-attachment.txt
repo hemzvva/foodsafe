@@ -1,0 +1,474 @@
+# A. Research Findings
+
+## 1. AI “Slop” in Generated Apps and How to Prevent It
+
+AI coding agents today can produce convincing code and UIs, but often suffer from **“AI slop”** – subtle or glaring flaws that break production quality. Common issues include generic or templated interfaces, inconsistent styling, heavy or duplicate code, weak architecture, and missing edge-case handling. For example, Paul Hudson notes that LLMs often use outdated or deprecated SwiftUI APIs (like `foregroundColor()`, `cornerRadius()`, `NavigationView`, etc.) and neglect modern alternatives, leading to inefficiencies and accessibility problems. They may also sprinkle UI with hardcoded sizes or mock data, failing to support Dynamic Type or localization, and rely on gesture modifiers (`onTapGesture`) rather than proper controls, which hurts VoiceOver and platform integration. 
+
+**Why does this happen?** AI agents typically lack deep context about the project’s domain, design identity, and evolving platform conventions. Kush Agrawal observes that “LLMs seem supremely knowledgeable about Swift syntax and frameworks, yet they’re brand-new to your specific codebase, project constraints, and organizational style”. Without expert guidance, agents default to common patterns or past techniques, which leads to repetitive, generic UI layouts and fragile architectures. They also tend to confirm their own work with trivial tests or ignore failures – essentially “declaring tasks complete” without rigorous validation.
+
+**Addressing Slop with Context and Constraints:** Many defects can be prevented with *richer context and prompting*. For UI issues, provide design references, style guides, and HIG rules up front. For instance, embedding a component library or design tokens ensures consistency in spacing, typography, and colors (HIG emphasizes “a consistent layout that adapts across display sizes”). Prompt agents to ask for missing details or to confirm design choices before coding. In practice, Xcode’s Conversations allow agents to “explore” the project and user requirements interactively, generating architecture docs and plans based on the existing code and product goals. 
+
+**Architectural Constraints and Tooling:** Some problems require stronger structural controls. Enforce modular architectures (e.g. MVVM or feature modules) so features live in scoped boundaries, preventing unnecessary dependencies and duplication. Use static analysis and linters (SwiftLint, SwiftFormat) to enforce naming conventions, file sizes, and forbidden APIs. For example, Apple’s official **SwiftAgents** guideline mandates targeting iOS 26+, Swift 6.x, and using modern APIs: “Target iOS 26.0 or later… Always choose async/await APIs… SwiftUI backed up by `@Observable` classes… Avoid UIKit unless requested”. Such rules can be encoded in an `AGENTS.md` or lint profile. However, an instruction file alone is not sufficient – agents must *execute* these rules by using compilers, formatters, and unit tests to verify adherence. 
+
+**Automated Testing and Measurement:** Many slop issues require verification by tests or metrics. For instance, performance regressions (janky animations, leaks) are invisible in code and only found via profiling. Accessibility holes show up only under VoiceOver. Therefore, agents should run unit tests, UI tests, and accessibility audits automatically. Xcode’s latest agents can even “write and run tests” to validate new code. But tests must be meaningful: for example, UI snapshot tests or flow simulations that verify the app actually meets requirements. Similarly, performance profiling should be automated: measure frame rates, memory, CPU, etc., and flag regressions. If an agent merely compiles code and stops, it must be explicitly prompted (or gated) to run these validation steps. 
+
+**Human Judgment and Review:** Some decisions still need human expertise. Design coherence, user flows, and product-market fit are hard to formalize. An AI may not catch that a feature breaks a key user journey or that a UI, while polished, feels generic. Experienced developers must review visual design, UX patterns, and product assumptions. Apple Design Award winners illustrate qualities like *delight, clarity, and polish* that go beyond rules: e.g. the hand-drawn aesthetic of **grug** (2026 ADA winner) is unique and clever, but its success relies on the simple, tight focus of its experience. Such inspiration must come from human designers.
+
+In summary, eliminating AI slop requires **a layered approach**: provide agents with comprehensive project context (requirements, design specs, code architecture) and strict instructions, build architecture and tooling constraints into the environment, automate deep validation (tests, profiling, style checks), and retain human review for subjective or strategic decisions. AGENTS.md or prompts are only one layer; the rest is made of architecture, tools, and processes that systematically catch or prevent mistakes.
+
+## 2. Learning from Experienced iOS Developers
+
+To inform this system, we examined practices of senior and principal iOS engineers and designers. **Key patterns and opinions include:**
+
+- **Architecture Choices:** Seasoned devs emphasize simplicity and clarity. For small to medium apps, lightweight MVVM or even SwiftUI’s natural flow often suffices, whereas long-lived or complex products may justify Clean or modular architectures. For example, a 2026 guide notes MVVM is great for simpler apps but warns that elaborate clean architectures can overcomplicate maintenance. The Composable Architecture (TCA) has proponents and critics: it enforces unidirectional data flow and testability, but some engineers warn it adds boilerplate. The trade-off is clear: for data-heavy, stateful apps, a redux-like approach can pay off; for simpler apps, it’s overkill. In any case, experts stress *explicit data flow* and *state management*. Use Swift’s type system: immutable `struct` models, protocols for dependencies, and value semantics to avoid unintended sharing.
+
+- **Swift Language Use:** Modern Swift (5.9+/6) is non-negotiable. Experts insist on the latest Swift features: structured concurrency (`async/await`, `TaskGroup`), actors and the `Sendable` protocol for thread safety. The adoption of Swift 6’s strict concurrency is mandatory: it enforces isolation and flags data races at compile time. Similarly, protocols and generics should be used judiciously to reduce duplication without over-abstraction. Swift’s emphasis on clarity means naming APIs expressively, following the [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/). Paul Hudson’s AGENTS.md echoes this: prefer swift-native methods (e.g. `String.replacing`) and clear async APIs.
+
+- **Code Organization:** Experts structure code by feature or layer. Large teams often use a **modular architecture**, splitting the app into frameworks or Swift packages per domain (Networking, UI, etc.) to speed up builds and clarify ownership. Modules ease reasoning for an agent too, as it can operate on one module at a time. In smaller apps, grouping by feature (screen or function) is common. Namespaces (enums or nested types) or folders should reflect functionality. Clean separation is key: e.g. avoid giant ViewControllers or a single massive file – break views and view models into separate files or SwiftUI subviews when they grow beyond a screen. Lincoln here: Paul Hudson warns LLMs to avoid “placing lots of types in a single file” because it lengthens builds.
+
+- **SwiftUI vs UIKit:** Most experts now recommend **SwiftUI** for new projects targeting iOS 16/17+, as it matches Apple’s future direction and offers modern UI paradigms. However, they caution its current limitations: e.g. fine-grained control or certain layout behaviors may still require UIKit. Many adopt SwiftUI for the bulk of the interface but use UIKit for complex custom components or legacy views. For navigation, everyone has moved to `NavigationStack` (iOS 16+) and uses `NavigationSplitView` or `TabView` for structure. Agents should prefer these too. SwiftUI’s data flow is critical: use `@State`, `@Binding`, and (since iOS 18) the new `@Observable/@StateObject` models. In fact, Apple’s official guidance for agents explicitly says to **“use SwiftUI backed up by `@Observable` classes for shared data”**, and to prefer it over older `ObservableObject` patterns.
+
+- **State Management and Navigation:** In SwiftUI, state and navigation should be centralized. Experienced devs often lift app state into root Observables (or `@StateObject`) and pass it down, or use the environment. Complex flows may use Router patterns or the new NavigationPath APIs. Agents should follow suit: e.g. maintain a single source of truth for the app’s data and coordinate navigation via `NavigationStack` or `navigationDestination`. Concurrency (actors and async tasks) should encapsulate side effects (network calls, DB writes). Dependency Injection is typically done via initializer injection or environment, not a global service locator. 
+
+- **Concurrency:** Threads and tasks are a common challenge. Experts advise marking model types as `Sendable` and using actors to isolate mutable state. The [“Swift and Concurrency” article](https://ravi6997.medium.com/if-youre-not-using-swift-6-features-you-re-behind-def8dc9d4e8e) emphasizes that *Swift 6’s strict concurrency* will force redesign: “The new compiler will prevent building any code that exhibits data races… [Swift 6] alters your architectural designs for apps”. Agents must thus follow actor-isolation rules. Combine (for example, `ObservableObject` with `@Published`) is now considered legacy in pure SwiftUI code; replace it with `@Observable/@State` and async streams when possible.
+
+- **Performance and Resource Management:** Skilled engineers continually profile and optimize. Common patterns include reusing views, using `.animation(.interactiveSpring(), value: x)` sparingly, and preferring drawing APIs (like `ImageRenderer`) that leverage GPU. Avoid unnecessary recomputation by splitting views: as Paul notes, “tell [the AI] to split [computed properties] into separate SwiftUI views… important for performance when using `@Observable`”. Be cautious with images (use lazy loading), heavy view hierarchies, and background work. Conserve memory: use `URLCache`, purge caches on memory warnings, and use Instruments (Allocations, Leaks) to catch retain cycles. Apple’s Instruments and MetricKit should be used regularly (see next section).
+
+- **Design and UX:** Designers stress **clarity, consistency, and delight**. They follow Apple’s Human Interface Guidelines: maintain visual hierarchy with typography (headline, body, caption styles); use semantic color palettes for light/dark mode and brand identity; apply consistent spacing (use SwiftUI’s `padding()` and `Spacer` patterns that adapt); and use system components whenever possible for familiarity. Good design balances convention with personality: for instance, one ADA winner used a retro TV theme but kept interactions intuitive and fluid. The design must also be accessible: use Dynamic Type fonts (`.font(.body)` etc) instead of fixed sizes, provide VoiceOver labels (prefer `Button { label: { Text(...) } }` over plain images), and support localization. The Apple Design Awards suggest that the *difference between merely decorated and truly great apps* is coherence – the visuals, the interaction, and the technical solidity all reinforce the app’s purpose. 
+
+- **Testing and Quality:** Seasoned teams write extensive tests. Unit and integration tests cover critical logic, while UI tests (XCUITest) exercise key user flows. Snapshot testing can guard against visual regressions. Static analysis (Xcode warnings, SwiftLint) and CI pipelines enforce quality early. Paul Hudson’s AGENTS.md was essentially building such a “lint” for AI code: e.g., always modernize deprecated APIs, require `NavigationStack`, avoid `fontWeight(.bold)` misuse, etc. Agents should produce code that is testable (e.g. dependency injection, small view structs) and actually run the tests as part of development.
+
+- **AI-Assisted Development Attitude:** Several experienced developers (e.g. Kush Agrawal, Paul Hudson) note that **the senior engineer makes AI work**. Kush writes that developers with robust expertise (“the Seasoned Engineer edge”) will guide AI to produce high-quality results; novices often get confused by LLM outputs. Thus, in an AI workflow, the human or lead agent must curate requirements (“robust requirements”), set up instrumentation (logging, test harnesses), and provide “skeleton files” or architecture docs for the AI to fill in. These skills are critical: clear problem statements and incremental steps enable the AI to succeed. 
+
+## 3. Swift Language and Code Quality
+
+Modern iOS engineering demands mastery of Swift 6.x and its idioms:
+
+- **Type Safety & Value Semantics:** Use `struct` for models and value types by default. Leverage `enum` for clear state. Minimize force-unwrapping (`!`) and use `guard let` or `if let`. Swift’s strong typing and generics should model the domain clearly.
+
+- **Generics and Protocols:** Abstract shared behavior with protocols, and use generics (with constraints) to avoid duplication. But avoid unnecessary indirection; a protocol is justified if you need multiple implementations or test mocks, otherwise simple concrete types are fine.
+
+- **Error Handling:** Use `throws` and `Result` instead of ad-hoc error patterns. Do not silence errors; propagate or handle them explicitly. Follow guidelines: use Swift’s `try?` or `try!` only when safe, and provide user feedback for recoverable errors.
+
+- **Concurrency:** Adopt **structured concurrency** everywhere. Use `Task`, `async let`, and `TaskGroup` rather than GCD queues or completion handlers. Annotate shared state and expensive methods with `@MainActor` or dedicated actors. Ensure types crossing threads conform to `Sendable`. The Swift compiler (Swift 6) enforces these rules – code that violates isolation will not compile. In practice, the agent should default to async/await and attach `@MainActor` to UI-related code. For example, Paul’s AGENTS.md explicitly requires `@Observable` classes to be `@MainActor`.
+
+- **Memory Management:** Understand ARC: avoid retain cycles by using `[weak self]` or unowned references in closures and timer blocks. Prefer value types (structs) to avoid reference cycles. Use Instruments’ Leaks tool to check.
+
+- **Dependency Injection:** For modular code and testability, inject dependencies (services, stores) via initializers or environment values, not via globals. This fits well with SwiftUI’s `@EnvironmentObject` (or better, `@Binding` and `@StateObject`). Paul’s guide suggests passing shared data through the environment rather than global singletons.
+
+- **API Design:** Follow Apple’s [API design guidelines](https://swift.org/documentation/api-design-guidelines/). Use clear, objective method and property names. Make intent explicit in function labels. For instance, prefer `updateProfile(name:)` over ambiguous verbs. SwiftLint and SwiftFormat can enforce style (e.g. brace placement, line length) consistently across the codebase.
+
+- **Modularization:** Even single apps benefit from breaking into Swift Packages or frameworks. Group code by domain (e.g. `MyAppNetworking`, `MyAppPersistence`, `MyAppUIComponents`). This reduces coupling and build times. For example, separate UI libraries allow reuse and independent evolution. For AI agents, smaller modules are easier to scan and update.
+
+- **Documentation:** Document APIs and modules. At minimum, maintain a README or API docs in code (using Swift’s markup). AGENTS should read these docs. Also keep ADRs (Architecture Decision Records) for major design choices so future readers/agents understand why code is structured a certain way.
+
+- **Quality Checks:** Automate linting (SwiftLint), type-checking, and SwiftFormat formatting on CI. Treat warnings as errors. Use Swift’s new **Compiler Diagnostics** (e.g. `-Xfrontend -strict-concurrency`) to enforce the latest rules.
+
+## 4. Architecture Patterns
+
+There is no one-size-fits-all: experts choose architecture by app complexity:
+
+- **Small apps or features:** MVC (Apple’s original), or simple MVVM, often suffice. SwiftUI tends to default toward MVVM-like patterns since views observe state stores. Many indie developers keep models and views closely tied, with minimal layers.
+
+- **Larger apps:** MVVM (with Coordinators) or Clean Architecture (outer layers for UI, inner for business logic) are common. Unidirectional data flow (Redux/TCA) is used when state is complex or multiple features interact. Feature-based modular architecture (each feature in a separate module with its own MVVM triad) is popular for scaling. For instance, splitting by user stories (auth, feed, settings) each with own View/ViewModel layer, can let an AI agent work feature-by-feature.
+
+- **Apple guidance:** Apple’s sessions and sample code often use MVVM or MVC with Coordinators (UIApplicationDelegate handling scenes). They encourage *composition and modularity*. They also introduced patterns like **Data Flow** (via bindings/State) and **data-oriented UI** (SwiftUI). The HIG suggests using UIKit components consistently (e.g. Tab Bars for top-level nav, Sheets for modal info) when not in SwiftUI.
+
+- **AI considerations:** The architecture should be simple enough for the agent to grasp. Avoid multi-level inheritance or inscrutable base classes. Explicitly document the flow: e.g. an ADR or README that outlines MVVM layers or Flow types. Agents should first be prompted to *understand the architecture* (e.g. “Summarize the View hierarchy and data flow”) before adding code. This is akin to Xcode’s “explore” mode generating architecture docs.
+
+## 5. SwiftUI and UIKit
+
+**SwiftUI** (iOS 13+ but matured in iOS 16/17/26) is the primary UI toolkit:
+
+- **Capabilities & Layout:** Use SwiftUI’s adaptive stacks (`VStack`, `HStack`, `Grid`) and geometry readers for flexible layouts. Leverage built-in adaptive modifiers (`.padding()`, `.frame(maxWidth: .infinity)`). For complex flows, `NavigationStack` (not deprecated `NavigationView`), `TabView`, `Toolbar`, and new page-based or split navigations should be used. SwiftUI previews are a powerful tool for visual verification; agents can generate previews and even snapshots to check rendering.
+
+- **State Management:** Use `@State` or `@Binding` for simple local state, and `@StateObject` or the new `@Observable` model objects for shared app state. SwiftUI’s environment and `@EnvironmentObject` can propagate dependencies. Agents should align with the app’s chosen state model. For example, Paul’s guidelines emphasize using `@Observable` (iOS 18) over legacy `ObservableObject` models.
+
+- **Performance Pitfalls:** SwiftUI can become slow if view bodies do too much work. Experts split views into smaller subviews to improve diffing efficiency. They caution against heavy use of complex view modifiers that cause frequent redraws. Any LLM-introduced inefficiency (e.g. repeated `List` computations, uncontrolled `ForEach`) should be spotted by profiling. The agent should use Instruments’ **SwiftUI** and **Core Animation** tools to check view updates and frame rates (see Performance section).
+
+- **New APIs:** iOS 26 adds things like improved buttons (`.buttonStyle(.borderedProminent)`), search in toolbar, new SF Symbols, etc. Agents can use document search to find these. For example, Xcode’s Apple Docs tool allowed an agent to learn about the new `Table` view and apply it. Prompts can instruct agents to “prefer the latest SwiftUI patterns on iOS 26”.
+
+- **UIKit Interop:** If a feature requires UIKit (e.g. advanced animation, live camera feed, older library), wrap it in `UIViewControllerRepresentable` or `UIViewRepresentable`. Experienced teams keep SwiftUI and UIKit code separated: e.g. a `Legacy` folder for UIKit views. Agents should do this only when needed, per instructions. If the design calls for `UIView.animate` or a `CAAnimation`, it may be easier to use UIKit. But the default stance (per many experts) is “avoid UIKit unless a specific need”.
+
+## 6. Data, Persistence, and Reliability
+
+- **Persistence:** For most apps, Apple’s new **SwiftData** (iOS 18+) is recommended, as it simplifies Core Data with a Swift-first API. Use `@Model` types for your data and SwiftData’s `@Query` for retrieval. SwiftData has features like uniqueness constraints and indexes (WWDC24 “What’s new in SwiftData” covers these). For earlier targets or complex migrations, Core Data remains an option (with CloudKit for sync). Other options: 
+  - **UserDefaults/Keychain:** for simple settings or sensitive tokens.
+  - **Files/JSON:** for human-readable local storage; use FileManager or Codable.
+  - **Third-party DBs:** e.g. SQLite/GRDB if full control needed. (But Apple encourages SwiftData/CoreData to work well with Xcode and iCloud).
+- **Offline/Sync:** Aim for offline-first: the UI should load from local data and sync in background. Tools like CloudKit or App Intents can help sync data with servers. Use `URLSession` with caching for network API (set `URLCache.shared`). Keep networking separate from UI – use a Repository pattern or Service objects.
+- **Networking:** Use `async/await` with `URLSession`. For JSON, use `Codable`. Write a layer of abstraction (e.g. a `NetworkClient` protocol) so agents can stub responses in tests. Common pitfalls: forget error handling, huge synchronous data parsing. Agents should handle HTTP errors (4xx/5xx) explicitly, and not assume all responses succeed.
+- **Caching and Throttling:** Cache images or heavy data locally (e.g. with `NSCache`, or store downloaded images). If the app updates often, use `OperationQueue` or `Task.sleep` for debouncing. Paul notes that LLMs will resurrect old APIs (e.g. `Task.sleep(nanoseconds:)` instead of modern `Task.sleep(for:)`) – ensure the agent uses the latest.
+- **Data Modeling:** Define clear models (structs/classes) and use migrations for changes. SwiftData and Core Data support lightweight migrations; agents should be instructed to update the data model and migration code (e.g. by writing new migrations or versioning).
+- **Background Work:** Register background tasks (BGAppRefresh, BGProcessing) to refresh content or send analytics. For iOS 26+, Apple even updated BGTasks (Ravi’s article “iOS 26 Rewrote Background Tasks” explains new scheduling options). Agents can trigger BG tasks via code or by integrating with Push Notification or App Intents.
+- **Security and Permissions:** Handle privacy carefully. Check and request permissions for location, camera, etc only when needed. Store sensitive data in Keychain. Apple’s App Store guidelines require privacy descriptions; treat missing privacy text as a gate. Agents should be given the Info.plist to update and must not add extraneous access (e.g. no background audio unless needed).
+
+## 7. Performance Engineering
+
+Professional iOS apps obsess over performance. Key points:
+
+- **Performance Types:** Startup time (cold launch), rendering (smooth 60fps animations), scrolling, CPU usage, memory footprint, network/battery efficiency. Use Instruments:
+  - **Time Profiler** to find CPU hot spots.
+  - **Core Animation** to detect dropped frames.
+  - **Allocations/Leaks** for memory growth.
+  - **Network** for bandwidth/use.
+  - **Energy Log** for battery drain.
+  - **MetricKit** (iOS 15+) collects crash rates, hangs, CPU spikes in the wild.
+
+- **Measurements:** Establish realistic budgets (e.g. App launch < 2s on target devices, main thread idle most of the time). Measure on real devices (especially older/low-end) and simulators. Use Signposts and `os_signpost` in code to mark critical paths (downloads, parsing) and log durations. Unit-test critical functions for performance with XCTest performance metrics.
+
+- **UI Performance:** Ensure views are not doing heavy work in `body`. Move data processing off the main thread. Cache layouts or images when possible. For lists, use `LazyVStack`/`LazyHStack` to avoid offscreen work. Use Instruments’ SwiftUI-specific templates to see how many body invalidations occur per state change.
+
+- **Memory:** Load images with care (downsample for display size). Use `ImageRenderer` (SwiftUI API) instead of UIKit’s `UIGraphicsImageRenderer` for SwiftUI-friendly rendering. Free caches on memory warnings. Profile for retain cycles (in closures or Combine subscriptions). Use Xcode’s Memory Graph Debugger to visually inspect object trees.
+
+- **Network/Energy:** Batch network calls when possible; use HTTP/2 multiplexing. Apply compression (HTTP gz). Use `URLSessionConfiguration` to be efficient. Schedule background fetch to avoid frequent polling.
+
+- **Testing and Regression:** Automate performance regression tests. For example, use fastlane’s performance plugin or custom XCTest benchmarks. After each change, compare metrics to guard thresholds. Prompt agents to “benchmark response time of this API call” or “simulate scrolling for 10 seconds and record FPS” using scripts.
+
+- **Agent Involvement:** Agents should only optimize when necessary: first write correct code, then profile and fix. A “performance audit” agent could run Instruments via command-line (Instruments CLI or `xcpretty`) and interpret hotspots, but currently no AI tool fully analyzes Instruments output. Instead, have the agent look for known anti-patterns (e.g. too many `VStack`s, images without `.resizable()` & `.scaledToFill()`) and warn. Ultimately, human oversight is needed for interpretation. But agents can automate repetitive fixes (e.g. make a view lazy) when a problem is identified.
+
+## 8. UI/UX and Visual Excellence
+
+Building an interface that *feels* crafted rather than generated requires attention to both detail and big-picture experience:
+
+- **Visual Hierarchy and Consistency:** Apply a clear typographic hierarchy (fonts, weights, colors) to distinguish headings, subheadings, body text. Use Apple’s recommended San Francisco text styles. Maintain consistent margins and padding (e.g. 16pt grid). For example, HIG emphasizes a predictable layout rhythm across device sizes. Agents should use fixed design tokens (spacing values, color constants) rather than magic numbers.
+
+- **Color and Branding:** Choose a restrained palette (often 2–4 colors) with semantic roles (primary/action, background, etc). Make sure text contrast meets accessibility guidelines. For Dark Mode, test on both. Agents should use `Color.primary` or custom `Color("BrandPrimary")` rather than arbitrary colors scattered in code.
+
+- **Iconography and Imagery:** Use SF Symbols or custom icons consistently (style, weight). Illustrations or images should fit the app’s tone. For example, “grug” used a consistent hand-drawn style in every asset. An agent could be given a style guide with example icons or art to maintain visual identity. Pre-trained AI can’t design an icon, but it can layout a button with an icon from the asset catalog.
+
+- **Motion and Feedback:** Use built-in SwiftUI animations (e.g. `.animation`, `.transition`) to animate state changes elegantly. But avoid gratuitous animation – focus on clarity. Subtle haptics or feedback (e.g. with button presses) improve UX. Agents can be prompted to “animate this list reorder for delight” or “add haptic feedback” if the design doc calls for it.
+
+- **Layout Adaptiveness:** Support all device sizes and orientations. Test on iPhone and iPad (and potentially Mac Catalyst or visionOS). For universal apps, use size classes and adaptive stacks. The HIG section on “Layout” stresses adaptive interfaces. Agents should include responsive behaviors (e.g. a two-column layout on iPad using `NavigationSplitView`).
+
+- **Onboarding and States:** Experts design for the whole journey: clear onboarding explaining value, informative empty/error states, and loading indicators. Provide affordances (e.g. a subtle prompt where no data exists). Agents should generate “EmptyStateView” or “ErrorView” components based on spec. For example, if the app lists messages, an empty inbox state might show an illustration and a friendly prompt. Apple’s own system apps (Mail, Photos) do this well, and agents can mimic those patterns.
+
+- **Accessibility:** Integrate accessibility from the start. HIG says accessible UIs empower everyone. Use accessibility modifiers (`.accessibilityLabel`, `.accessibilityHint`) for custom elements. Test with VoiceOver and Dynamic Type. Agents can run the Accessibility Inspector (Xcode tool) on screenshots to find low-contrast text or missing labels. For example, Paul urged replacing `.onTapGesture` with `Button` so VoiceOver can focus on interactive elements. Also ensure localization: use `LocalizedStringKey` and avoid hardcoding English. Agents should flag any strings not in `Localizable.strings`.
+
+- **Platform Coherence:** The app should *feel* native. This means using standard components (TabBar, ContextMenu, Pull-to-refresh, etc.) when appropriate. Apple’s design examples often mix original flair with these conventions. For instance, even a retro-styled app like Blippo+ still used Apple’s standard menu bar on macOS. Agents should prefer SwiftUI’s built-in controls (Button, Toggle, Picker) over custom hacks, unless a specific design demands otherwise.
+
+- **Examples of Excellence:**  Design Award apps are instructive. **grug (ADA 2026)** shows how a strong visual theme (cave-painting style) applied consistently, combined with minimal features, yields an immediately charming UX. **Is This Seat Taken?** (Game Award 2026) illustrates polishing: every tappable object in its scenes has a tiny, playful response. These examples highlight that a polished app is not just about *looks* but about delighting the user with thoughtful details. 
+
+In summary, UI/UX excellence comes from a coherent design system (colors, typography, spacing), careful attention to user flows and feedback, and rigorous compliance with HIG conventions – all built atop solid engineering. AI agents need specific design guidelines (design tokens, mockups, user stories) to approach this level of craftsmanship. Human designers or product owners should define that vision, and agents should follow it without trying to invent entirely new brand identities.
+
+## 9. Agentic Development Systems
+
+Building a world-class app with AI requires orchestrating multiple agent capabilities, not just a single giant prompt. From Apple’s vision and recent demos, we identify several agent roles and tools:
+
+- **Single vs. Multi-Agent:** Apple’s Xcode adopts a *multi-agent* paradigm. For example, Xcode 27 allows separate conversations (“threads”) for exploring, planning, building, and refining features. It even runs parallel sub-agents for tasks like localization or accessibility audits. We recommend a similar structure: have an *orchestrator* (could be a human lead or a master agent) that assigns responsibilities to specialized agents.
+
+- **Key Agent Roles:** 
+  - **Architect/Overview Agent:** First, an agent should analyze the project’s structure. It reads the codebase (using Xcode’s “Explore” or via static analysis tools), and summarizes the architecture, data models, and existing components. This agent may create ADRs or an architecture document to store its findings. 
+  - **Planner/Specification Agent:** Works with the Product Owner’s requirements to create a development plan, feature breakdown, and ensure acceptance criteria. This is akin to Xcode’s “plan mode”. It writes a Markdown plan with tasks and gets user confirmation.
+  - **Feature Implementation Agents:** Each handles coding for a specific feature or screen. They take specs from the planner and existing UI designs, then write Swift/SwiftUI code. They should access tools (Swift compiler, Xcode build logs) and references (MCP doc search). They commit changes incrementally, with design previews. 
+  - **UI/UX Agent:** Specialized in translating design specs (sketches, images) into views. The WWDC demo shows an agent that created a chart view from an iPad sketch. In our system, this agent might use generative tools plus design rules to implement screens pixel-perfect to the spec.
+  - **Test Agent:** Generates unit and UI tests. After code is written, this agent should run `xcodebuild test` and write tests for new functionality. It can use Xcode’s test tools as in the WWDC demo.
+  - **Review/QA Agent:** Performs code review, style checks, accessibility audit, and HIG compliance. It might run SwiftLint, accessibility validations, and compare UI screenshots for regressions.
+  - **Performance Agent:** Runs profiling tools and checks for performance issues. For example, it could script Instruments, then summarize hotspots.
+  - **Localization Agent:** Uses translation APIs (e.g. Apple Translate) to localize strings, following Xcode’s example of spawning localization tasks.
+  - **Design System Agent:** Builds or enforces a design system. It might extract common components (colors, text styles, icons) and ensure consistent usage across screens.
+  - **Documentation Agent:** Generates or updates developer docs, changelogs, README from code and architecture changes.
+
+- **Orchestration:** The orchestrator (human or agent) assigns tasks to these roles and tracks dependencies. For example, the feature implementation agent should not code until the planner is done. Agents should communicate via shared project state (e.g. Git branches, files) and messaging (Xcode conversations or a coordination tool). Apple’s Xcode Conversations idea suggests tasks are broken down into *queued messages* between user and agent.
+
+- **Avoiding Conflicts:** Concurrency control is critical: use version control (Git) to manage merges, and file locks or CI checks to prevent overlapping changes. The orchestrator could ensure each agent works on its own branch and only merges via reviewed PRs.
+
+- **Agent Tools:** Each agent should use project tools:
+  - **Xcode/Swift Compiler** – compile code, catch errors, run static analyzer.
+  - **Doc Search** – to fetch up-to-date API docs, avoid outdated assumptions.
+  - **Simulator/Previews** – to render UI and catch layout issues.
+  - **Unit/UI Test Runner** – to execute tests.
+  - **Accessibility Inspector** – to validate a11y.
+  - **Instruments CLI** – to gather performance data.
+  - **Git** – for versioning; agents should commit intermediate results for traceability.
+  - **Design Tools** (optional) – if possible, use Figma or Sketch plugins (Xcode 27 may integrate Figma via MCP).
+  - **MCP and Plugins:** Use Apple’s Model Context Protocol (open standard) to connect any agent. Apple provides a [skills CLI](https://github.com/superagents-lab/xcode27-skills) to add capabilities, but custom tools (like a script to run instruments) can also be integrated.
+
+No tool is a silver bullet. The system must log everything (builds, tests, chats) so any agent can query history. And by design, agents only proceed when validation passes – e.g., the build agent must ensure compilation before marking a feature done.
+
+## 10. Prompt Engineering by Stage
+
+Each development phase requires its own objectives and prompts. Below is a condensed outline for illustrative stages (actual prompts would be refined further):
+
+- **Discovery (Phase 1):** *Objective:* Understand problem domain and target users. *Context:* Market research docs, competitive apps, user personas. *Agent/Role:* Product Research Agent. *Tools:* Web access (if allowed), knowledge base. *Prompt Example:* “Research similar iOS apps for [domain], list their core features, UI styles, and differentiators. What do users like or dislike about them? Provide references.” *Output:* A summary report. *Validation:* Human review of findings; ensure key scenarios are identified.
+
+- **Product Definition (Phase 2):** *Objective:* Define scope, features, requirements, edge cases. *Context:* Discovery findings, business goals. *Agent:* Product Manager Agent. *Prompt:* “Draft a product spec for a [app description], listing user stories, acceptance criteria, and possible pitfalls. Include how to measure success.” *Output:* Detailed spec document. *Validation:* Stakeholder agreement; ensure no contradictions. Agent should flag any missing information or conflicting goals before proceeding.
+
+- **UX / IA (Phase 3):** *Objective:* Plan navigation and screen hierarchy. *Context:* Product spec. *Agent:* UX Architect. *Prompt:* “Design the high-level user flows and screen structure. Create a sitemap or list of screens, and propose a navigation model (tabs, stack, etc.). Explain rationale.” *Output:* Navigation map, UX document. *Validation:* Check completeness of flows, correct patterns (tab bar on root, etc.). Possibly a human checks logic.
+
+- **Visual Design (Phase 4):** *Objective:* Establish look and feel. *Context:* Brand guidelines (if any), style references, HIG tokens. *Agent:* UI Designer (supported by an AI image tool if available). *Prompt:* “Based on [moodboard or ref apps], define a color palette, typography scale, and sample component styles (buttons, cards). Produce a sample screen design or description.” *Output:* Design spec (colors, fonts, sample screens). *Validation:* Designer review or compare to Apple HIG (colors for contrast, text sizes for legibility). The agent should not alter architecture here without sign-off.
+
+- **Tech Architecture (Phase 5):** *Objective:* Choose frameworks, modules, data flow. *Context:* Requirements, team constraints. *Agent:* Software Architect Agent. *Prompt:* “Propose a technical architecture: data models, chosen persistence (SwiftData/CoreData/other), network strategy, and module breakdown. Justify choices (e.g. why MVVM or Clean).” *Output:* Architecture doc/ADR. *Validation:* Experts review for scalability, sanity. The agent should not skip this planning.
+
+- **Setup AI Dev Environment (Phase 6):** *Objective:* Configure agents, tools, docs. *Context:* Project repo. *Agent:* DevOps Agent. *Prompt:* “Create initial AGENTS.md, coding conventions, CI pipeline config. Install needed skills (SwiftLint, unit test template).” *Output:* Repo structure, config files. *Validation:* Check CI passes, code style enforced. Ensure documentation (README, ADRs) is present.
+
+- **Implementation (Phase 7):** *Objective:* Write code feature-by-feature. *Context:* Design and spec. *Agent:* Feature Agents. *Prompt (example):* “Implement the Login screen: it should have email/password fields and a login button. Use SwiftUI, following the design spec [attached image]. Validate inputs and handle errors. Do not commit until it builds and passes unit tests.” *Output:* Pull request with code and preview images. *Validation:* CI build/test passes, UI preview matches design. The agent should generate and run tests for new logic. It should not move to next feature until PR is merged.
+
+- **Review & Refactor (Phase 8):** *Objective:* Clean up after initial implementation. *Context:* Completed code. *Agent:* Review Agent. *Prompt:* “Perform a code review on [recent commit]. Look for violations of style, architecture drift, and opportunities to simplify. Suggest refactorings.” *Output:* Review comments or refactored code. *Validation:* Ensure no regressions, code reviews done by another agent or human. Agents should not unilaterally rearrange core architecture.
+
+- **Debugging (Phase 9):** *Objective:* Fix bugs or integration issues. *Context:* Failing tests or crash logs. *Agent:* Debug Agent. *Prompt:* “A failure occurs here: [stack trace or symptom]. Investigate likely cause and propose a fix.” *Output:* Bugfix code, with tests validating the fix. *Validation:* Verify that the specific issue is resolved without side effects.
+
+- **Testing (Phase 10):** *Objective:* Verify actual user behavior. *Context:* Functional spec and acceptance criteria. *Agent:* Testing Agent. *Prompt:* “Simulate a user workflow (e.g. creating an item, editing it, deleting it). Write UI tests that cover these flows and run them.” *Output:* UI test suite results, screenshots if available. *Validation:* All tests pass reliably. Agents should not claim success without running tests.
+
+- **Accessibility/UX Audit (Phase 11):** *Objective:* Check inclusivity. *Agent:* Accessibility Agent. *Prompt:* “Audit the current UI for accessibility issues: contrast, labels, dynamic type, etc. Suggest fixes.” *Output:* Report of issues (e.g. missing labels, low contrast). *Validation:* A human or tool (Accessibility Inspector) should confirm issues. Agents should not mark this done if violations remain.
+
+- **Performance Profiling (Phase 12):** *Objective:* Optimize bottlenecks. *Agent:* Performance Agent. *Prompt:* “Profile the app under typical use. Identify any slow operations or high CPU. Recommend improvements.” *Output:* Report (e.g. “This loop takes 50ms, suggest caching”). *Validation:* After fixes, re-measure to ensure improvement. Agents should not do premature micro-optimizations; only measured issues.
+
+- **Release Audit (Phase 13):** *Objective:* Final checks before shipping. *Agent:* Release Agent. *Prompt:* “Prepare for App Store release: ensure app icons and screenshots are present, privacy notices (Consent in place?), versioning is correct. Check App Store Guidelines for compliance.” *Output:* Checklist (incl. provisioning profiles, metadata, testflight integration). *Validation:* Human check of compliance, passing testflight install. The agent should not submit to App Store by itself; it provides readiness report.
+
+- **Final Human Review (Phase 14):** *Objective:* Overall quality gating. *Agent:* QA or Design Lead (could be human). *Prompt:* “Perform exploratory testing and code/design review. Validate that feature set matches spec, UI is polished, and no critical bugs remain.” *Output:* Approval or list of issues. *Validation:* Only proceed if product owner/experts sign off.
+
+Throughout these stages, each agent’s prompt must include clear instructions on scope (e.g. “only modify files in this feature folder”), and what *not* to do (e.g. “do not remove existing code” or “do not introduce new color outside the palette”). They should be trained to halt and ask questions if requirements are ambiguous or if their proposed change exceeds the specified feature scope.
+
+Agents should treat `AGENTS.md` and repository docs as *source-of-truth*. For example, if the global style guide says “use spacers of 8pt multiples,” a code agent should incorporate that without prompting. Conversely, if a new requirement emerges (say, adding a dark mode color), the agent should update the design system documentation accordingly and propagate to all views.
+
+## 11. Development Lifecycle Workflow
+
+A cohesive, iterative workflow can be structured into roughly these phases (inputs/outputs and agents in parentheses):
+
+1. **Product Discovery:** (Input: market data, competitor apps) → (Output: problem statement, user personas) by Product/UX agents.
+2. **Product Definition:** (Input: discovery report) → (Output: detailed spec, features list, acceptance criteria) by Planning agents.
+3. **UX/IA Design:** (Input: spec) → (Output: user flows, wireframes, navigation schema) by UX agent, possibly reviewed by designer.
+4. **Visual Design:** (Input: flows, brand style) → (Output: design system (colors, fonts, components), screen mockups) by UI agent.
+5. **Technical Architecture:** (Input: spec, design) → (Output: architecture doc/ADRs, data models, tech stack) by Architect agent.
+6. **AI Environment Setup:** (Input: architecture) → (Output: AGENTS.md, CI config, initial project scaffold) by DevOps agent.
+7. **Implementation:** (Iteratively per feature.) Each cycle: Plan → Code → Preview → Test, by feature agents and UI agent. Output: merged code in repo.
+8. **Verification:** (Continuous) Run builds, unit/UI tests, style checks after each merge. Agents produce test reports and fix small issues.
+9. **Optimization:** (After core features) run profiling, performance tests. Agents identify issues (e.g. slow list, memory hog) and refactor.
+10. **Final Review:** Run accessibility tools, security checks, accessibility audits, design consistency check. Agents/auditors report outstanding issues.
+11. **Release Prep:** Prepare App Store assets, privacy info. Agent assembles screenshots and metadata (if UI done) and ensures all guidelines met.
+12. **Submission:** (Human step) Submit build to TestFlight/App Store, monitor review.
+
+Each phase has clear *exit criteria* (e.g. all tests pass, design sign-off, performance within budget). An agent must not mark a phase complete unless those criteria are met (automated checks) and any subjective requirements (design approval) are confirmed by a person.
+
+## 12. Quality Assurance and Evaluation
+
+A thorough evaluation framework is crucial. We recommend a **scorecard with categories** (some automated, some human-judged):
+
+- **Functional Correctness:** All features work as per requirements. Covered by unit tests, integration tests, and manual exploratory testing.
+- **Code Quality:** Clean, idiomatic Swift; consistent style (verified by linters); no compiler warnings. Agents should submit code for automated linting and formatting checks.
+- **Architecture Integrity:** Adherence to chosen patterns. Check modular boundaries, lack of tight coupling. Human review or static analysis tools can flag violations.
+- **Maintainability:** Code readability, documentation presence, tests coverage. Metrics: Cyclomatic complexity, code smells (using tools like SonarQube or SwiftLint custom rules).
+- **Performance:** Memory use, CPU usage under load, frame rates. Must meet defined benchmarks (e.g. <x MB RAM on medium device, 60fps scrolling). Run Instruments benchmarks.
+- **Reliability:** No crashes, handle edge cases, error recovery. Use fuzz testing of inputs, ensure all user paths are tested.
+- **Security & Privacy:** Use safe APIs (avoid insecure calls), proper handling of sensitive data (Keychain, HTTPS), and compliant with App Store privacy guidelines. Automated checks (e.g. dependency vulnerability scanners, Info.plist audits).
+- **Accessibility:** Conforms to accessibility norms (labels on all controls, high contrast, font scaling). Tools: Accessibility Inspector, Vision Accessibility API. Scorecard: e.g. 100% elements have accessibilityLabel.
+- **Visual and Interaction Quality:** Consistency with design system (checkstyle for colors/spacing), UX flow smoothness, user-friendly text. Some automated UI diff (snapshot testing) and some human design review. 
+- **Platform Integration:** Uses platform conventions (back button, share sheet, notifications correctly). Apple HIG compliance (e.g. following guidelines for lists, sheets, etc.).
+- **Product Value:** Soft metric – does app clearly deliver the promised value? This is subjective, but user testing or expert opinion can assess novelty, usefulness, and delight.
+
+**Pass/Fail Gates:** Before moving phases or shipping, require e.g. 100% unit test pass, 0 critical static warnings, all accessibility errors fixed, no performance regressions >10%. Scorecards with numeric targets (e.g. 80% code coverage, <50MB memory at runtime) help automate decisions.
+
+Agents can feed these results back into planning. For example, if a test fails or performance is poor, the orchestrator should assign that fix back into the implementation queue. Feedback loops are essential: break the “agent declares done” loop by mandating independent checks. 
+
+# B. AI-Assisted iOS Development Operating Model
+
+The ideal operating model brings together *Human Product Owner*, *Orchestrator Agent*, *Specialist Agents*, *Skills*, *Tools*, and *Quality Gates* in a pipeline:
+
+- **Human Product Owner:** Defines vision and makes subjective decisions (branding, scope). Reviews specs and final product.
+- **AI Orchestrator:** Could be a human or a supervisory agent. Coordinates tasks, assigns to specialist agents, merges code, triggers workflows, and ensures phase exit criteria are met.
+- **Specialized Agents:** As listed above (Planner, Feature, UX, Test, etc.). Each has a role description and connects to relevant tools. They communicate via the project repo and orchestrator.
+- **Skills & Instruction Files:** 
+  - *Global instructions:* Permanent guidelines (e.g. “Use Swift 6 concurrency”, “Follow HIG conventions”) stored in AGENTS.md or similar.
+  - *Project instructions:* Specific to this app (e.g. domain terminology, business rules) in project docs. 
+  - *Task prompts:* Occasional instructions per feature (in conversation or task tracker).
+- **Context and Documentation:** A structured docs folder contains PRD, ADRs, design specs, architecture overview, coding conventions. Agents must ingest these. Use ADRs to justify architectural choices. Store design assets (screenshots, Sketch/Figma exports).
+- **Tools:** Xcode (with coding assistant UI or CLI), Swift compiler, Simulator, devices, XCTest, Instruments, accessibility tools, Git. Optionally, integrate ChatGPT or Claude via Xcode’s ACP/MCP plugins. Possibly use external tools like Docc for docs, SwiftFormat, SwiftLint, etc.
+- **Quality Gates:** Automated CI pipelines enforce tests and lint. Stages cannot proceed unless gates pass. For example, merging to main triggers UI tests, snapshots, performance smoke tests.
+- **Flow:** The orchestrator (or orchestrating conversation) moves from requirement→plan→build→verify→release, as outlined in Section A. Agents complete tasks asynchronously and report back (via commit messages, status reports, or conversation transcripts).
+
+In practice, a task might flow like:
+1. Product Owner raises a new feature request in the system (brief doc).
+2. Planner Agent (prompted by “/plan new feature request”) produces a plan doc, which the owner approves.
+3. Orchestrator spawns a feature branch and instructs a Feature Agent: “Implement feature X as per plan.”
+4. Feature Agent fetches context (docs, code) via MCP, writes code and tests, commits to a branch.
+5. CI runs. If failure, Orchestrator triggers Debug Agent to fix.
+6. Once passing, Orchestrator requests Review Agent to audit code and UI (via snapshot or lint).
+7. On approval, merge to main, and updates knowledge base (maybe an updated architecture doc).
+8. Cycle continues to next feature.
+
+This system is not rigidly linear; for example, localization or accessibility can be applied in parallel by separate agents once UI is in place. The orchestrator ensures they integrate smoothly (e.g. merging translated strings into project).
+
+For smaller projects, many of these roles can be collapsed. A single “AI Engineer” agent might do planning, coding, and basic testing in one thread, with a human reviewing. The model above is for complex, high-quality projects where the overhead pays off.
+
+# C. Recommended Project & Documentation Structure
+
+A serious AI-assisted iOS repo might be organized like:
+
+```
+AppProject/
+├── AppProject.xcodeproj      # Xcode project
+├── App/                     # Swift code (app target)
+│   ├── App.swift           # @main App struct (SwiftUI)
+│   ├── Views/              # SwiftUI Views
+│   ├── ViewModels/         # ViewModel or State controllers
+│   ├── Models/             # Data models (SwiftData @Model or structs)
+│   ├── Services/           # Networking, data persistence, etc.
+│   ├── Resources/          # Assets (images, colors), Storyboards (if any)
+│   └── Utilities/          # Helpers, extensions
+├── Tests/                   # Unit/UI test targets
+├── Docs/
+│   ├── PRD.md              # Product Requirements/Spec
+│   ├── Architecture.md     # Technical architecture overview
+│   ├── ADRs/               # Architecture decision records (one per key choice)
+│   ├── Design/             # Design docs
+│   │   ├── DesignSystem.md # Colors, typography, components
+│   │   ├── Wireframes/     # Sketches or layouts for screens
+│   │   └── ScreenSpecs/    # Detailed screen specs (e.g. Figma export or markdown)
+│   ├── FeatureSpecs/       # Per-feature markdown specs
+│   ├── Testing.md          # Testing plan and coverage requirements
+│   ├── Performance.md      # Performance budgets and results
+│   ├── Security.md         # Security/privacy requirements
+│   └── ReleaseChecklist.md # Steps for App Store submission
+├── AGENTS.md                # Agent instructions and guidelines
+├── .swiftlint.yml          # Style rules
+├── .gitignore
+└── README.md              # Overview and setup instructions
+```
+
+**Key documents explained:**
+
+- **AGENTS.md:** Crucial. Contains the role definitions and coding standards (like the SwiftAgents example). Includes global app constraints (e.g. minimum iOS version, banned APIs, etc.).
+- **PRD.md:** High-level goals, target audience, differentiators (to guide product thinking).
+- **Architecture.md / ADRs:** Explain chosen patterns (MVVM, etc.), data flow, and justify decisions. Helps agents follow the architecture consistently.
+- **DesignSystem.md:** Defines color names, font sizes, spacing units. Agents reference these to style UI. Without it, an agent might invent inconsistent spacing or colors.
+- **FeatureSpecs:** Each feature’s acceptance criteria. Agents use these as tests: e.g. “If X is tapped, Y happens.”
+- **Testing.md:** Outlines required coverage, tools, and any custom test strategies (e.g. mock services).
+- **Performance.md:** Sets target metrics (e.g. “App should use ≤50MB memory on iPhone X within first 10s”, “First frame time < 100ms”). Helps define automated checks.
+- **Security/Privacy:** Lists data storage needs, required entitlements (e.g. camera access), and encryption rules. Ensures agents include necessary Info.plist keys (like NSCameraUsageDescription).
+- **ReleaseChecklist.md:** Contains Apple guidelines points (e.g. “Remove any debug or test data”, “Include App Privacy questions”). Agents can step through this when finalizing.
+
+Avoid clutter: don’t create docs for the sake of it. Each should be used by agents (e.g. AGENTS.md is directly consumed) or by humans. Keep them synchronized: for example, if a component is refactored, update the design system if needed. Agents can be tasked to update docs when they change related code.
+
+# D. AI Agent Team
+
+**Proposed Agents:**
+
+1. **Architect Agent:** Reads code and docs, produces architecture overview. (Tools: code parsing, SwiftDoc, Xcode indexer.)
+2. **Planner Agent:** Breaks down features into tasks. (Tools: markdown editor, code annotator.)
+3. **Feature Agent(s):** Implements individual features. (Tools: Xcode compiler, SwiftDocs, Simulator for previews.)
+4. **UI/Design Agent:** Translates visual specs to SwiftUI. (Tools: Xcode preview, image analysis model if available.)
+5. **Test Agent:** Writes and runs tests. (Tools: XCTest runner, coverage tool.)
+6. **Review Agent:** Runs lint, style, a11y checks. (Tools: SwiftLint, Accessibility Inspector.)
+7. **Performance Agent:** Profiles app. (Tools: Instruments CLI, MetricKit data.)
+8. **Localization Agent:** Handles translation and pluralization. (Tools: Apple Translate, Xcode genstrings.)
+9. **DevOps Agent:** Configures CI, manages project settings (like entitlements).
+10. **Documentation Agent:** Updates ADRs and docs based on changes.
+
+**Collaboration:** 
+
+- All agents share the git repo. They communicate via commit comments and issues. For example, the Architect Agent might open an issue “Architecture plan for Feature X”.
+- The **Orchestrator** (possibly a human product lead or a super-agent) assigns tasks and reviews merges.
+- Agents should do pull requests for major changes so others can comment.
+- Use consistent “ownership” (feature branches) to avoid conflicts.
+
+**Lean Alternative:** For smaller projects, a single “AI Engineer” agent (like ChatGPT with the right system prompt) could play multiple roles sequentially, with a human in the loop for context switches. The prompt would include high-level instructions (AGENTS.md + context) and the developer would step through plan→code→review steps manually as needed.
+
+# E. Reusable Skill Library
+
+Based on common tasks, we propose these skill categories (with triggers in parentheses):
+
+- **Swift Standards Skill** (trigger: “Swift code style”): Encapsulates Swift language guidelines, naming conventions, concurrency rules (like Swift Agents does). Used whenever writing or refactoring Swift code.
+- **SwiftUI Specialist** (“swiftui-specialist”): Guidelines for SwiftUI (state, view composition, modifiers). E.g. convert onTapGesture to Button, use Lazy stacks, avoid obsolete APIs. Apple’s `swiftui-specialist` skill is an example.
+- **UIKit Modernizer** (“uikit-app-modernization”): If any UIKit is used, ensure scene lifecycle, multiwindow support, replace old APIs. From xcode27 skills.
+- **Architecture Reviewer** (“architecture-roles-1”): Checks separation of concerns, flags giant view controllers or singletons. Apple skill `architecture-roles-1` (mentioned in xcode27-skills index) would fit here.
+- **Testing Skill** (“test-modernizer”): Ensures tests use modern XCTest patterns and `@testable import`; writes template tests for new functions. Apple has `test-modernizer`.
+- **Accessibility Skill**: Checks for labels, hints, dynamic type. Could use a11y guidelines. Trigger on UI changes.
+- **UI/UX Audit Skill**: Verifies HIG compliance: proper controls, no custom nav patterns, etc. Might reference HIG sections.
+- **Performance Skill**: Uses known best practices (lazy loading images, off-main tasks). Trigger when touching heavy code (loops, large data).
+- **API/Dependency Skill**: Manages external libs. E.g. disallow certain pods, or ensure using async URLSession. Triggers on `Package.swift` or Podfile edits.
+- **Security Skill**: Checks usage of secure APIs, e.g. use HTTPS (enforce ATS), enable hardened runtime in Build Settings. Apple’s `audit-xcode-security-settings` is a reference.
+- **Platform Integration Skill**: Ensures use of UIKit bridging, correct entitlements for features (notifications, HealthKit). Trigger on relevant code additions.
+- **App Store Prep Skill**: Guides generating screenshots, privacy labels, etc. Could partially automate via tools (fastlane plugin).
+
+Each skill is a folder with a SKILL.md describing scope and examples, and references (Apple docs, HIG). Skills are loaded when the agent encounters a matching task or command. For example, prompt “/swiftui-specialist” in an Xcode conversation can explicitly invoke that skill.
+
+# F. Prompt Library (Production-ready Examples)
+
+Below are example prompts for key tasks. In actual use, these would be adapted to the project’s specifics:
+
+- **Discovery Agent Prompt:**  
+  > *Objective:* “Investigate the problem domain for [app name]. Who are the users? What similar apps exist on iOS? Summarize their key features and UX patterns. Identify at least three potential user needs or pain points that our app should address. Avoid copying proprietary details; focus on general patterns.”  
+  *Context:* List of keywords, target audience.  
+  *Tools:* Web search, knowledge of App Store.  
+  *Expected Output:* A brief report with bullet points (user stories, competitor features, target differentiators).  
+
+- **Architecture Agent Prompt (Post-Exploration):**  
+  > *Objective:* “Create an architecture overview for the current project. Describe the data model, main modules, and data flow between them. Identify which classes or structs hold app state, and outline how views get data. Don’t write code yet. Confirm that this aligns with our design goals before proceeding.”  
+  *Context:* Codebase files and existing docs.  
+  *Output:* Markdown doc summarizing architecture.  
+  *Exit:* Architect reviews doc, adds corrections. If major flaws (e.g. mixing concerns), go back to design.  
+
+- **Feature Agent Prompt (Implementation):**  
+  > *Objective:* “Implement the [Feature Name]: [one-line feature description]. Based on the plan, this includes [list of tasks]. Use SwiftUI and follow the design spec. Only modify files related to this feature (e.g. add new SwiftUI View files under `Views/`). Ensure code compiles and writes unit tests for new logic. Provide inline comments for any non-obvious logic. When done, present the diff and preview screenshots.”  
+  *Context:* FeatureSpec doc, design mockups.  
+  *Output:* Code changes, new tests, preview.  
+  *Evaluation:* Automated build/test. Manual check of screenshot vs design. Must ask before changing any unrelated parts.  
+
+- **Refactoring Agent Prompt:**  
+  > *Objective:* “Review the recent commit for [Feature Name]. Identify any code smells or duplicated code. Refactor functions longer than 50 lines, and extract repeated code into helper methods. Ensure naming follows [AGENTS.md guidelines]. Run SwiftLint auto-correct and integrate changes. Confirm project still compiles and tests pass.”  
+  *Output:* Cleaned code, commit.  
+  *Evaluation:* Compare complexity metrics before/after (should improve).  
+
+- **Testing Agent Prompt:**  
+  > *Objective:* “Write unit tests for the logic in `[FileName]`, covering normal and edge cases as defined in the feature spec. Also, create UI tests to simulate the main user flow for this feature. Ensure tests fail if a requirement is not met.”  
+  *Output:* XCTest files with test methods.  
+  *Evaluation:* Tests pass when feature is correct; deliberately break feature to ensure tests catch it.  
+
+- **Accessibility Agent Prompt:**  
+  > *Objective:* “Audit all UI for accessibility. Check that every image and button has an accessibility label. Ensure text uses dynamic type (no fixed `.font(.system(size:))` values). Use high contrast text colors. If any label text is not localized, fix it. Report any unresolved issues.”  
+  *Output:* Accessibility report with issues and fixes.  
+  *Evaluation:* Run Accessibility Inspector; no errors.  
+
+- **Performance Agent Prompt:**  
+  > *Objective:* “Profile the `viewDidLoad` and scroll performance of the main list. Identify any functions that run on the main thread for more than 100ms. Suggest optimizations (e.g. caching, async data fetch).”  
+  *Output:* Table of hotspots with advice.  
+  *Evaluation:* After fixes, re-profile.  
+
+- **Overall QA Prompt:**  
+  > *Objective:* “Conduct a final release-readiness audit. Check code quality, run all tests, validate screens on iPhone 14 and iPad Pro, run accessibility and privacy checks. List any remaining issues. If everything is clean, produce a “Ready to Ship” report.”  
+  *Evaluation:* No failing items. Human decision to ship or fix.
+
+Crucially, each prompt should enforce scope boundaries and failure modes. For example, “If you encounter uncertainty in requirements, stop and ask for clarification instead of guessing.” These “stop conditions” prevent agents from proceeding blindly.
+
+# G. Quality Gates and Scorecards
+
+At each phase and final release, define gates. For instance:
+
+- **Phase Gates:** E.g. after Implementation phase, require 100% code review complete, 0 major lint warnings, 0 test failures. Agents cannot skip these.
+- **Release Scorecard:** Create a checklist (like Apple’s guidelines):
+  - All functional tests pass (y/n).
+  - Code coverage ≥ X% (y/n).
+  - Performance targets met (y/n).
+  - All accessibility rules satisfied (y/n).
+  - HIG compliance (e.g. no hardcoded layouts) (y/n).
+  - Privacy compliance (all sensitive data usage documented) (y/n).
+  - Visual review approved by designer (y/n).
+  - Any business-critical acceptance criteria (y/n).
+
+Automate what can be automated: linters, formatters, tests, accessibility scans, snapshot diffs. For human-judged criteria, require explicit sign-off. 
+
+Feedback loops: Failures re-enter backlog. E.g. failing a gate “implement feature tests” goes back to feature agent with prompt “fix tests.” Automate as much as possible to catch AI overconfidence (an agent cannot just self-declare success – another agent or CI must check).
+
+# H. Implementation Roadmap
+
+1. **Define Standards and Context:** Write AGENTS.md and coding conventions first (Section C). This ensures agents have the rules from the start. Also prepare a minimal tech skeleton (Xcode project, empty modules) to anchor the AI’s work.
+2. **Set Up Tooling:** Integrate SwiftLint, SwiftFormat, CI pipeline. Install any CLI tools (e.g. `skills` CLI, instruments automation). Ensure the agent environment (Xcode, Simulator) is ready.
+3. **Create Base Documentation:** Draft initial PRD, architecture draft, design system stub. Agents can update these, but start with something.
+4. **Onboard Agents:** Install necessary skills (from Apple repo and custom ones). Test basic prompts to ensure agents obey AGENTS.md.
+5. **Pilot a Feature:** Use the prompt workflow on a non-critical feature to validate the process. Iterate on prompt design and agent interactions.
+6. **Build Knowledge Base:** As agents “explore” and discuss, continuously update Docs (e.g. architecture, ADRs) to capture that learning. Over time, this reduces repeated exploration.
+7. **Automate Checks:** Ensure tests and metrics run in CI and fail the build on regressions. Agents should aim for green CI on every commit.
+8. **Scale Agents:** Once core flow is smooth, add parallelization: have separate agents work on UI, coding, and testing concurrently where possible.
+9. **Human Oversight:** Throughout, a senior engineer or product owner reviews the code and UX – especially important early on to refine instructions and curb hallucinations. 
+10. **Iterate and Refine:** Learn from each iteration. If the agent repeatedly fails at some pattern, encode a new skill or add a rule. 
+11. **Pre-Release Audits:** Use final days to run full automated audits (e.g. Simulate TestFlight distribution, code sign checks) and fix any last-minute issues.
+12. **Launch:** With all gates passed and human sign-off, submit to TestFlight/App Store.
+
+Keep humans in the loop as sponsors of quality: do not move to more automation until the basics are solid. For example, don’t try multi-agent orchestration until single-agent prompts are reliable.
+
+---
+
+**In sum**, building a world-class native iOS app with AI requires replicating the rigor of top engineering teams in an automated pipeline. This means codifying best practices (in code, docs, and skills), creating structured interactions between specialized AI agents, and enforcing objective quality gates. By grounding the agents with comprehensive context and validation, and by preserving human judgment where it matters, we can push AI-generated development towards Apple Design Award caliber. Each piece of this system – from Swift concurrency and SwiftUI expertise to UX design sensibility and testing discipline – must be embedded into prompts, tools, and process. Only then will the final product possess the polish, robustness, and delight that experts recognize as world-class. 
+
+**Sources:** We synthesized findings from Apple’s latest documentation and conference talks, the official Xcode agent skills, and insights from leading developers like Kush Agrawal and Paul Hudson, among others, all current as of 2026. All claims are backed by these sources.

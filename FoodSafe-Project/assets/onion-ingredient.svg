@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 110" role="img" aria-label="Cute hand-drawn onion"><defs>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx=".7" dy="1.5" stdDeviation="1.1" flood-color="#7A6245" flood-opacity=".14"/></filter>
+ <pattern id="grain" width="13" height="13" patternUnits="userSpaceOnUse"><path d="M2 4l2-.5M9 10l1.5-.5" stroke="#CBB995" stroke-width=".45" opacity=".22"/></pattern>
+ </defs>
+ <rect width="120" height="110" rx="15" fill="#F8EED9"/>
+ <rect width="120" height="110" rx="15" fill="url(#grain)"/>
+ <path d="M13 17l3 6 6 1-5 4-1 6-4-5-6-1 5-4Z" fill="#EAB95B" stroke="#5A4B38" stroke-width=".8"/>
+ <path d="M98 18q5-5 9 0q-4 2-6 7" fill="none" stroke="#4E8060" stroke-width="1.7" stroke-linecap="round"/>
+ <path d="M12 91l5-3m-2 7 3-4" stroke="#D96F51" stroke-width="1.6" stroke-linecap="round"/>
+<g filter="url(#shadow)">
+<path d="M59 20q2 9-7 13q-25 8-26 32q-1 21 29 25q33 0 39-23q4-22-20-34q-9-5-15-13Z" fill="#D8B6CA" stroke="#5A4B38" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M58 21q-1-10 7-14M51 35q-14 11-13 31q3 15 14 19M64 36q14 10 15 29q-3 14-12 19" fill="none" stroke="#9B6B8B" stroke-width="2" stroke-linecap="round"/>
+<path d="M48 52q5-7 9-3M65 62q5-5 9-1" fill="none" stroke="#F7E4EF" stroke-width="2.4" stroke-linecap="round"/>
+</g></svg>

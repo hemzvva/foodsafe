@@ -1,0 +1,360 @@
+Deep Research Mission: Building World-Class Native iOS Apps with AI — Engineering, Design, Agents, and the Elimination of AI Slop
+1. Executive Summary and System Operating Architecture
+The rapid adoption of Artificial Intelligence (AI) coding agents has dramatically lowered the barrier to generating Swift code. However, unconstrained automated code generation frequently introduces structural decay, colloquially known as "AI slop". In native iOS engineering, AI slop manifests as subtle data races, memory leaks, invalid SwiftUI view redraw cascades, superficial test coverage, generic interface design, and architectural drift. Reaching a quality bar comparable to Apple Design Award (ADA) winners requires transitioning from ad-hoc prompting to a deterministically controlled, agentic software engineering system. [1][2][3][4][5][6][7][8][9]
+This investigation establishes a complete system architecture for building native iOS applications using Swift 6, SwiftUI, and targeted UIKit components. It synthesizes empirical methodologies from pioneer iOS developers, defines technical standards across Swift 6 strict concurrency and performance profiling, and outlines a multi-agent orchestration model paired with a 14-stage operational prompt playbook. [1][2][3][4][5][6][7][8][9]
+The system architecture connects human domain intent with autonomous execution agents through structured context engineering, Model Context Protocol (MCP) tooling, dynamic agent skills, and multi-dimensional quality gates. By enforcing strict compile-time invariants, real-time performance diagnostics via Instruments tracing, automated visual snapshot testing, and strict human product boundaries, this operating model enables AI agents to take a well-defined application from initial requirements to a release-ready candidate that withstands platform scrutiny. [1][2][3][4][5]
+2. The Mechanics of AI Slop in iOS Development and How to Eliminate It
+2.1 Taxonomy and Root Causes of AI-Generated Software Decay
+AI slop in native iOS software is not merely syntactically invalid code; it represents software that compiles successfully yet suffers from structural instability, poor platform alignment, and degraded runtime performance. Large Language Models (LLMs) operate via probabilistic pattern completion, which inherently biases them toward averaging out code patterns across public training data. In the context of rapidly evolving Apple platforms, this mechanism introduces distinct architectural and execution failure modes. [1][2][3][4][5]
+First, models suffer from context fragmentation, operating on localized code snippets without a persistent mental model of the global system. This leads to duplicate data models, redundant utility functions, and inconsistent state management strategies across different screens. [1][2][3][4][5][6][7][8]
+Second, AI agents lack native runtime feedback unless explicitly connected to execution tools. Without real-time visual inspection or profiling data, agents confidently output code that triggers continuous view body invalidations, blocks the main thread, or leaks memory through uncancelled async tasks. [1][2][3][4][5][6][7][8]
+Third, training data lag causes models to emit obsolete platform conventions—such as combining legacy ⁠Combine⁠ pipelines with ⁠@StateObject⁠ wrappers—rather than utilizing Swift 6 strict concurrency primitives and ⁠@Observable⁠ macros. [1][2][3][4][5][6][7][8]
+Finally, AI-generated tests frequently suffer from tautological verification, where tests are structured to confirm the underlying implementation logic rather than validating domain invariants or platform boundary conditions. [1][2][3][4][5][6][7][8]
+2.2 Strategic Defect Mitigation Matrix
+To eliminate AI slop, every structural defect must be assigned to its precise operational prevention layer. Expanding prompt instruction files (⁠AGENTS.md⁠) is insufficient on its own; a robust system requires compiler-level constraints, static linting rules, automated runtime instrumentation, and explicit human review boundaries. [1][2][3][4][5][6][7][8]
+Defect Category
+Concrete Manifestation
+Primary Prevention Vector
+Enforcement Mechanism
+Verification Tier
+Visual Homogeneity
+Generic rounded cards, missing brand identity, uniform visual presentation.
+Context & Prompting
+Design System Tokens & HIG Guidelines.
+Human Design Review
+Spacing & Type Drift
+Hardcoded padding (.padding(13)), non-standard font sizes, broken baseline alignment.
+Architectural Constraints
+Linter rules enforcing dynamic spatial tokens (DesignSystem.Spacing).
+Static Analysis (SwiftLint)
+Data Races & Thread Leaks
+Unchecked mutable cross-thread state, missing main-thread dispatching.
+Architectural Constraints
+Swift 6 Complete Concurrency Mode (-strict-concurrency=complete).
+Compiler / Build Time
+SwiftUI Redraw Storms
+Excessive view invalidations caused by coarse state observation.
+Automated Testing
+Instruments tracing via RocketTrace signposts.
+Automated Profiling Gate
+Fragile Navigation
+Coupling navigation state directly inside views, lost deep-link parameters.
+Architectural Constraints
+Flow Coordinator pattern enforcing route isolation.
+Automated UI Automation
+Tautological Testing
+Unit tests asserting internal mock properties rather than functional behavior.
+Tooling & Skill Engineering
+Swift Testing parameterized suites enforcing boundary conditions.
+Automated Test Gate
+Legacy Platform Patterns
+Using DispatchQueue.main.async or manual retain management.
+Context & Prompting
+Swift 6 concurrency rules restricting legacy threading.
+Static Analysis & Code Review
+Missing Interaction Craft
+Static buttons lacking touch feedback, absent micro-haptics.
+Context & Skill Engineering
+Interaction standards requiring UIImpactFeedbackGenerator mapping.
+Human UX Evaluation
+
+3. Insights from Industry Pioneers and Architectural Paradigms
+3.1 Principles from Veteran iOS Developers
+Achieving exceptional software craftsmanship requires studying the principles of engineers who have built recognized production applications and open-source ecosystems. [1][2][3][4][5]
+Christian Selig, creator of Apollo for Reddit, emphasizes platform citizenship over arbitrary visual customization. Outstanding iOS applications feel instantly familiar because they embrace native platform behaviors—such as system context menus, fluid swipe actions, Dynamic Type support, and native navigation bars—rather than attempting to re-implement custom UI paradigms from scratch. Selig’s engineering practices also highlight aggressive optimization at the data boundary. In Apollo, network payloads were intentionally staged (e.g., requesting an initial lightweight batch of 25 items for immediate display before loading secondary details) to eliminate UI latency. For AI agent workflows, this requires instructing agents to design paginated, local-first data caching layers into feature specifications before writing visual components. [1][2][3][4]
+Krzysztof Zablocki, Principal Engineer and creator of open-source iOS tooling, advocates for deterministic architectural boundaries and strict separation of navigation responsibilities. Zablocki points out that a primary flaw in standard SwiftUI development is embedding navigation links and screen presentation logic directly within view structures. By extracting navigation routing into dedicated Flow Coordinators, views remain pure visual functions of state, and navigation workflows can be unit-tested independently. Furthermore, Zablocki’s work on rule-loaders and AI coding workflows demonstrates that agents perform best when guided by modular, dynamically loaded rules rather than static context dumps. [1][2][3][4]
+Antoine van der Lee, creator of SwiftLee and developer tools such as RocketSim and RocketTrace, stresses empirical performance validation over theoretical code correctness. Van der Lee’s research shows that AI agents consistently produce code that appears clean but secretly triggers heavy view body re-evaluations, main-thread stalls, and memory allocation spikes. To counter this, Van der Lee integrates automated Xcode Instruments tracing directly into agent execution loops, utilizing custom tools to feed performance diagnostic traces back to the agent for targeted refactoring. [1][2][3][4]
+3.2 Evaluation of iOS Architectural Paradigms for AI Systems
+Selecting an architecture for an AI-assisted codebase requires balancing structural guardrails against context window consumption. Overly permissive patterns (such as unconstrained MVVM) allow agents to scatter side effects across view models, whereas overly complex architectures (such as VIPER) generate excessive boilerplate that consumes context windows and fragments file structures. [1][2][3][4]
+In an MVVM-C (Model-View-ViewModel-Coordinator) architecture, the view sends user events to the ViewModel, which updates its observable state. When a navigation event occurs, the ViewModel delegates routing to the Coordinator, which constructs the next view and its dependencies. In contrast, The Composable Architecture (TCA) enforces a unidirectional loop where views dispatch discrete Actions to a Store. Pure Reducer functions process these Actions to compute the next State and return asynchronous Effects, which execute dependencies and feed actions back into the Store. [1][2][3][4]
+4. Modern Native iOS Engineering Standards
+4.1 Swift 6 Strict Concurrency and Memory Ownership
+Swift 6 shifts data race safety from an advisory convention to a strict compile-time guarantee enforced by the compiler. The compiler tracks isolation domains across actors, tasks, and closures, preventing non-Sendable types from crossing concurrency boundaries. [1][2][3][4][5][6]
+Concurrency Standards for AI Coding Agents
+4.2 SwiftUI, Modern State Observation, and UIKit Interoperability
+Modern SwiftUI applications utilize the ⁠@Observable⁠ macro (introduced in iOS 17) for state management. Unlike legacy ⁠ObservableObject⁠ and ⁠@Published⁠ wrappers, ⁠@Observable⁠ performs fine-grained tracking of property reads directly within the view body, re-evaluating the view only when properties accessed during execution change. ViewModels are annotated with ⁠@Observable⁠ and isolated to ⁠@MainActor⁠. Views hold references to ViewModels using standard ⁠var⁠ or ⁠let⁠ properties, reserving ⁠@State⁠ solely for instantiating objects owned by the view's lifecycle. [1][2][3]
+UIKit remains essential for specialized interface requirements. Wrapping UIKit views via ⁠UIViewControllerRepresentable⁠ or ⁠UIViewRepresentable⁠ is required under specific technical conditions:
+￼ Custom text formatting engines requiring precise layout control via ⁠TextKit 2⁠.
+￼ Complex collection views requiring fine-grained invalidation protocols via ⁠UICollectionViewCompositionalLayout⁠.
+￼ High-performance video rendering pipelines utilizing ⁠AVSampleBufferDisplayLayer⁠.
+4.3 Testing Paradigms: Swift Testing and Snapshot Testing
+Testing in modern iOS projects relies on the native ⁠Swift Testing⁠ framework alongside point-free snapshot testing. Swift Testing replaces ⁠XCTestCase⁠ with declarative ⁠@Test⁠ and ⁠@Suite⁠ macros. Expectations are stated using ⁠#expect(value == expected)⁠ and ⁠#require(optional != nil)⁠. Parameterized testing is heavily enforced to validate domain logic across structured datasets. [1][2][3]
+Visual regression testing is executed via ⁠swift-snapshot-testing⁠. Snapshots capture visual image renderings (⁠assertSnapshot(of: view, as: .image)⁠), textual subview hierarchies (⁠.recursiveDescription⁠), and raw data serializations (⁠.json⁠) to detect subtle layout or structural shifts. [1][2][3]
+4.4 Data Persistence, Local-First Architecture, and Networking
+The data layer must prioritize local data integrity, resilience under offline conditions, and explicit separation between remote DTOs and internal domain models. ⁠SwiftData⁠ serves as the primary persistence framework for modern targets, while Core Data or custom SQLite wrappers (e.g., GRDB) are used when granular background context management or legacy compatibility is required. [1][2][3]
+Under a local-first architecture, UI components read data exclusively from local persistence stores. Remote network calls update local storage in the background, which then streams updated domain models to the UI layer via Swift async sequences or query observers. Network DTOs implementing ⁠Codable⁠ remain strictly isolated from database entities, with mapping occurring at actor boundaries. [1][2][3]
+5. Performance Engineering and Profiling Instrumentation
+5.1 Quantitative Performance Budgets and Failure Thresholds
+High-performance iOS applications require clear performance budgets. Code generated by AI agents must satisfy these quantitative thresholds before advancing to release candidates. [1][2][3]
+Performance Dimension
+Metric Target
+Instrumentation Diagnostic
+Failure Threshold
+Remediation Action
+App Launch Time
+< 400 ms Cold < 100 ms Warm
+MetricKit / Time Profiler / Dyld Signposts
+> 800 ms
+Defer non-critical SDK setup; lazy-load initial view dependencies.
+Frame Render Rate
+120 FPS ProMotion 60 FPS Standard
+Core Animation Instrument / RocketTrace.
+< 55 FPS drop for > 2 consecutive frames
+Decompose heavy view bodies; eliminate inline allocations in scroll views.
+Memory Footprint
+< 80 MB baseline growth
+Allocations Instrument / Leaks Instrument
+Allocation spikes > 20 MB during transitions
+Fix retain cycles in async tasks; downsample assets before rendering.
+SwiftUI Redraw Rate
+< 2 redraws per interaction
+Self-Diagnostic _printChanges() / RocketTrace.
+Continuous re-evaluation loops
+Move state properties; split monolithic view models into discrete domains.
+Main Thread I/O
+0 ms Disk I/O on Main Thread
+Time Profiler / System Trace
+Any synchronous disk I/O on @MainActor
+Offload database queries to background actor contexts.
+
+5.2 Automated Execution Profiling and Agent Feedback Loops
+To prevent performance degradation, AI agents must incorporate profiling diagnostics into their iteration cycles. By pairing system signposts (⁠os_signpost⁠) with automated profiling tools (such as RocketTrace), execution traces can be captured during automated test runs. [1][2]
+When diagnostic traces reveal frame drops or view body invalidation loops, trace summary logs are parsed and provided back to the agent. The agent analyzes the call stack, refactors the view hierarchy or data flow, and verifies the fix through a subsequent automated profile pass. [1][2]
+6. UI, UX, and Platform Craftsmanship
+6.1 Visual Systems, Design Tokens, and HIG Adherence
+Applications recognized by the Apple Design Awards share common design qualities: clear visual hierarchy, dynamic typography, semantic color structures, fluid motion, and subtle interaction feedback. [1][2]
+Visual design systems depend on centralized design tokens. Spacing systems must follow an 8-point spatial grid (⁠8pt⁠, ⁠16pt⁠, ⁠24pt⁠, ⁠32pt⁠), prohibiting hardcoded layout values. Typography must leverage system dynamic type fonts scaled via ⁠UIFontMetrics⁠ to adapt seamlessly across user font preferences. Colors must be defined using semantic system wrappers (⁠Color(uiColor: .systemBackground)⁠, ⁠Color(uiColor: .label)⁠) to support Light and Dark modes automatically. Interactive visual state changes must use fluid spring animations (⁠Animation.spring(response: 0.35, dampingFraction: 0.8)⁠), avoiding rigid linear transitions.
+6.2 Accessibility, Localization, and Sensory Feedback
+Accessibility and internationalization must be built into components from the start. VoiceOver compatibility requires custom elements to define descriptive ⁠.accessibi[span_114](start_span)[span_114](end_span)lityLabel()⁠, ⁠.accessibilityValue()⁠, and appropriate ⁠.accessibilityTraits()⁠, while decorative elements are hidden using ⁠.accessibilityHidden(true)⁠. Layouts must undergo visual regression testing at extreme Dynamic Type sizes (⁠Accessibility Extra Extra Extra Large⁠) to prevent text clipping. Localization requires horizontal layouts to use dynamic leading and trailing anchors rather than fixed left and right positions, ensuring proper alignment under Right-to-Left (RTL) localizations. Interactive elements should incorporate sensory haptics using ⁠UIImpactFeedbackGenerator⁠ or SwiftUI's ⁠.sensoryFeedback()⁠ modifier to enhance visual changes with physical feedback.
+7. AI Development Architecture, Context Engineering, and Tooling
+7.1 Multi-Agent Orchestration Blueprint
+Building complex applications with AI agents requires a structured multi-agent operating model. Specializing agents by domain ensures distinct operational boundaries and prevents context pollution. [1][2][3][4]
+7.2 Context Engineering and Model Context Protocol (MCP) Tools
+To avoid overwhelming model context windows, context must be supplied dynamically. Central project instructions (⁠AGENTS.md⁠) define overall coding standards, while Architecture Decision Records (⁠/docs/adr/⁠) store major structural decisions.
+Model Context Protocol (MCP) tools give agents structured access to external development tooling:
+7.3 Reusable Agent Skill Library
+Skills are dynamic instruction sets loaded by agents based on task context. [1][2][3]
+8. Operational Playbook: Complete Lifecycle Prompt Catalog
+This section provides a production-oriented catalog of operational prompts across 14 lifecycle stages.
+Stage 1: Product Discovery & Problem Research
+Stage 2: Product Definition & Feature Specifications
+￼ Objective: Translate product vision into detailed feature specifications and acceptance criteria.
+￼ Context: ⁠PRODUCT_VISION.md⁠, Human Interface Guidelines.
+￼ Agent Role: Business Analyst Agent.
+￼ Tool Access: File System Write.
+￼ Prompt:
+Stage 3: UX Architecture & Information Architecture
+￼ Objective: Design navigation hierarchies, screen flows, and routing transitions.
+￼ Context: ⁠FEATURE_SPECIFICATIONS.md⁠.
+￼ Agent Role: UX Architect Agent.
+￼ Tool Access: File System Write.
+￼ Prompt:
+Stage 4: Design System & Design Tokens
+￼ Objective: Create type-safe design tokens for typography, spacing grids, dynamic colors, and haptics.
+￼ Context: Apple HIG design principles, brand guidelines.
+￼ Agent Role: Design System Agent.
+￼ Tool Access: Swift Compiler, File System Write.
+￼ Prompt:
+Stage 5: Screen-Level Layout Specifications
+￼ Objective: Define component layouts, visual states, and accessibility rules for individual screens.
+￼ Context: ⁠NAVIGATION_ARCHITECTURE.md⁠, ⁠DesignTokens.swift⁠.
+￼ Agent Role: UI Design Agent.
+￼ Tool Access: File System Write.
+￼ Prompt:
+Stage 6: Technical Architecture & System Design
+￼ Objective: Define data schemas, actor boundaries, network DTO mappings, and SPM modularization.
+￼ Context: ⁠FEATURE_SPECIFICATIONS.md⁠, ⁠DesignTokens.swift⁠.
+￼ Agent Role: Principal Systems Architect Agent.
+￼ Tool Access: Swift Package Manager, File System Write.
+￼ Prompt:
+Stage 7: AI Environment Configuration & Rules
+￼ Objective: Establish linting configurations, compiler flags, and repository instruction files.
+￼ Context: ⁠SYSTEM_ARCHITECTURE.md⁠.
+￼ Agent Role: DevOps Infrastructure Agent.
+￼ Tool Access: Shell Execution, Git Hook Configuration.
+￼ Prompt:
+Stage 8: Incremental Feature Implementation
+￼ Objective: Implement a single feature slice following architectural rules.
+￼ Context: ⁠[FEATURE_NAME]_SPEC.md⁠, ⁠SYSTEM_ARCHITECTURE.md⁠, ⁠DesignTokens.swift⁠.
+￼ Agent Role: Senior Swift Engineer Agent.
+￼ Tool Access: File System Write, XcodeBuildMCP.
+￼ Prompt:
+Stage 9: Static Analysis & Concurrency Audit
+￼ Objective: Audit code quality, concurrency safety, and retain cycle prevention.
+￼ Context: Feature source files, Swift 6 compiler flags.
+￼ Agent Role: Code Reviewer Agent.
+￼ Tool Access: SwiftLint, Xcode Compiler (⁠-strict-concurrency=complete⁠).
+￼ Prompt:
+Stage 10: Functional & Unit Testing (Swift Testing)
+￼ Objective: Write parameterized unit tests validating domain logic and boundary conditions.
+￼ Context: Feature source code, domain business logic rules.
+￼ Agent Role: QA Test Engineer Agent.
+￼ Tool Access: Swift Testing Framework, XcodeBuildMCP.
+￼ Prompt:
+Stage 11: Visual Snapshot Verification
+￼ Objective: Prevent visual regressions across screen sizes, dynamic type levels, and color themes.
+￼ Context: Rendered SwiftUI views, screen specifications.
+￼ Agent Role: Visual QA Agent.
+￼ Tool Access: ⁠swift-snapshot-testing⁠, Simulator MCP.
+￼ Prompt:
+Stage 12: Performance Profiling & Trace Analysis
+￼ Objective: Profile application execution, eliminate frame drops, and resolve view redraw loops.
+￼ Context: Application build target, RocketTrace diagnostic tools.
+￼ Agent Role: Performance Engineer Agent.
+￼ Tool Access: Xcode Instruments, RocketTrace CLI, Simulator MCP.
+￼ Prompt:
+Stage 13: Accessibility & HIG Audit
+￼ Objective: Audit accessibility element trees, dynamic type responsiveness, and touch hit areas.
+￼ Context: Booted simulator application instance.
+￼ Agent Role: Accessibility Auditor Agent.
+￼ Tool Access: AXe Accessibility Inspector, Simulator MCP.
+￼ Prompt:
+Stage 14: App Store Release Audit & Asset Generation
+￼ Objective: Verify release build readiness, validate privacy manifests, and capture App Store screenshots.
+￼ Context: Complete codebase, release build target.
+￼ Agent Role: Release Manager Agent.
+￼ Tool Access: ⁠xcrun simctl status_bar⁠, Fastlane / App Store Connect Tools.
+￼ Prompt:
+9. Development Lifecycle: Operational Phase Matrix
+The development workflow requires strict phase boundaries. A phase cannot be marked complete simply because an agent produced documentation; completion requires meeting concrete verification gates. [1][2][3][4][5][6][7][8]
+Lifecycle Phase
+Inputs
+Outputs
+Responsible Agents
+Required Human Decisions
+Completion Criteria
+Phase 1: Discovery
+Concept brief, market context
+PRODUCT_VISION.md
+Product Strategy Agent
+Feature prioritization, core value approval
+Signed-off product vision document
+Phase 2: Definition
+PRODUCT_VISION.md
+FEATURE_SPECIFICATIONS.md
+Business Analyst Agent
+Scope boundaries, edge-case approval
+Complete acceptance criteria
+Phase 3: UX Architecture
+Feature specs
+NAVIGATION_ARCHITECTURE.md
+UX Architect Agent
+Navigation model approval
+Validated flow routing graph
+Phase 4: Visual Design
+Brand rules, HIG guidelines
+DesignTokens.swift
+Design System Agent
+Visual identity sign-off
+Clean token suite compilation
+Phase 5: Technical Arch
+Feature & UX specs
+SYSTEM_ARCHITECTURE.md
+Systems Architect Agent
+Framework & storage selection
+Swift 6 protocol baseline pass
+Phase 6: Environment Setup
+Architecture specs
+AGENTS.md, .swiftlint.yml
+DevOps Infrastructure Agent
+Quality gate threshold sign-off
+Passing static linters & hooks
+Phase 7: Implementation
+Screen specs, Architecture
+Source code files
+Senior Swift Engineer Agent
+Code review sign-off
+0 Compiler warnings/errors
+Phase 8: Verification
+Source code
+Test suites & snapshot diffs
+Review & QA Agents
+Unresolved defect evaluation
+100% Test pass, 0 visual diffs
+Phase 9: Optimization
+Compiled application
+Performance trace logs
+Performance Engineer Agent
+Trade-off approval
+All performance budgets met
+Phase 10: Final Review
+Optimized candidate
+Audits (Accessibility, Security)
+Compliance Auditor Agents
+Release candidate approval
+Full audit pass sign-offs
+Phase 11: Release Prep
+Validated build candidate
+App Store assets & metadata
+Release Manager Agent
+Final submission sign-off
+TestFlight / Store upload pass
+
+10. Multi-Dimensional Quality Scorecard and Feedback Loops
+Evaluating application quality requires objective metrics across engineering, visual, performance, and user experience domains. [1][2][3][4][5]
+Feedback Loop Mechanism
+When a quality gate fails during verification:
+11. Apple-Level Quality, Platform Citizenship, and Recognition
+Applications recognized by the Apple Design Awards (ADAs) and App Store Awards set benchmarks in platform citizenship, visual polish, and technical execution. An investigation into ADA winners (such as CapWords, Play, PBJ — The Musical, Taobao, and DREDGE) reveals recurring quality characteristics: [1][2][3][4][5][6][7]
+12. Recommended Repository Structure and Configuration Specifications
+12.1 Practical Repository Layout
+12.2 Primary Repository Instructions (⁠AGEN[span_77](start_span)[span_77](end_span)[span_94](start_span)[span_94](end_span)TS.md⁠)
+Repository Instructions for AI Development Agents
+Core Technical Mandates
+1. Swift 6 Concurrency: All code MUST pass strict concurrency checks (⁠-strict-concurrency=complete⁠).
+2. Architecture: Follow MVVM-C with isolated Flow Coordinators. Views MUST NOT perform inline navigation.
+3. UI State: ViewModels MUST be annotated with ⁠@Observable⁠ and isolated to ⁠@MainActor⁠.
+4. Shared State: All data services, network engines, and persistent stores MUST be implemented as ⁠actor⁠ types.
+5. Value Semantics: Data models MUST be immutable ⁠struct⁠ or ⁠enum⁠ types conforming to ⁠Sendable⁠.
+6. Design System: Colors, spacing, and typography MUST reference ⁠DesignTokens.swift⁠. Magic numbers and hardcoded padding are strictly forbidden.
+7. Error Handling: Use typed throws or explicit Result models. Generic untyped error handling is prohibited.
+Verification Requirements
+￼ Every new feature slice MUST include a corresponding Swift Testing unit test suite (⁠@Suite⁠, ⁠@Test⁠).
+￼ UI layout modifications MUST include point-free snapshot tests (⁠assertSnapshot⁠).
+￼ Code MUST compile with 0 warnings before declaring a task complete.
+12.3 Sample Architecture Decision Record (⁠docs/adr/ADR-001-PERSISTENCE.md⁠)
+ADR-001: Selection of SwiftData for Core Persistence
+Status
+Accepted
+Context
+The application requires local storage for offline synchronization, dynamic query updates in views, and type-safe data modeling.
+Decision
+We adopt ⁠SwiftData⁠ as the primary persistence framework for iOS 17+ targets.
+Consequences
+￼ Data models will be annotated with ⁠@Model⁠ under SwiftData conventions.
+￼ All background database operations must execute within dedicated background ModelActors to preserve main thread rendering performance.
+￼ Direct Core Data imports are prohibited unless required for legacy migrations.
+12.4 Sample Feature Specification (⁠docs/product/FEATURE_DASHBOARD.md⁠)
+Feature Specification: User Analytics Dashboard
+User Intent
+Provide users with an immediate visual summary of their daily metrics upon launching the application.
+Functional Requirements
+1. Fetch daily metric records from the local SwiftData store.
+2. Synchronize metrics with the remote API in the background.
+3. Display metric summary cards formatted using Dynamic Type styles.
+4. Support offline access by displaying cached metrics when network connectivity is unavailable.
+Acceptance Criteria (Gherkin)
+￼ Given a user opens the dashboard with cached metric data,
+When the screen loads,
+Then the cached metrics display immediately without a loading indicator.
+￼ Given the remote network sync fails,
+When the user views the dashboard,
+Then an offline status indicator presents non-intrusively without blocking interaction.
+12.5 Sample Design System Implementation (⁠Sources/DesignSystem/DesignTokens.swift⁠)
+13. Phased Implementation Roadmap and Strategic Conclusions
+13.1 Phased System Implementation Sequence
+13.2 Strategic Conclusions
+Building native iOS applications with AI agents requires treating AI as an execution engine within a highly structured system. Eliminating AI slop depends on establishing clear architectural boundaries, strict compile-time checks (Swift 6 strict concurrency), automated runtime diagnostics (Instruments tracing via RocketTrace), visual snapshot testing, and explicit human review gates. [1][2][3]
+By organizing development around specialized sub-agents, dynamic skill libraries, and structured context engineering, software teams can leverage AI to accelerate development while ensuring the final application meets the visual, functional, and performance standards expected of native iOS software.
+ [1][2][3]
+
+1, https://www.avanderlee.com/ (SwiftLee: A weekly Swift & Agentic Development blog)
+2, https://www.youtube.com/@AvanderLee (Antoine van der Lee - YouTube)
+3, https://www.youtube.com/@AvanderLee (Antoine van der Lee - YouTube)
+4, https://medium.com/@sampath27/migrating-to-swift-strict-concurrency-a-complete-practical-guide-for-ios-developers-716a9423714d (Migrating to Swift Strict Concurrency: A Complete Practical Guide for)
+5, https://softaims.com/blog/swift-ios-development-guide-2026 (Swift 6 iOS Development 2026: Concurrency, SwiftUI & Deployment)
+6, https://github.com/RayFernando1337/rayfernando-skills (GitHub - RayFernando1337/rayfernando-skills: Ray Fernando's)
+7, https://www.avanderlee.com/ (SwiftLee: A weekly Swift & Agentic Development blog)
+8, https://github.com/RayFernando1337/rayfernando-skills (GitHub - RayFernando1337/rayfernando-skills: Ray Fernando's)
+9, https://www.apple.com/newsroom/2025/06/apple-unveils-winners-and-finalists-of-the-2025-apple-design-awards/ (Apple unveils winners and finalists of the 2025 Apple Design Awards)
+10, https://www.devlane.com/blog/swift-6-for-ios-app-development-whats-new-and-how-to-migrate (Swift 6: What's New, Concurrency and Migration - Devlane)

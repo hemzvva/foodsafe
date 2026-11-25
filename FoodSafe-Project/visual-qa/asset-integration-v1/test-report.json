@@ -1,0 +1,447 @@
+{
+  "screenCount": 13,
+  "screens": [
+    {
+      "screen": "welcome",
+      "title": "Good food.Less waste.",
+      "images": [
+        {
+          "src": "data:image/png;base64,iVBORw0KGgoAAAANSU",
+          "ok": true,
+          "alt": "FoodSafe"
+        },
+        {
+          "src": "data:image/png;base64,iVBORw0KGgoAAAANSU",
+          "ok": true,
+          "alt": "Illustrated grocery bag full of vegetables"
+        }
+      ],
+      "controls": 1,
+      "icons": 1,
+      "textElements": 8,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "home",
+      "title": "My Kitchen",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 16,
+      "icons": 14,
+      "textElements": 29,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "add",
+      "title": "Add Ingredient",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 9,
+      "icons": 11,
+      "textElements": 17,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "inventory",
+      "title": "Inventory",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 15,
+      "icons": 13,
+      "textElements": 33,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "suggestions",
+      "title": "Recipe Suggestions",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 11,
+      "icons": 11,
+      "textElements": 23,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "detail",
+      "title": "",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 4,
+      "icons": 7,
+      "textElements": 21,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "cooking",
+      "title": "Cooking\u2026",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 3,
+      "icons": 6,
+      "textElements": 10,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "scaling",
+      "title": "Portion Scaling",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 6,
+      "icons": 2,
+      "textElements": 21,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "swaps",
+      "title": "Ingredient Swaps",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": "Lemon illustration"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 5,
+      "icons": 2,
+      "textElements": 12,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "meals",
+      "title": "Meal Suggestions",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 11,
+      "icons": 11,
+      "textElements": 24,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "lentil",
+      "title": "Lentil Soup",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 7,
+      "icons": 9,
+      "textElements": 19,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "expiry",
+      "title": "Expiration Priority",
+      "images": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz",
+          "ok": true,
+          "alt": ""
+        }
+      ],
+      "controls": 8,
+      "icons": 3,
+      "textElements": 14,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    },
+    {
+      "screen": "settings",
+      "title": "Settings",
+      "images": [],
+      "controls": 6,
+      "icons": 14,
+      "textElements": 14,
+      "fontFamilies": [
+        "\"FoodSafe Hand\", cursive"
+      ],
+      "fontFamilyMismatches": [],
+      "brokenImages": []
+    }
+  ],
+  "pageErrors": [],
+  "font": {
+    "audit": {
+      "family": "FoodSafe Hand",
+      "regular": true,
+      "bold": true
+    },
+    "regular": true,
+    "bold": true
+  },
+  "controlToggleCounts": {
+    "onInitial": 16,
+    "off": 0,
+    "onAgain": 16
+  },
+  "iconFilter": {
+    "before": "url(\"#foodsafeDoodleInk\") drop-shadow(rgb(40, 46, 40) 0.2px 0.25px 0px)",
+    "off": "none",
+    "on": "url(\"#foodsafeDoodleInk\") drop-shadow(rgb(40, 46, 40) 0.2px 0.25px 0px)"
+  },
+  "navigationClickLandedOn": "inventory"
+}

@@ -1,0 +1,155 @@
+{
+  "research_date": "2026-10-25",
+  "policy": {
+    "photography": "forbidden",
+    "food_rendering": "illustrated_only",
+    "runtime_remote_assets": "forbidden"
+  },
+  "candidates": [
+    {
+      "name": "Drawably",
+      "url": "https://github.com/danielwh2/drawably",
+      "license": "MIT",
+      "purpose": "hand-sketched HTML controls",
+      "status": "local_style_audition_created_upstream_not_vendored",
+      "priority": "high"
+    },
+    {
+      "name": "Doodle Icons",
+      "url": "https://github.com/oreo-design/doodle-icons",
+      "license": "MIT",
+      "purpose": "hand-drawn SVG interface icons",
+      "status": "local_svg_icons_and_filter_audition_created_upstream_icons_not_vendored",
+      "priority": "high"
+    },
+    {
+      "name": "Culinary Assets",
+      "url": "https://github.com/cosmintrica/culinary-assets",
+      "license": "CC0 1.0 artwork/metadata; MIT software/examples",
+      "purpose": "illustrated ingredient coverage",
+      "status": "not_integrated_local_foodsafe_svg_illustrations_used_instead",
+      "priority": "conditional_visual_audit"
+    },
+    {
+      "name": "Food Icon Pack Classic",
+      "url": "https://www.foodiconpack.com/free-food-icons",
+      "license": "CC BY 4.0; attribution required",
+      "purpose": "backup illustrated food coverage",
+      "status": "researched_not_downloaded",
+      "priority": "secondary"
+    },
+    {
+      "name": "Schoolbell",
+      "url": "https://fonts.google.com/specimen/Schoolbell",
+      "license": "SIL OFL per Doodle Icons README; verify actual font package license when downloading",
+      "purpose": "handwritten font candidate",
+      "status": "researched_not_downloaded_current_local_baseline_purisa",
+      "priority": "font_test"
+    },
+    {
+      "name": "Patrick Hand",
+      "url": "https://fonts.google.com/specimen/Patrick+Hand",
+      "license": "SIL OFL 1.1",
+      "purpose": "handwriting legibility benchmark",
+      "status": "researched_not_downloaded_current_local_baseline_purisa",
+      "priority": "font_test"
+    },
+    {
+      "name": "Kalam",
+      "url": "https://fonts.google.com/specimen/Kalam",
+      "license": "Open-source Google Fonts family; keep upstream license notice",
+      "purpose": "slanted-pen handwriting benchmark",
+      "status": "researched_not_downloaded_current_local_baseline_purisa",
+      "priority": "font_test"
+    }
+  ],
+  "local_implementations": [
+    {
+      "name": "FoodSafe custom illustrated SVG set",
+      "status": "included",
+      "purpose": "illustrated food, dishes, ingredients, category tiles, swaps and priority rows",
+      "provenance": "locally authored project assets; no third-party illustration pack copied"
+    },
+    {
+      "name": "Drawably-style static controls",
+      "status": "included_as_local_visual_audition_only",
+      "purpose": "deterministic hand-drawn outline overlay for buttons, fields, cards, chips, category tiles and other controls",
+      "upstream_package_included": false
+    },
+    {
+      "name": "Doodle-style SVG ink",
+      "status": "included_as_local_visual_audition_only",
+      "purpose": "light static SVG displacement filter over local hand-authored interface icons",
+      "upstream_package_included": false
+    },
+    {
+      "name": "FoodSafe Hand / Purisa local font",
+      "status": "included_and_load_tested",
+      "purpose": "global handwritten-style text family across all visible text roles",
+      "weights": [
+        "400",
+        "700"
+      ],
+      "original_source_font_confirmed": false
+    }
+  ],
+  "external_asset_decision": {
+    "status": "researched_and_visually_compared_in_web_previews; files_not_downloaded_due_runtime_dns",
+    "recommended_roles": {
+      "dish_art_primary_candidate": {
+        "name": "AnorelArts Watercolor Cooking Set",
+        "url": "https://anorelarts.itch.io/watercolor-cooking-set",
+        "contents": "28 backgrounds, 48 ingredients, 12 utensils, 35 food dishes; food/object PNGs stated as 500x500 transparent canvases",
+        "price_listed": "£12.50 minimum for complete set; £4 minimum for food-only pack",
+        "license_summary": "creator states personal/commercial use allowed; credit optional; raw pack redistribution/resale prohibited",
+        "ai_assisted": true,
+        "status": "selected_candidate_not_downloaded"
+      },
+      "ingredient_art_closest_style_candidate": {
+        "name": "The Rogue Cookie Low FODMAP Clipart",
+        "url": "https://theroguecookie.com/the-hand-drawn-low-fodmap-food-illustrations-set-for-creators/",
+        "contents": "80+ transparent food PNGs at 2000x2000; list includes tomato, cherry tomato, egg, chicken, pasta, olive oil, lemon, lime, basil",
+        "license_summary": "commercial license; page showed $34.99 for commercial option and linked product has price variants; confirm exact in-app terms before purchase",
+        "ai_assisted": false,
+        "status": "closest_style_candidate_not_downloaded"
+      },
+      "ui_control_outlines": {
+        "name": "Drawably",
+        "url": "https://github.com/danielwh2/drawably",
+        "license": "MIT",
+        "mode": "fixed seed; boil=0; preserve semantic native HTML controls",
+        "status": "upstream_researched_not_vendored; local audition adapter remains"
+      },
+      "ui_symbols": {
+        "name": "Doodle Icons",
+        "url": "https://github.com/oreo-design/doodle-icons",
+        "license": "MIT",
+        "mode": "static SVGs in icons/, not icons-animated/",
+        "status": "upstream_researched_not_vendored; local audition adapter remains"
+      }
+    },
+    "rejected_candidates": [
+      {
+        "name": "PictArts hand-drawn food illustrations",
+        "url": "https://food-illustration.com/material/002-bitten-gourmet-food/fork-twirling-bolognese-spaghetti-l.png",
+        "reason": "published pasta sample has heavy black outline and strong white sticker halo; app-asset terms need clarification"
+      },
+      {
+        "name": "World Food Tour — Cozy Cooking Collection",
+        "url": "https://juichieh.itch.io/world-food-tour-cozy-cooking-collection",
+        "reason": "256px assets and more game-like/high-contrast than target; inexpensive fallback only"
+      },
+      {
+        "name": "Culinary Assets",
+        "url": "https://github.com/cosmintrica/culinary-assets",
+        "reason": "wide coverage, but coral/mint polished geometric style is less close to reference"
+      },
+      {
+        "name": "Food Icon Pack Classic",
+        "url": "https://www.foodiconpack.com/free-food-icons",
+        "reason": "mostly CC BY 4.0 outline icons; unsuitable as the main painterly food/dish family"
+      }
+    ],
+    "runtime_policy": "No remote assets in the app. All selected files must be downloaded under appropriate license and bundled locally before being referenced by the app."
+  }
+}

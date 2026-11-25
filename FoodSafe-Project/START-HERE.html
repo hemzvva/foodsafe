@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FoodSafe — project start</title>
+<style>
+@font-face{font-family:FoodSafe;src:url('assets/fonts/Purisa-Regular.otf') format('opentype');font-weight:400}
+@font-face{font-family:FoodSafe;src:url('assets/fonts/Purisa-Bold.otf') format('opentype');font-weight:700}
+:root{--paper:#F5EBD5;--ink:#353D32;--green:#367456;--green2:#275B41;--line:#C9B997;--coral:#D96F51;--gold:#E9BA58}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:FoodSafe,system-ui,sans-serif;padding:28px;line-height:1.35}
+main{max-width:1050px;margin:auto}.eyebrow{color:var(--green);font-size:14px;letter-spacing:.04em}.top{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center}.brand{font-size:clamp(38px,6vw,76px);font-weight:700;color:var(--green);line-height:1.02;margin:10px 0}.lead{font-size:20px;max-width:520px}.board{width:100%;display:block;border:2px solid var(--line);border-radius:18px;box-shadow:5px 6px 0 rgba(94,73,42,.08);background:#fff7e6}.links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:30px 0}.card{padding:17px;border:1.5px solid var(--line);border-radius:15px;background:rgba(255,250,238,.52);text-decoration:none;color:inherit;display:block;transition:transform .12s}.card:hover{transform:rotate(-.4deg) translateY(-2px);border-color:var(--green)}.card strong{display:block;color:var(--green2);font-size:18px;margin-bottom:4px}.muted{opacity:.78;font-size:14px}.primary{background:var(--green);color:#fff9e9;border-color:var(--green);transform:rotate(-.5deg)}.primary strong{color:#fff9e9}.section-title{font-weight:700;font-size:25px;margin:30px 0 10px}.note{border-left:4px solid var(--gold);padding:10px 14px;background:rgba(255,250,238,.45);font-size:15px}@media(max-width:760px){body{padding:16px}.top{grid-template-columns:1fr}.top .board{max-height:390px;object-fit:cover;object-position:top}.links{grid-template-columns:1fr}}
+</style></head><body><main>
+<div class="top"><div><div class="eyebrow">THE FOODSAFE UI PROJECT</div><h1 class="brand">FoodSafe</h1><p class="lead">Good food. Less waste. A handwritten, illustrated kitchen companion—built from your reference mockup.</p><p class="muted">Open the preview first, then explore the implementation and measurement files.</p></div><img class="board" src="FoodSafe-UI-Mockup-13-Screen-Board.jpg" alt="The FoodSafe 13-screen mockup board"></div>
+<h2 class="section-title">Open the project</h2><section class="links">
+<a class="card primary" href="FoodSafe-Preview.html"><strong>▶ Open offline UI demo</strong>Self-contained HTML. No installation or network required.</a>
+<a class="card" href="prototype/index.html"><strong>Interactive prototype source</strong>HTML/CSS/JS plus local SVG food illustrations and local font files.</a>
+<a class="card" href="FoodSafe-UI-Mockup-13-Screen-Board.jpg"><strong>13-screen mockup board</strong>Quick image reference for the current visual draft.</a>
+<a class="card" href="FoodSafe-UI-Mockup-Source-Comparison.jpg"><strong>Compare with the original</strong>See the current UI draft beside the source mockup.</a>
+<a class="card" href="design.md"><strong>design.md</strong>Main implementation specification and visual rules.</a>
+<a class="card" href="reference/SCREEN-MEASUREMENT-ATLAS.md"><strong>Screen measurement atlas</strong>Per-screen component geometry and measured coordinates.</a>
+<a class="card" href="reference/SCREEN-TEXT-COORDINATE-ATLAS.md"><strong>Typography and text positions</strong>Text-run bounds, role, estimated size, color and rotation.</a>
+<a class="card" href="visual-qa/coordinate-audit/index.html"><strong>Visual QA dashboard</strong>Rectified references, current renders, grids, element bounds and comparisons.</a>
+<a class="card" href="ASSET-RESEARCH.md"><strong>Asset research</strong>Sources, licenses, style fit and candidates that still require downloading/licensing.</a>
+<a class="card" href="INSTALL-LOCAL.md"><strong>Opening instructions</strong>Quick local usage and browser troubleshooting.</a>
+</section><p class="note"><strong>Important:</strong> this is a browser design/prototype pack, not an installable iOS `.ipa` or Xcode app project. The UI demo runs locally and needs no package installation.</p>
+</main></body></html>

@@ -1,0 +1,6929 @@
+{
+  "version": "1.0",
+  "source": {
+    "file": "09D9C5A2-D90F-4E05-844E-8912D4858573(2).jpeg",
+    "pixel_size": [
+      1536,
+      1024
+    ],
+    "nature": "flattened perspective-skewed concept collage, not source vector/Figma file"
+  },
+  "reference_calibration": {
+    "rectified_viewport_pt": [
+      390,
+      844
+    ],
+    "rectification_method": "manual 4-corner quadrilateral + OpenCV perspective warp",
+    "corner_accuracy": "approximately ±2–5 source pixels; after warp this varies by screen and is roughly ±3–9 rectified pixels / points",
+    "geometry_source": "visual-qa/coordinate-audit/screen-geometry.json",
+    "interpretation": "bbox_pt is an approximate measured visible component bounding box on the rectified 390×844 canvas; it is not original source Auto Layout constraint or source font metadata."
+  },
+  "coordinate_convention": {
+    "origin": "top-left",
+    "units": "logical points at 390×844 reference baseline",
+    "bbox": "[x,y,width,height]",
+    "angle": "clockwise positive degrees; estimated visual target, not source font glyph angle",
+    "text_angle": "rotates the entire text wrapper, not individual glyphs",
+    "hit_target": "keep unrotated semantic hit target >=44×44pt wherever feasible"
+  },
+  "shared_style_roles": {
+    "status": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 10.5,
+      "color": "#282E28",
+      "line_height": 1.0
+    },
+    "page-title": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 22,
+      "color": "#282E28",
+      "line_height": 1.05
+    },
+    "recipe-title": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 27,
+      "color": "#282E28",
+      "line_height": 1.04
+    },
+    "recipe-title-small": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 21,
+      "color": "#282E28",
+      "line_height": 1.08
+    },
+    "section-title": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 17,
+      "color": "#282E28",
+      "line_height": 1.1
+    },
+    "body-strong": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 15,
+      "color": "#282E28",
+      "line_height": 1.15
+    },
+    "body-copy": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 14,
+      "color": "#282E28",
+      "line_height": 1.25
+    },
+    "field-label": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 14,
+      "color": "#282E28",
+      "line_height": 1.05
+    },
+    "item-title": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 15,
+      "color": "#282E28",
+      "line_height": 1.05
+    },
+    "item-title-small": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 13,
+      "color": "#282E28",
+      "line_height": 1.05
+    },
+    "metadata": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 11.5,
+      "color": "#6B604F",
+      "line_height": 1.12
+    },
+    "warning-metadata": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 11.2,
+      "color": "#C96658",
+      "line_height": 1.1
+    },
+    "swap-metadata": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 11.3,
+      "color": "#B87937",
+      "line_height": 1.1
+    },
+    "tagline": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 22,
+      "color": "#315C43",
+      "line_height": 1.03
+    },
+    "support": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 18,
+      "color": "#514B3E",
+      "line_height": 1.2
+    },
+    "button-label": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 16,
+      "color": "#FBF4E5",
+      "line_height": 1.0
+    },
+    "secondary-action": {
+      "family": "FoodSafe Hand",
+      "weight": 400,
+      "size_pt": 14,
+      "color": "#315C43",
+      "line_height": 1.0
+    },
+    "primary-button": {
+      "fill": "#527B5E",
+      "stroke": "#2E6A4F",
+      "stroke_width_pt": 0.9,
+      "radius": "capsule",
+      "label_family": "FoodSafe Hand",
+      "label_weight": 400,
+      "label_size_pt": 16,
+      "label_color": "#FBF4E5"
+    },
+    "secondary-button": {
+      "fill": "#FAF2E1",
+      "stroke": "#827460",
+      "stroke_width_pt": 0.8,
+      "radius": "capsule"
+    },
+    "filter-selected": {
+      "fill": "#527B5E",
+      "stroke": "#2E6A4F",
+      "stroke_width_pt": 0.8,
+      "label_color": "#FBF4E5",
+      "label_size_pt": 12
+    },
+    "filter": {
+      "fill": "#FAF2E1",
+      "stroke": "#BFB19A",
+      "stroke_width_pt": 0.8,
+      "label_color": "#282E28",
+      "label_size_pt": 12
+    },
+    "category": {
+      "radius_pt": 15,
+      "stroke": "#B5A58D",
+      "stroke_width_pt": 0.7,
+      "label_size_pt": 11.5,
+      "icon_style": "colored-pencil illustration"
+    },
+    "search": {
+      "fill": "#FAF2E1",
+      "stroke": "#BFB19A",
+      "stroke_width_pt": 0.8,
+      "radius_pt": 21,
+      "text_size_pt": 12
+    },
+    "text-field": {
+      "fill": "#FAF2E1",
+      "stroke": "#827460",
+      "stroke_width_pt": 0.8,
+      "radius_pt": 13,
+      "text_size_pt": 16
+    },
+    "picker": {
+      "fill": "#FAF2E1",
+      "stroke": "#827460",
+      "stroke_width_pt": 0.8,
+      "radius_pt": 13,
+      "text_size_pt": 14
+    },
+    "multiline-field": {
+      "fill": "#FAF2E1",
+      "stroke": "#BFB19A",
+      "stroke_width_pt": 0.8,
+      "radius_pt": 13,
+      "text_size_pt": 13,
+      "placeholder_color": "#8C806E"
+    }
+  },
+  "screens": [
+    {
+      "id": "welcome",
+      "title": "Welcome / onboarding",
+      "reference_image": "reference/rectified/01-welcome.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "sun-doodle",
+          "type": "illustration",
+          "text": "sun",
+          "bbox_pt": [
+            14,
+            39,
+            76,
+            94
+          ],
+          "rotation_deg": -5,
+          "notes": "board-style decoration visible on onboarding panel",
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "wordmark",
+          "type": "brand-art",
+          "text": "FoodSafe",
+          "bbox_pt": [
+            18,
+            103,
+            354,
+            132
+          ],
+          "rotation_deg": -3.4,
+          "notes": "Source-derived brush lettering; preserve asset, do not typeset.",
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "tagline-line-1",
+          "type": "text",
+          "text": "Good food.",
+          "bbox_pt": [
+            99,
+            239,
+            195,
+            41
+          ],
+          "rotation_deg": -1.0,
+          "type_role": "tagline",
+          "style_token": "tagline",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#315C43",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "tagline-line-2",
+          "type": "text",
+          "text": "Less waste.",
+          "bbox_pt": [
+            101,
+            276,
+            207,
+            38
+          ],
+          "rotation_deg": -1.2,
+          "type_role": "tagline",
+          "style_token": "tagline",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#315C43",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "grocery-bag",
+          "type": "illustration",
+          "text": "Grocery bag with smiling face, vegetables and groceries",
+          "bbox_pt": [
+            36,
+            327,
+            321,
+            246
+          ],
+          "rotation_deg": 0.5,
+          "notes": "Major hero occupies ~39% of panel height; transparent source art preferred.",
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "support-copy-line-1",
+          "type": "text",
+          "text": "Your Kitchen.",
+          "bbox_pt": [
+            57,
+            588,
+            237,
+            34
+          ],
+          "rotation_deg": -2.2,
+          "type_role": "support",
+          "style_token": "support",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 18,
+          "text_color": "#514B3E",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "support-copy-line-2",
+          "type": "text",
+          "text": "Your ingredients.",
+          "bbox_pt": [
+            72,
+            619,
+            222,
+            36
+          ],
+          "rotation_deg": -2.2,
+          "type_role": "support",
+          "style_token": "support",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 18,
+          "text_color": "#514B3E",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "support-copy-line-3",
+          "type": "text",
+          "text": "Better meals.",
+          "bbox_pt": [
+            87,
+            652,
+            182,
+            33
+          ],
+          "rotation_deg": -2.0,
+          "type_role": "support",
+          "style_token": "support",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 18,
+          "text_color": "#514B3E",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "get-started-button",
+          "type": "button",
+          "text": "Get Started",
+          "bbox_pt": [
+            18,
+            714,
+            346,
+            57
+          ],
+          "rotation_deg": -1.1,
+          "type_role": "primary-button",
+          "notes": "Capsule appears hand-drawn; green fill; preserve slightly unequal top/bottom contour.",
+          "style_token": "primary-button",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "get-started-label",
+          "type": "text",
+          "text": "Get Started",
+          "bbox_pt": [
+            100,
+            731,
+            183,
+            28
+          ],
+          "rotation_deg": -0.4,
+          "type_role": "button-label",
+          "style_token": "button-label",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "text_color": "#FBF4E5",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "sign-in-label",
+          "type": "text",
+          "text": "Sign In",
+          "bbox_pt": [
+            145,
+            787,
+            95,
+            28
+          ],
+          "rotation_deg": 0.6,
+          "type_role": "secondary-action",
+          "style_token": "secondary-action",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#315C43",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "decorative-stars",
+          "type": "illustration",
+          "text": "Small yellow star and pencil-stroke marks",
+          "bbox_pt": [
+            13,
+            278,
+            42,
+            40
+          ],
+          "rotation_deg": -8,
+          "notes": "Separate decorative assets, do not use emoji glyphs.",
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        }
+      ],
+      "notes": "This panel is a welcome/marketing composition rather than a typical app screen. Coordinates describe the visible panel; source sheet itself is photographed/rectified."
+    },
+    {
+      "id": "home",
+      "title": "My Kitchen",
+      "reference_image": "reference/rectified/02-my-kitchen.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "home-icon",
+          "type": "icon",
+          "text": "Home",
+          "bbox_pt": [
+            27,
+            48,
+            42,
+            40
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "My Kitchen",
+          "bbox_pt": [
+            91,
+            48,
+            161,
+            37
+          ],
+          "rotation_deg": -0.8,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "favorite-icon",
+          "type": "icon",
+          "text": "Heart outline",
+          "bbox_pt": [
+            282,
+            53,
+            24,
+            30
+          ],
+          "rotation_deg": -4,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "header-sparkle",
+          "type": "illustration",
+          "text": "Small yellow sparkle",
+          "bbox_pt": [
+            322,
+            68,
+            16,
+            18
+          ],
+          "rotation_deg": 8,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "storage-fridge",
+          "type": "chip",
+          "text": "Fridge",
+          "bbox_pt": [
+            20,
+            113,
+            113,
+            48
+          ],
+          "rotation_deg": -0.6,
+          "type_role": "filter-selected",
+          "style_token": "filter-selected",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "storage-pantry",
+          "type": "chip",
+          "text": "Pantry",
+          "bbox_pt": [
+            140,
+            115,
+            113,
+            46
+          ],
+          "rotation_deg": 0.4,
+          "type_role": "filter",
+          "style_token": "filter",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "storage-freezer",
+          "type": "chip",
+          "text": "Freezer",
+          "bbox_pt": [
+            260,
+            114,
+            111,
+            46
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "filter",
+          "style_token": "filter",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "search-field",
+          "type": "field",
+          "text": "Search ingredients...",
+          "bbox_pt": [
+            19,
+            183,
+            353,
+            43
+          ],
+          "rotation_deg": -0.1,
+          "type_role": "search",
+          "style_token": "search",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "category-vegetables",
+          "type": "category-tile",
+          "text": "Vegetables",
+          "bbox_pt": [
+            19,
+            247,
+            87,
+            82
+          ],
+          "rotation_deg": -0.5,
+          "type_role": "category",
+          "style_token": "category",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "category-fruits",
+          "type": "category-tile",
+          "text": "Fruits",
+          "bbox_pt": [
+            117,
+            248,
+            83,
+            82
+          ],
+          "rotation_deg": 0.55,
+          "type_role": "category",
+          "style_token": "category",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "category-dairy",
+          "type": "category-tile",
+          "text": "Dairy",
+          "bbox_pt": [
+            213,
+            248,
+            80,
+            82
+          ],
+          "rotation_deg": -0.35,
+          "type_role": "category",
+          "style_token": "category",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "category-grains",
+          "type": "category-tile",
+          "text": "Grains",
+          "bbox_pt": [
+            302,
+            248,
+            72,
+            82
+          ],
+          "rotation_deg": 0.8,
+          "type_role": "category",
+          "style_token": "category",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "category-proteins",
+          "type": "category-tile",
+          "text": "Proteins",
+          "bbox_pt": [
+            19,
+            344,
+            88,
+            79
+          ],
+          "rotation_deg": 0.3,
+          "type_role": "category",
+          "style_token": "category",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "category-others",
+          "type": "category-tile",
+          "text": "Others",
+          "bbox_pt": [
+            117,
+            344,
+            83,
+            79
+          ],
+          "rotation_deg": -0.6,
+          "type_role": "category",
+          "style_token": "category",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "category-leaves",
+          "type": "category-tile",
+          "text": "Leaves",
+          "bbox_pt": [
+            213,
+            344,
+            81,
+            79
+          ],
+          "rotation_deg": 0.55,
+          "type_role": "category",
+          "style_token": "category",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16,
+          "notes": "Source caption appears to read “Leaves”; visible tile carries a plus-like mark. Preserve this unusual pairing instead of substituting a lemon icon."
+        },
+        {
+          "id": "category-decor-star",
+          "type": "illustration",
+          "text": "Yellow sparkle",
+          "bbox_pt": [
+            312,
+            354,
+            37,
+            32
+          ],
+          "rotation_deg": 7,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "quick-overview-heading",
+          "type": "text",
+          "text": "Quick Overview",
+          "bbox_pt": [
+            20,
+            435,
+            185,
+            27
+          ],
+          "rotation_deg": -0.45,
+          "type_role": "section-title",
+          "style_token": "section-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "quick-overview-star",
+          "type": "illustration",
+          "text": "Small black sparkle",
+          "bbox_pt": [
+            204,
+            439,
+            16,
+            18
+          ],
+          "rotation_deg": 5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        },
+        {
+          "id": "attention-summary",
+          "type": "alert",
+          "text": "3 items need attention",
+          "bbox_pt": [
+            18,
+            470,
+            354,
+            40
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "alert",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 20
+        },
+        {
+          "id": "attention-summary-icon",
+          "type": "icon",
+          "text": "Warning triangle",
+          "bbox_pt": [
+            29,
+            480,
+            22,
+            21
+          ],
+          "rotation_deg": -2,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 21
+        },
+        {
+          "id": "expiring-soon-card",
+          "type": "card",
+          "text": "Expiring Soon · 2 items · within 24h",
+          "bbox_pt": [
+            18,
+            518,
+            354,
+            67
+          ],
+          "rotation_deg": -0.35,
+          "type_role": "summary-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 22
+        },
+        {
+          "id": "expiring-soon-icon",
+          "type": "illustration",
+          "text": "Clock with sun",
+          "bbox_pt": [
+            28,
+            528,
+            51,
+            47
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 23
+        },
+        {
+          "id": "low-stock-card",
+          "type": "card",
+          "text": "Low Stock · 4 items",
+          "bbox_pt": [
+            18,
+            597,
+            354,
+            68
+          ],
+          "rotation_deg": 0.45,
+          "type_role": "summary-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 24
+        },
+        {
+          "id": "low-stock-icon",
+          "type": "illustration",
+          "text": "Carrot",
+          "bbox_pt": [
+            29,
+            605,
+            51,
+            49
+          ],
+          "rotation_deg": 1,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 25
+        },
+        {
+          "id": "almost-empty-card",
+          "type": "card",
+          "text": "Almost Empty · 2 items",
+          "bbox_pt": [
+            18,
+            675,
+            354,
+            65
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "summary-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 26
+        },
+        {
+          "id": "almost-empty-icon",
+          "type": "illustration",
+          "text": "Bottle",
+          "bbox_pt": [
+            30,
+            682,
+            49,
+            48
+          ],
+          "rotation_deg": -0.6,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 27
+        },
+        {
+          "id": "bottom-navigation",
+          "type": "navigation",
+          "text": "Home / Inventory / Add / Recipes / More",
+          "bbox_pt": [
+            0,
+            752,
+            390,
+            78
+          ],
+          "rotation_deg": 0,
+          "type_role": "bottom-nav",
+          "notes": "Raised central Add action around 8pt above tab baseline.",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 28
+        }
+      ],
+      "notes": "Six category tiles are visible: 4 in the first row and 3 in the second; preserve the intentionally offset empty/decoration area on the second row."
+    },
+    {
+      "id": "add",
+      "title": "Add Ingredient",
+      "reference_image": "reference/rectified/03-add-ingredient.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "back-button",
+          "type": "icon-button",
+          "text": "Back",
+          "bbox_pt": [
+            14,
+            53,
+            34,
+            39
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "Add Ingredient",
+          "bbox_pt": [
+            103,
+            54,
+            194,
+            37
+          ],
+          "rotation_deg": 0.4,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "ingredient-image-frame",
+          "type": "illustration-frame",
+          "text": "Tomatoes",
+          "bbox_pt": [
+            20,
+            127,
+            139,
+            124
+          ],
+          "rotation_deg": -0.5,
+          "type_role": "art-frame",
+          "notes": "Source shows tomatoes in a rounded, hand-outlined thumbnail box.",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "ingredient-name",
+          "type": "text",
+          "text": "Tomatoes",
+          "bbox_pt": [
+            178,
+            144,
+            132,
+            35
+          ],
+          "rotation_deg": -0.7,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "ingredient-category-chip",
+          "type": "chip",
+          "text": "Vegetable",
+          "bbox_pt": [
+            178,
+            191,
+            130,
+            37
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "category-chip",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "leaf-doodle",
+          "type": "illustration",
+          "text": "Leaf and red pen marks",
+          "bbox_pt": [
+            312,
+            86,
+            59,
+            57
+          ],
+          "rotation_deg": 5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "quantity-label",
+          "type": "text",
+          "text": "Quantity",
+          "bbox_pt": [
+            20,
+            273,
+            87,
+            25
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "field-label",
+          "style_token": "field-label",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "quantity-field",
+          "type": "field",
+          "text": "500",
+          "bbox_pt": [
+            20,
+            300,
+            219,
+            54
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "text-field",
+          "style_token": "text-field",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "unit-picker",
+          "type": "field",
+          "text": "g",
+          "bbox_pt": [
+            251,
+            300,
+            127,
+            54
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "picker",
+          "style_token": "picker",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "storage-zone-label",
+          "type": "text",
+          "text": "Storage Zone",
+          "bbox_pt": [
+            20,
+            384,
+            145,
+            27
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "field-label",
+          "style_token": "field-label",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "storage-pantry",
+          "type": "segmented-option",
+          "text": "Pantry",
+          "bbox_pt": [
+            18,
+            414,
+            121,
+            60
+          ],
+          "rotation_deg": -0.4,
+          "type_role": "storage-option",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "storage-fridge",
+          "type": "segmented-option",
+          "text": "Fridge",
+          "bbox_pt": [
+            145,
+            413,
+            121,
+            62
+          ],
+          "rotation_deg": 0.35,
+          "type_role": "storage-selected",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "storage-freezer",
+          "type": "segmented-option",
+          "text": "Freezer",
+          "bbox_pt": [
+            273,
+            414,
+            99,
+            60
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "storage-option",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "expiration-label",
+          "type": "text",
+          "text": "Expiration Date",
+          "bbox_pt": [
+            20,
+            501,
+            154,
+            28
+          ],
+          "rotation_deg": -0.45,
+          "type_role": "field-label",
+          "style_token": "field-label",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "expiration-picker",
+          "type": "field",
+          "text": "Apr 20, 2026",
+          "bbox_pt": [
+            18,
+            530,
+            355,
+            63
+          ],
+          "rotation_deg": 0.1,
+          "type_role": "date-picker",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "notes-label",
+          "type": "text",
+          "text": "Notes (optional)",
+          "bbox_pt": [
+            20,
+            620,
+            154,
+            29
+          ],
+          "rotation_deg": 0.1,
+          "type_role": "field-label",
+          "style_token": "field-label",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "notes-field",
+          "type": "field",
+          "text": "e.g. organic, fresh, etc.",
+          "bbox_pt": [
+            18,
+            651,
+            355,
+            70
+          ],
+          "rotation_deg": -0.15,
+          "type_role": "multiline-field",
+          "style_token": "multiline-field",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "save-button",
+          "type": "button",
+          "text": "Save",
+          "bbox_pt": [
+            20,
+            743,
+            353,
+            55
+          ],
+          "rotation_deg": -0.65,
+          "type_role": "primary-button",
+          "style_token": "primary-button",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        },
+        {
+          "id": "save-label",
+          "type": "text",
+          "text": "Save",
+          "bbox_pt": [
+            169,
+            756,
+            52,
+            29
+          ],
+          "rotation_deg": 0,
+          "type_role": "button-label",
+          "style_token": "button-label",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "text_color": "#FBF4E5",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 20
+        }
+      ],
+      "notes": "Keep the name/image block side by side. Quantity and unit are distinct controls in one horizontal row. Storage Zone has three equal-ish selections, with Fridge selected."
+    },
+    {
+      "id": "inventory",
+      "title": "Inventory",
+      "reference_image": "reference/rectified/04-inventory.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "Inventory",
+          "bbox_pt": [
+            129,
+            54,
+            132,
+            35
+          ],
+          "rotation_deg": -0.65,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "back-button",
+          "type": "icon-button",
+          "text": "Back",
+          "bbox_pt": [
+            14,
+            52,
+            35,
+            38
+          ],
+          "rotation_deg": 0,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "search-field",
+          "type": "field",
+          "text": "Search...",
+          "bbox_pt": [
+            18,
+            102,
+            355,
+            42
+          ],
+          "rotation_deg": -0.1,
+          "type_role": "search",
+          "style_token": "search",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "filter-all",
+          "type": "chip",
+          "text": "All",
+          "bbox_pt": [
+            17,
+            151,
+            45,
+            35
+          ],
+          "rotation_deg": -0.5,
+          "type_role": "filter-selected",
+          "style_token": "filter-selected",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "filter-fridge",
+          "type": "chip",
+          "text": "Fridge",
+          "bbox_pt": [
+            65,
+            151,
+            64,
+            35
+          ],
+          "rotation_deg": 0.3,
+          "type_role": "filter",
+          "style_token": "filter",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "filter-pantry",
+          "type": "chip",
+          "text": "Pantry",
+          "bbox_pt": [
+            133,
+            151,
+            64,
+            35
+          ],
+          "rotation_deg": -0.4,
+          "type_role": "filter",
+          "style_token": "filter",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "filter-freezer",
+          "type": "chip",
+          "text": "Freezer",
+          "bbox_pt": [
+            202,
+            151,
+            79,
+            35
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "filter",
+          "style_token": "filter",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "tomato-row",
+          "type": "inventory-row",
+          "text": "Tomatoes · 50 g · Fridge · Exp: 2 days",
+          "bbox_pt": [
+            14,
+            191,
+            360,
+            61
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "inventory-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "tomato-art",
+          "type": "illustration",
+          "text": "Tomatoes",
+          "bbox_pt": [
+            19,
+            195,
+            50,
+            51
+          ],
+          "rotation_deg": -0.6,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "tomato-expiry-pill",
+          "type": "status-pill",
+          "text": "Soon",
+          "bbox_pt": [
+            326,
+            208,
+            39,
+            25
+          ],
+          "rotation_deg": 0.4,
+          "type_role": "expiry-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "eggs-row",
+          "type": "inventory-row",
+          "text": "Eggs · 6 pcs · Fridge · Exp: 5 days",
+          "bbox_pt": [
+            14,
+            255,
+            360,
+            61
+          ],
+          "rotation_deg": 0.35,
+          "type_role": "inventory-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "eggs-art",
+          "type": "illustration",
+          "text": "Eggs",
+          "bbox_pt": [
+            19,
+            259,
+            50,
+            51
+          ],
+          "rotation_deg": 0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "spinach-row",
+          "type": "inventory-row",
+          "text": "Spinach · 2 pcs · Fridge · Exp: 1 day",
+          "bbox_pt": [
+            14,
+            319,
+            360,
+            61
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "inventory-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "spinach-art",
+          "type": "illustration",
+          "text": "Spinach",
+          "bbox_pt": [
+            19,
+            323,
+            50,
+            51
+          ],
+          "rotation_deg": -0.6,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "spinach-expiry-pill",
+          "type": "status-pill",
+          "text": "Soon",
+          "bbox_pt": [
+            326,
+            335,
+            39,
+            25
+          ],
+          "rotation_deg": 0.35,
+          "type_role": "expiry-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "pasta-row",
+          "type": "inventory-row",
+          "text": "Pasta · 50 g · Pantry · Exp: 6 months",
+          "bbox_pt": [
+            14,
+            383,
+            360,
+            61
+          ],
+          "rotation_deg": 0.3,
+          "type_role": "inventory-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "pasta-art",
+          "type": "illustration",
+          "text": "Pasta",
+          "bbox_pt": [
+            19,
+            387,
+            50,
+            51
+          ],
+          "rotation_deg": 0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "oil-row",
+          "type": "inventory-row",
+          "text": "Olive Oil · 1 L · Pantry · Exp: 1 year",
+          "bbox_pt": [
+            14,
+            447,
+            360,
+            61
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "inventory-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        },
+        {
+          "id": "oil-art",
+          "type": "illustration",
+          "text": "Olive oil bottle",
+          "bbox_pt": [
+            19,
+            451,
+            50,
+            51
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 20
+        },
+        {
+          "id": "chicken-row",
+          "type": "inventory-row",
+          "text": "Chicken Breast · 400 g · Fridge · Exp: 3 days",
+          "bbox_pt": [
+            14,
+            511,
+            360,
+            61
+          ],
+          "rotation_deg": 0.4,
+          "type_role": "inventory-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 21
+        },
+        {
+          "id": "chicken-art",
+          "type": "illustration",
+          "text": "Chicken breast",
+          "bbox_pt": [
+            19,
+            515,
+            50,
+            51
+          ],
+          "rotation_deg": 0.65,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 22
+        },
+        {
+          "id": "chicken-expiry-pill",
+          "type": "status-pill",
+          "text": "Soon",
+          "bbox_pt": [
+            326,
+            529,
+            39,
+            25
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "expiry-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 23
+        },
+        {
+          "id": "bottom-navigation",
+          "type": "navigation",
+          "text": "Home / Inventory / Add / Recipes / More",
+          "bbox_pt": [
+            0,
+            752,
+            390,
+            78
+          ],
+          "rotation_deg": 0,
+          "type_role": "bottom-nav",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 24
+        }
+      ],
+      "notes": "Search/filter controls occupy the top; six compact item rows run at about 64pt vertical intervals. Bottom nav is visible in source."
+    },
+    {
+      "id": "suggestions",
+      "title": "Recipe Suggestions",
+      "reference_image": "reference/rectified/05-recipe-suggestions.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "back-button",
+          "type": "icon-button",
+          "text": "Back",
+          "bbox_pt": [
+            18,
+            54,
+            31,
+            37
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "Recipe Suggestions",
+          "bbox_pt": [
+            61,
+            54,
+            306,
+            40
+          ],
+          "rotation_deg": 0.75,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "tab-for-you",
+          "type": "chip",
+          "text": "For You",
+          "bbox_pt": [
+            14,
+            122,
+            113,
+            47
+          ],
+          "rotation_deg": -0.55,
+          "type_role": "filter-selected",
+          "style_token": "filter-selected",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "tab-by-ingredient",
+          "type": "chip",
+          "text": "By Ingredient",
+          "bbox_pt": [
+            135,
+            124,
+            133,
+            44
+          ],
+          "rotation_deg": 0.4,
+          "type_role": "filter",
+          "style_token": "filter",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "tab-by-season",
+          "type": "chip",
+          "text": "By Season",
+          "bbox_pt": [
+            271,
+            124,
+            99,
+            44
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "filter",
+          "style_token": "filter",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "based-on-label",
+          "type": "text",
+          "text": "Based on your kitchen",
+          "bbox_pt": [
+            20,
+            197,
+            194,
+            27
+          ],
+          "rotation_deg": -0.35,
+          "type_role": "body-strong",
+          "style_token": "body-strong",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "sort-picker",
+          "type": "picker",
+          "text": "Sort: Best Match",
+          "bbox_pt": [
+            232,
+            190,
+            140,
+            38
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "compact-picker",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "ready-now-heading",
+          "type": "status-pill",
+          "text": "Ready Now",
+          "bbox_pt": [
+            81,
+            250,
+            116,
+            35
+          ],
+          "rotation_deg": -0.15,
+          "type_role": "ready-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "tomato-pasta-card",
+          "type": "recipe-card",
+          "text": "Tomato Pasta · 15 min · 3 servings",
+          "bbox_pt": [
+            14,
+            232,
+            360,
+            151
+          ],
+          "rotation_deg": -0.35,
+          "type_role": "suggestion-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "tomato-pasta-thumb",
+          "type": "illustration",
+          "text": "Tomato Pasta bowl",
+          "bbox_pt": [
+            23,
+            292,
+            82,
+            82
+          ],
+          "rotation_deg": -0.55,
+          "notes": "Food must be illustrated in actual app; source mockup image here is photographic but product art direction forbids photos.",
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "tomato-pasta-status",
+          "type": "status-pill",
+          "text": "Ready Now",
+          "bbox_pt": [
+            80,
+            251,
+            112,
+            28
+          ],
+          "rotation_deg": 0.3,
+          "type_role": "ready-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "tomato-pasta-title",
+          "type": "text",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            125,
+            301,
+            143,
+            28
+          ],
+          "rotation_deg": -0.4,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "tomato-pasta-meta",
+          "type": "text",
+          "text": "15 min · 3 servings",
+          "bbox_pt": [
+            126,
+            334,
+            164,
+            27
+          ],
+          "rotation_deg": 0.1,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "chicken-card",
+          "type": "recipe-card",
+          "text": "Chicken Stir-fry · Missing: soy sauce (optional)",
+          "bbox_pt": [
+            14,
+            391,
+            360,
+            140
+          ],
+          "rotation_deg": 0.35,
+          "type_role": "suggestion-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "chicken-thumb",
+          "type": "illustration",
+          "text": "Chicken Stir-fry bowl",
+          "bbox_pt": [
+            23,
+            411,
+            82,
+            82
+          ],
+          "rotation_deg": 0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "chicken-status",
+          "type": "status-pill",
+          "text": "Almost Ready",
+          "bbox_pt": [
+            119,
+            411,
+            124,
+            29
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "almost-ready-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "chicken-title",
+          "type": "text",
+          "text": "Chicken Stir-fry",
+          "bbox_pt": [
+            126,
+            445,
+            177,
+            26
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "chicken-meta",
+          "type": "text",
+          "text": "25 min · 2 servings",
+          "bbox_pt": [
+            126,
+            474,
+            172,
+            24
+          ],
+          "rotation_deg": -0.15,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        },
+        {
+          "id": "chicken-missing",
+          "type": "text",
+          "text": "Missing: Soy Sauce (optional)",
+          "bbox_pt": [
+            125,
+            501,
+            224,
+            22
+          ],
+          "rotation_deg": 0.4,
+          "type_role": "warning-metadata",
+          "style_token": "warning-metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "text_color": "#C96658",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 20
+        },
+        {
+          "id": "lentil-card",
+          "type": "recipe-card",
+          "text": "Lentil Soup · Swap: chicken → lentils",
+          "bbox_pt": [
+            14,
+            540,
+            360,
+            180
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "suggestion-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 21
+        },
+        {
+          "id": "lentil-thumb",
+          "type": "illustration",
+          "text": "Lentil soup bowl",
+          "bbox_pt": [
+            23,
+            556,
+            82,
+            82
+          ],
+          "rotation_deg": -0.4,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 22
+        },
+        {
+          "id": "lentil-status",
+          "type": "status-pill",
+          "text": "Smart Swap",
+          "bbox_pt": [
+            120,
+            574,
+            111,
+            29
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "smart-swap-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 23
+        },
+        {
+          "id": "lentil-title",
+          "type": "text",
+          "text": "Lentil Soup",
+          "bbox_pt": [
+            126,
+            611,
+            132,
+            26
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 24
+        },
+        {
+          "id": "lentil-meta",
+          "type": "text",
+          "text": "40 min · 4 servings",
+          "bbox_pt": [
+            126,
+            640,
+            172,
+            24
+          ],
+          "rotation_deg": 0.15,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 25
+        },
+        {
+          "id": "lentil-swap-line",
+          "type": "text",
+          "text": "Swap: chicken → lentils",
+          "bbox_pt": [
+            126,
+            670,
+            210,
+            22
+          ],
+          "rotation_deg": 0.35,
+          "type_role": "swap-metadata",
+          "style_token": "swap-metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.3,
+          "text_color": "#B87937",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 26
+        },
+        {
+          "id": "view-all-button",
+          "type": "button",
+          "text": "View All Suggestions",
+          "bbox_pt": [
+            11,
+            735,
+            340,
+            62
+          ],
+          "rotation_deg": -0.55,
+          "type_role": "primary-button",
+          "style_token": "primary-button",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 27
+        },
+        {
+          "id": "view-all-label",
+          "type": "text",
+          "text": "View All Suggestions",
+          "bbox_pt": [
+            83,
+            752,
+            222,
+            30
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "button-label",
+          "style_token": "button-label",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "text_color": "#FBF4E5",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 28
+        }
+      ],
+      "notes": "Source has three stacked recommendation cards. “Ready Now” is a category/status label for first card and a small grouped section marker; avoid duplicating it visually. Main card extents overlap slightly with their internal title/info blocks by design."
+    },
+    {
+      "id": "detail",
+      "title": "Tomato Pasta detail",
+      "reference_image": "reference/rectified/06-tomato-pasta.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "hero-dish",
+          "type": "illustration-frame",
+          "text": "Tomato Pasta in plate",
+          "bbox_pt": [
+            14,
+            54,
+            359,
+            171
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "hero-art",
+          "notes": "Reference shows hero image spanning nearly full content width. For FoodSafe product, retain illustration, not photography.",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "back-button",
+          "type": "icon-button",
+          "text": "Back",
+          "bbox_pt": [
+            20,
+            68,
+            49,
+            51
+          ],
+          "rotation_deg": -3,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "favorite-button",
+          "type": "icon-button",
+          "text": "Favorite heart",
+          "bbox_pt": [
+            323,
+            68,
+            48,
+            50
+          ],
+          "rotation_deg": 2,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "recipe-title",
+          "type": "text",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            15,
+            234,
+            254,
+            43
+          ],
+          "rotation_deg": -0.8,
+          "type_role": "recipe-title",
+          "style_token": "recipe-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 27,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "ready-now-chip",
+          "type": "chip",
+          "text": "Ready Now",
+          "bbox_pt": [
+            18,
+            286,
+            137,
+            38
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "ready-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "time-meta",
+          "type": "text",
+          "text": "15 min · 3 servings",
+          "bbox_pt": [
+            179,
+            294,
+            185,
+            28
+          ],
+          "rotation_deg": 0.4,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "ingredients-heading",
+          "type": "text",
+          "text": "Ingredients",
+          "bbox_pt": [
+            21,
+            350,
+            142,
+            30
+          ],
+          "rotation_deg": -0.35,
+          "type_role": "section-title",
+          "style_token": "section-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "add-ingredient-symbol",
+          "type": "icon",
+          "text": "Plus",
+          "bbox_pt": [
+            348,
+            353,
+            19,
+            19
+          ],
+          "rotation_deg": 0,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "ingredient-list-container",
+          "type": "card",
+          "text": "Ingredient list container",
+          "bbox_pt": [
+            22,
+            383,
+            344,
+            341
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "list-container",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "ingredient-pasta",
+          "type": "list-row",
+          "text": "Pasta · 300 g",
+          "bbox_pt": [
+            26,
+            390,
+            331,
+            47
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "ingredient-pasta-art",
+          "type": "illustration",
+          "text": "Pasta",
+          "bbox_pt": [
+            40,
+            394,
+            31,
+            37
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "ingredient-tomatoes",
+          "type": "list-row",
+          "text": "Tomatoes · 400 g",
+          "bbox_pt": [
+            26,
+            438,
+            331,
+            47
+          ],
+          "rotation_deg": 0.3,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "ingredient-tomatoes-art",
+          "type": "illustration",
+          "text": "Tomato",
+          "bbox_pt": [
+            40,
+            442,
+            31,
+            37
+          ],
+          "rotation_deg": 0.4,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "ingredient-oil",
+          "type": "list-row",
+          "text": "Olive oil · 30 ml",
+          "bbox_pt": [
+            26,
+            486,
+            331,
+            47
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "ingredient-oil-art",
+          "type": "illustration",
+          "text": "Oil bottle",
+          "bbox_pt": [
+            40,
+            490,
+            31,
+            37
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "ingredient-garlic",
+          "type": "list-row",
+          "text": "Garlic · 2 cloves",
+          "bbox_pt": [
+            26,
+            534,
+            331,
+            47
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "ingredient-garlic-art",
+          "type": "illustration",
+          "text": "Garlic",
+          "bbox_pt": [
+            40,
+            538,
+            31,
+            37
+          ],
+          "rotation_deg": 0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "ingredient-basil",
+          "type": "list-row",
+          "text": "Basil · 10 g",
+          "bbox_pt": [
+            26,
+            582,
+            331,
+            47
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        },
+        {
+          "id": "ingredient-basil-art",
+          "type": "illustration",
+          "text": "Basil leaf",
+          "bbox_pt": [
+            40,
+            586,
+            31,
+            37
+          ],
+          "rotation_deg": -0.6,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 20
+        },
+        {
+          "id": "ingredient-salt",
+          "type": "list-row",
+          "text": "Salt · 1 g",
+          "bbox_pt": [
+            26,
+            630,
+            331,
+            43
+          ],
+          "rotation_deg": 0.3,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 21
+        },
+        {
+          "id": "ingredient-salt-art",
+          "type": "illustration",
+          "text": "Salt",
+          "bbox_pt": [
+            40,
+            633,
+            31,
+            34
+          ],
+          "rotation_deg": 0.3,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 22
+        },
+        {
+          "id": "ingredient-pepper",
+          "type": "list-row",
+          "text": "Pepper · 2 g",
+          "bbox_pt": [
+            26,
+            674,
+            331,
+            43
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 23
+        },
+        {
+          "id": "ingredient-pepper-art",
+          "type": "illustration",
+          "text": "Pepper",
+          "bbox_pt": [
+            40,
+            677,
+            31,
+            34
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 24
+        },
+        {
+          "id": "start-cooking-button",
+          "type": "button",
+          "text": "Start Cooking",
+          "bbox_pt": [
+            28,
+            740,
+            324,
+            65
+          ],
+          "rotation_deg": -0.4,
+          "type_role": "primary-button",
+          "style_token": "primary-button",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 25
+        },
+        {
+          "id": "chef-hat-icon",
+          "type": "illustration",
+          "text": "Chef hat",
+          "bbox_pt": [
+            272,
+            752,
+            36,
+            39
+          ],
+          "rotation_deg": 1,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 26
+        }
+      ],
+      "notes": "The hero occupies about one fifth of the viewport. Ingredient amounts are right-aligned; ingredient icon columns are aligned on a shared x-axis."
+    },
+    {
+      "id": "cooking",
+      "title": "Cooking step",
+      "reference_image": "reference/rectified/07-cooking.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "back-button",
+          "type": "icon-button",
+          "text": "Back",
+          "bbox_pt": [
+            18,
+            53,
+            33,
+            37
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "Cooking…",
+          "bbox_pt": [
+            120,
+            54,
+            154,
+            39
+          ],
+          "rotation_deg": 0.65,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "recipe-step-card",
+          "type": "card",
+          "text": "Tomato Pasta · Step 2 of 7",
+          "bbox_pt": [
+            18,
+            99,
+            352,
+            87
+          ],
+          "rotation_deg": -0.35,
+          "type_role": "recipe-step-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "recipe-step-icon",
+          "type": "illustration",
+          "text": "Recipe card icon",
+          "bbox_pt": [
+            33,
+            119,
+            48,
+            57
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "recipe-step-title",
+          "type": "text",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            96,
+            119,
+            181,
+            29
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "recipe-step-count",
+          "type": "text",
+          "text": "Step 2 of 7",
+          "bbox_pt": [
+            98,
+            153,
+            119,
+            26
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "hero-pan",
+          "type": "illustration-frame",
+          "text": "Tomato sauce in pan",
+          "bbox_pt": [
+            29,
+            193,
+            341,
+            203
+          ],
+          "rotation_deg": 0.15,
+          "type_role": "cooking-art",
+          "notes": "Must be drawn pan and drawn food, never photograph.",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "step-heading",
+          "type": "text",
+          "text": "2. Cook the pasta",
+          "bbox_pt": [
+            28,
+            414,
+            285,
+            41
+          ],
+          "rotation_deg": -0.65,
+          "type_role": "recipe-title-small",
+          "style_token": "recipe-title-small",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 21,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "instruction-line-1",
+          "type": "text",
+          "text": "Bring a large pot of salted water to",
+          "bbox_pt": [
+            29,
+            466,
+            330,
+            30
+          ],
+          "rotation_deg": -0.15,
+          "type_role": "body-copy",
+          "style_token": "body-copy",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "instruction-line-2",
+          "type": "text",
+          "text": "a boil. Add pasta and cook for 8–10",
+          "bbox_pt": [
+            29,
+            499,
+            334,
+            30
+          ],
+          "rotation_deg": 0.15,
+          "type_role": "body-copy",
+          "style_token": "body-copy",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "instruction-line-3",
+          "type": "text",
+          "text": "minutes (or according to package",
+          "bbox_pt": [
+            29,
+            531,
+            335,
+            30
+          ],
+          "rotation_deg": -0.1,
+          "type_role": "body-copy",
+          "style_token": "body-copy",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "instruction-line-4",
+          "type": "text",
+          "text": "instructions).",
+          "bbox_pt": [
+            29,
+            563,
+            188,
+            28
+          ],
+          "rotation_deg": 0.15,
+          "type_role": "body-copy",
+          "style_token": "body-copy",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "cooking-progress",
+          "type": "progress",
+          "text": "Cooking progress bar",
+          "bbox_pt": [
+            29,
+            620,
+            242,
+            17
+          ],
+          "rotation_deg": 0,
+          "type_role": "progress",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "timer-text",
+          "type": "text",
+          "text": "03:42 left",
+          "bbox_pt": [
+            283,
+            615,
+            81,
+            25
+          ],
+          "rotation_deg": 0,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "scaled-banner",
+          "type": "card",
+          "text": "Scaled for 3 servings",
+          "bbox_pt": [
+            21,
+            661,
+            350,
+            54
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "success-banner",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "back-button-bottom",
+          "type": "button",
+          "text": "Back",
+          "bbox_pt": [
+            20,
+            742,
+            159,
+            71
+          ],
+          "rotation_deg": -0.45,
+          "type_role": "secondary-button",
+          "style_token": "secondary-button",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "next-button",
+          "type": "button",
+          "text": "Next",
+          "bbox_pt": [
+            195,
+            742,
+            176,
+            71
+          ],
+          "rotation_deg": -0.55,
+          "type_role": "primary-button",
+          "style_token": "primary-button",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        }
+      ],
+      "notes": "Cooking illustration should preserve the source composition of a round pan seen from above with visible pasta/sauce; text instructions occupy four compact lines and should not become modern oversized body copy."
+    },
+    {
+      "id": "scaling",
+      "title": "Portion Scaling",
+      "reference_image": "reference/rectified/08-portion-scaling.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "back-button",
+          "type": "icon-button",
+          "text": "Back",
+          "bbox_pt": [
+            18,
+            54,
+            34,
+            39
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "Portion Scaling",
+          "bbox_pt": [
+            90,
+            58,
+            221,
+            39
+          ],
+          "rotation_deg": -0.7,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "recipe-summary-card",
+          "type": "card",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            17,
+            128,
+            352,
+            86
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "recipe-summary",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "recipe-summary-art",
+          "type": "illustration",
+          "text": "Tomato Pasta thumbnail",
+          "bbox_pt": [
+            26,
+            145,
+            50,
+            53
+          ],
+          "rotation_deg": -0.45,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "recipe-summary-name",
+          "type": "text",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            91,
+            153,
+            181,
+            31
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "servings-label",
+          "type": "text",
+          "text": "Adjust servings",
+          "bbox_pt": [
+            23,
+            238,
+            187,
+            29
+          ],
+          "rotation_deg": -0.45,
+          "type_role": "section-title",
+          "style_token": "section-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "serving-1",
+          "type": "chip",
+          "text": "1",
+          "bbox_pt": [
+            21,
+            280,
+            81,
+            67
+          ],
+          "rotation_deg": -0.45,
+          "type_role": "serving-option",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "serving-2",
+          "type": "chip",
+          "text": "2",
+          "bbox_pt": [
+            111,
+            280,
+            81,
+            67
+          ],
+          "rotation_deg": 0.45,
+          "type_role": "serving-option",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "serving-3",
+          "type": "chip",
+          "text": "3",
+          "bbox_pt": [
+            200,
+            278,
+            81,
+            70
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "serving-selected",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "serving-4",
+          "type": "chip",
+          "text": "4",
+          "bbox_pt": [
+            289,
+            280,
+            81,
+            67
+          ],
+          "rotation_deg": 0.35,
+          "type_role": "serving-option",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "adjusted-quantities-heading",
+          "type": "text",
+          "text": "Adjusted Quantities",
+          "bbox_pt": [
+            23,
+            379,
+            223,
+            30
+          ],
+          "rotation_deg": -0.35,
+          "type_role": "section-title",
+          "style_token": "section-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "quantities-list",
+          "type": "card",
+          "text": "Adjusted ingredients list",
+          "bbox_pt": [
+            21,
+            415,
+            349,
+            310
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "list-container",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "qty-pasta",
+          "type": "list-row",
+          "text": "Pasta · 300 g",
+          "bbox_pt": [
+            27,
+            421,
+            336,
+            59
+          ],
+          "rotation_deg": -0.15,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "qty-pasta-art",
+          "type": "illustration",
+          "text": "Pasta",
+          "bbox_pt": [
+            35,
+            430,
+            39,
+            41
+          ],
+          "rotation_deg": -0.6,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "qty-tomatoes",
+          "type": "list-row",
+          "text": "Tomatoes · 400 g",
+          "bbox_pt": [
+            27,
+            480,
+            336,
+            59
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "qty-tomatoes-art",
+          "type": "illustration",
+          "text": "Tomato",
+          "bbox_pt": [
+            35,
+            488,
+            39,
+            42
+          ],
+          "rotation_deg": 0.3,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "qty-oil",
+          "type": "list-row",
+          "text": "Olive oil · 30 ml",
+          "bbox_pt": [
+            27,
+            539,
+            336,
+            59
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "qty-oil-art",
+          "type": "illustration",
+          "text": "Oil bottle",
+          "bbox_pt": [
+            35,
+            547,
+            39,
+            42
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        },
+        {
+          "id": "qty-garlic",
+          "type": "list-row",
+          "text": "Garlic · 2 cloves",
+          "bbox_pt": [
+            27,
+            598,
+            336,
+            59
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 20
+        },
+        {
+          "id": "qty-garlic-art",
+          "type": "illustration",
+          "text": "Garlic",
+          "bbox_pt": [
+            35,
+            606,
+            39,
+            42
+          ],
+          "rotation_deg": 0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 21
+        },
+        {
+          "id": "qty-basil",
+          "type": "list-row",
+          "text": "Basil · 10 g",
+          "bbox_pt": [
+            27,
+            657,
+            336,
+            59
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "ingredient-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 22
+        },
+        {
+          "id": "qty-basil-art",
+          "type": "illustration",
+          "text": "Basil leaf",
+          "bbox_pt": [
+            35,
+            665,
+            39,
+            42
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 23
+        },
+        {
+          "id": "update-recipe-button",
+          "type": "button",
+          "text": "Update Recipe",
+          "bbox_pt": [
+            14,
+            736,
+            348,
+            66
+          ],
+          "rotation_deg": -0.45,
+          "type_role": "primary-button",
+          "style_token": "primary-button",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 24
+        }
+      ],
+      "notes": "One serving selector is selected (3) in green. The quantitative rows repeat exactly the same left icon and name column and right-aligned quantities."
+    },
+    {
+      "id": "swaps",
+      "title": "Ingredient Swaps",
+      "reference_image": "reference/rectified/09-ingredient-swaps.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "back-button",
+          "type": "icon-button",
+          "text": "Back",
+          "bbox_pt": [
+            18,
+            53,
+            34,
+            38
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "Ingredient Swaps",
+          "bbox_pt": [
+            82,
+            55,
+            232,
+            36
+          ],
+          "rotation_deg": 0.6,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "intro",
+          "type": "text",
+          "text": "Try these swaps",
+          "bbox_pt": [
+            20,
+            124,
+            165,
+            26
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "body-strong",
+          "style_token": "body-strong",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "swap-lemon",
+          "type": "swap-row",
+          "text": "Lemon",
+          "bbox_pt": [
+            18,
+            153,
+            354,
+            65
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "swap-option",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "swap-lemon-art",
+          "type": "illustration",
+          "text": "Lemon",
+          "bbox_pt": [
+            31,
+            162,
+            45,
+            45
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "swap-lemon-note",
+          "type": "text",
+          "text": "can be swapped with:",
+          "bbox_pt": [
+            86,
+            182,
+            154,
+            19
+          ],
+          "rotation_deg": 0,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "swap-lime",
+          "type": "swap-row",
+          "text": "Lime",
+          "bbox_pt": [
+            18,
+            224,
+            354,
+            65
+          ],
+          "rotation_deg": 0.3,
+          "type_role": "swap-selected",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "swap-lime-art",
+          "type": "illustration",
+          "text": "Lime",
+          "bbox_pt": [
+            31,
+            233,
+            45,
+            45
+          ],
+          "rotation_deg": 0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "swap-lime-check",
+          "type": "icon",
+          "text": "Selected check",
+          "bbox_pt": [
+            338,
+            243,
+            20,
+            20
+          ],
+          "rotation_deg": 0,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "swap-vinegar",
+          "type": "swap-row",
+          "text": "Vinegar",
+          "bbox_pt": [
+            18,
+            295,
+            354,
+            65
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "swap-option",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "swap-vinegar-art",
+          "type": "illustration",
+          "text": "Vinegar bottle",
+          "bbox_pt": [
+            31,
+            304,
+            45,
+            45
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "swap-vinegar-radio",
+          "type": "icon",
+          "text": "Radio outline",
+          "bbox_pt": [
+            339,
+            318,
+            18,
+            18
+          ],
+          "rotation_deg": 0,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "swap-orange",
+          "type": "swap-row",
+          "text": "Orange",
+          "bbox_pt": [
+            18,
+            366,
+            354,
+            65
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "swap-option",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "swap-orange-art",
+          "type": "illustration",
+          "text": "Orange",
+          "bbox_pt": [
+            31,
+            375,
+            45,
+            45
+          ],
+          "rotation_deg": 0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "swap-orange-radio",
+          "type": "icon",
+          "text": "Radio outline",
+          "bbox_pt": [
+            339,
+            389,
+            18,
+            18
+          ],
+          "rotation_deg": 0,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "why-heading",
+          "type": "text",
+          "text": "Why?",
+          "bbox_pt": [
+            20,
+            456,
+            84,
+            27
+          ],
+          "rotation_deg": -0.4,
+          "type_role": "section-title",
+          "style_token": "section-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "why-line-1",
+          "type": "text",
+          "text": "✓ Similar acidity and flavor profile.",
+          "bbox_pt": [
+            20,
+            490,
+            321,
+            22
+          ],
+          "rotation_deg": -0.1,
+          "type_role": "body-copy",
+          "style_token": "body-copy",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "why-line-2",
+          "type": "text",
+          "text": "✓ Works in the same type of recipes.",
+          "bbox_pt": [
+            20,
+            516,
+            332,
+            23
+          ],
+          "rotation_deg": 0.15,
+          "type_role": "body-copy",
+          "style_token": "body-copy",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        },
+        {
+          "id": "use-lime-button",
+          "type": "button",
+          "text": "Use Lime Instead",
+          "bbox_pt": [
+            21,
+            744,
+            350,
+            56
+          ],
+          "rotation_deg": -0.45,
+          "type_role": "primary-button",
+          "style_token": "primary-button",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 20
+        }
+      ],
+      "notes": "Four tall choice rows: artwork left, name and helper copy center-left, radio/check at right. Lime is selected in the reference."
+    },
+    {
+      "id": "meals",
+      "title": "Meal Suggestions",
+      "reference_image": "reference/rectified/10-meal-suggestions.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "back-button",
+          "type": "icon-button",
+          "text": "Back",
+          "bbox_pt": [
+            18,
+            53,
+            34,
+            39
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "Meal Suggestions",
+          "bbox_pt": [
+            59,
+            54,
+            275,
+            38
+          ],
+          "rotation_deg": -0.45,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "ready-tab",
+          "type": "chip",
+          "text": "Ready Now (2)",
+          "bbox_pt": [
+            4,
+            128,
+            129,
+            51
+          ],
+          "rotation_deg": -0.4,
+          "type_role": "filter-selected",
+          "style_token": "filter-selected",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "almost-tab",
+          "type": "chip",
+          "text": "Almost Ready (1)",
+          "bbox_pt": [
+            137,
+            129,
+            120,
+            50
+          ],
+          "rotation_deg": 0.35,
+          "type_role": "filter",
+          "style_token": "filter",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "swap-tab",
+          "type": "chip",
+          "text": "Smart Swap (1)",
+          "bbox_pt": [
+            263,
+            129,
+            111,
+            50
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "filter",
+          "style_token": "filter",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "meal-card-pasta",
+          "type": "meal-card",
+          "text": "Tomato Pasta · 15 min · 3 servings",
+          "bbox_pt": [
+            8,
+            208,
+            365,
+            159
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "meal-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "meal-pasta-status",
+          "type": "status-pill",
+          "text": "Ready Now",
+          "bbox_pt": [
+            15,
+            220,
+            116,
+            37
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "ready-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "meal-pasta-thumb",
+          "type": "illustration",
+          "text": "Tomato Pasta bowl",
+          "bbox_pt": [
+            14,
+            264,
+            111,
+            89
+          ],
+          "rotation_deg": -0.55,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "meal-pasta-title",
+          "type": "text",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            143,
+            225,
+            183,
+            29
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "meal-pasta-meta",
+          "type": "text",
+          "text": "15 min · 3 servings",
+          "bbox_pt": [
+            142,
+            264,
+            207,
+            25
+          ],
+          "rotation_deg": 0.1,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "meal-pasta-availability",
+          "type": "text",
+          "text": "All ingredients available",
+          "bbox_pt": [
+            142,
+            309,
+            215,
+            25
+          ],
+          "rotation_deg": -0.15,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "meal-card-chicken",
+          "type": "meal-card",
+          "text": "Chicken Stir-fry · 25 min · 2 servings",
+          "bbox_pt": [
+            8,
+            378,
+            365,
+            153
+          ],
+          "rotation_deg": 0.35,
+          "type_role": "meal-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "meal-chicken-status",
+          "type": "status-pill",
+          "text": "Ready Now",
+          "bbox_pt": [
+            15,
+            389,
+            116,
+            37
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "ready-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "meal-chicken-thumb",
+          "type": "illustration",
+          "text": "Chicken Stir-fry bowl",
+          "bbox_pt": [
+            14,
+            434,
+            111,
+            88
+          ],
+          "rotation_deg": 0.55,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "meal-chicken-title",
+          "type": "text",
+          "text": "Chicken Stir-fry",
+          "bbox_pt": [
+            143,
+            394,
+            203,
+            30
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "meal-chicken-meta",
+          "type": "text",
+          "text": "25 min · 2 servings",
+          "bbox_pt": [
+            142,
+            433,
+            207,
+            25
+          ],
+          "rotation_deg": -0.15,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "meal-card-curry",
+          "type": "meal-card",
+          "text": "Vegetable Curry · Missing coconut milk (optional)",
+          "bbox_pt": [
+            8,
+            539,
+            365,
+            160
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "meal-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "meal-curry-status",
+          "type": "status-pill",
+          "text": "Almost Ready",
+          "bbox_pt": [
+            15,
+            550,
+            126,
+            36
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "almost-ready-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        },
+        {
+          "id": "meal-curry-thumb",
+          "type": "illustration",
+          "text": "Vegetable curry bowl",
+          "bbox_pt": [
+            14,
+            595,
+            111,
+            91
+          ],
+          "rotation_deg": -0.4,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 20
+        },
+        {
+          "id": "meal-curry-title",
+          "type": "text",
+          "text": "Vegetable Curry",
+          "bbox_pt": [
+            143,
+            554,
+            207,
+            30
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 21
+        },
+        {
+          "id": "meal-curry-meta",
+          "type": "text",
+          "text": "35 min · 3 servings",
+          "bbox_pt": [
+            142,
+            592,
+            205,
+            25
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 22
+        },
+        {
+          "id": "meal-curry-missing",
+          "type": "text",
+          "text": "Missing: coconut milk (optional)",
+          "bbox_pt": [
+            142,
+            630,
+            217,
+            30
+          ],
+          "rotation_deg": 0.4,
+          "type_role": "warning-metadata",
+          "style_token": "warning-metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "text_color": "#C96658",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 23
+        },
+        {
+          "id": "meal-card-lentil",
+          "type": "meal-card",
+          "text": "Lentil Soup · Swap: chicken → lentils",
+          "bbox_pt": [
+            8,
+            707,
+            365,
+            137
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "meal-card",
+          "notes": "Reference card continues below the visible bottom edge; preserve source clipping/scroll rather than inventing a bottom tab bar.",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 24
+        },
+        {
+          "id": "meal-lentil-status",
+          "type": "status-pill",
+          "text": "Smart Swap",
+          "bbox_pt": [
+            15,
+            720,
+            124,
+            36
+          ],
+          "rotation_deg": 0.1,
+          "type_role": "smart-swap-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 25
+        },
+        {
+          "id": "meal-lentil-thumb",
+          "type": "illustration",
+          "text": "Lentil soup bowl",
+          "bbox_pt": [
+            14,
+            764,
+            111,
+            75
+          ],
+          "rotation_deg": 0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 26
+        },
+        {
+          "id": "meal-lentil-title",
+          "type": "text",
+          "text": "Lentil Soup",
+          "bbox_pt": [
+            143,
+            725,
+            190,
+            30
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 27
+        },
+        {
+          "id": "meal-lentil-meta",
+          "type": "text",
+          "text": "40 min · 4 servings",
+          "bbox_pt": [
+            142,
+            762,
+            205,
+            25
+          ],
+          "rotation_deg": 0.15,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 28
+        }
+      ],
+      "notes": "The fourth card is partially clipped by the bottom of the screenshot, with no visible bottom navigation. Do not compress the four cards equally to force all content above the fold."
+    },
+    {
+      "id": "lentil",
+      "title": "Lentil Soup / Steps",
+      "reference_image": "reference/rectified/11-lentil-soup.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "back-button",
+          "type": "icon-button",
+          "text": "Back",
+          "bbox_pt": [
+            18,
+            53,
+            33,
+            39
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "Lentil Soup",
+          "bbox_pt": [
+            64,
+            55,
+            203,
+            38
+          ],
+          "rotation_deg": 0.65,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "hero-dish",
+          "type": "illustration-frame",
+          "text": "Lentil soup bowl",
+          "bbox_pt": [
+            15,
+            101,
+            356,
+            85
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "hero-art",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "smart-swap-label",
+          "type": "status-pill",
+          "text": "Smart Swap",
+          "bbox_pt": [
+            17,
+            192,
+            101,
+            28
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "smart-swap-pill",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "time-meta",
+          "type": "text",
+          "text": "40 min · 4 servings",
+          "bbox_pt": [
+            126,
+            193,
+            171,
+            26
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "tab-ingredients",
+          "type": "segmented-option",
+          "text": "Ingredients",
+          "bbox_pt": [
+            18,
+            245,
+            177,
+            40
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "segmented",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "tab-steps",
+          "type": "segmented-option",
+          "text": "Steps",
+          "bbox_pt": [
+            196,
+            245,
+            175,
+            40
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "segmented-selected",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "step-1-number",
+          "type": "step-number",
+          "text": "1",
+          "bbox_pt": [
+            14,
+            296,
+            26,
+            28
+          ],
+          "rotation_deg": 0,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "step-1-title",
+          "type": "text",
+          "text": "Prep vegetables",
+          "bbox_pt": [
+            48,
+            295,
+            150,
+            22
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "item-title-small",
+          "style_token": "item-title-small",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 13,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "step-1-copy",
+          "type": "text",
+          "text": "Chop onion, carrot, celery.",
+          "bbox_pt": [
+            48,
+            316,
+            246,
+            19
+          ],
+          "rotation_deg": 0.1,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "step-2-number",
+          "type": "step-number",
+          "text": "2",
+          "bbox_pt": [
+            14,
+            354,
+            26,
+            28
+          ],
+          "rotation_deg": 0,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "step-2-title",
+          "type": "text",
+          "text": "Sauté",
+          "bbox_pt": [
+            48,
+            354,
+            91,
+            22
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "item-title-small",
+          "style_token": "item-title-small",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 13,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "step-2-copy",
+          "type": "text",
+          "text": "Cook in olive oil for 5 minutes.",
+          "bbox_pt": [
+            48,
+            375,
+            278,
+            19
+          ],
+          "rotation_deg": -0.1,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "step-3-number",
+          "type": "step-number",
+          "text": "3",
+          "bbox_pt": [
+            14,
+            413,
+            26,
+            28
+          ],
+          "rotation_deg": 0,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "step-3-title",
+          "type": "text",
+          "text": "Add lentils & broth",
+          "bbox_pt": [
+            48,
+            413,
+            187,
+            22
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "item-title-small",
+          "style_token": "item-title-small",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 13,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "step-3-copy",
+          "type": "text",
+          "text": "Simmer for 25 minutes.",
+          "bbox_pt": [
+            48,
+            434,
+            224,
+            19
+          ],
+          "rotation_deg": 0.15,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "step-4-number",
+          "type": "step-number",
+          "text": "4",
+          "bbox_pt": [
+            14,
+            472,
+            26,
+            28
+          ],
+          "rotation_deg": 0,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "step-4-title",
+          "type": "text",
+          "text": "Season",
+          "bbox_pt": [
+            48,
+            472,
+            90,
+            22
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "item-title-small",
+          "style_token": "item-title-small",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 13,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        },
+        {
+          "id": "step-4-copy",
+          "type": "text",
+          "text": "Add salt, pepper, herbs.",
+          "bbox_pt": [
+            48,
+            493,
+            224,
+            19
+          ],
+          "rotation_deg": -0.1,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 20
+        },
+        {
+          "id": "start-cooking-button",
+          "type": "button",
+          "text": "Start Cooking",
+          "bbox_pt": [
+            15,
+            793,
+            356,
+            50
+          ],
+          "rotation_deg": -0.4,
+          "type_role": "primary-button",
+          "style_token": "primary-button",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 21
+        }
+      ],
+      "notes": "Selected tab is Steps. Step numbers are small green filled circles; the text is compact and left-aligned with one-line title and one-line supporting instruction."
+    },
+    {
+      "id": "expiry",
+      "title": "Expiration Priority",
+      "reference_image": "reference/rectified/12-expiration-priority.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "back-button",
+          "type": "icon-button",
+          "text": "Back",
+          "bbox_pt": [
+            18,
+            54,
+            33,
+            37
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "Expiration Priority",
+          "bbox_pt": [
+            56,
+            55,
+            280,
+            38
+          ],
+          "rotation_deg": -0.4,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "alert-card",
+          "type": "alert",
+          "text": "3 items need to be used within 24–48 hours",
+          "bbox_pt": [
+            12,
+            101,
+            366,
+            75
+          ],
+          "rotation_deg": -0.3,
+          "type_role": "critical-alert",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "alert-icon",
+          "type": "icon",
+          "text": "Warning triangle",
+          "bbox_pt": [
+            21,
+            115,
+            27,
+            29
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "spinach-priority",
+          "type": "priority-row",
+          "text": "Spinach · Expires in 1 day",
+          "bbox_pt": [
+            14,
+            184,
+            362,
+            71
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "priority-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "spinach-priority-art",
+          "type": "illustration",
+          "text": "Spinach leaves",
+          "bbox_pt": [
+            20,
+            188,
+            52,
+            60
+          ],
+          "rotation_deg": -0.6,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "spinach-checkbox",
+          "type": "checkbox",
+          "text": "",
+          "bbox_pt": [
+            342,
+            206,
+            18,
+            18
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "beef-priority",
+          "type": "priority-row",
+          "text": "Ground Beef · Expires in 1 day",
+          "bbox_pt": [
+            14,
+            260,
+            362,
+            71
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "priority-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "beef-priority-art",
+          "type": "illustration",
+          "text": "Ground beef",
+          "bbox_pt": [
+            20,
+            264,
+            52,
+            60
+          ],
+          "rotation_deg": 0.45,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "beef-checkbox",
+          "type": "checkbox",
+          "text": "",
+          "bbox_pt": [
+            342,
+            282,
+            18,
+            18
+          ],
+          "rotation_deg": 1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "mozzarella-priority",
+          "type": "priority-row",
+          "text": "Mozzarella Cheese · Expires in 2 days",
+          "bbox_pt": [
+            14,
+            336,
+            362,
+            71
+          ],
+          "rotation_deg": 0.3,
+          "type_role": "priority-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "mozzarella-priority-art",
+          "type": "illustration",
+          "text": "Mozzarella cheese",
+          "bbox_pt": [
+            20,
+            340,
+            52,
+            60
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "mozzarella-checkbox",
+          "type": "checkbox",
+          "text": "",
+          "bbox_pt": [
+            342,
+            358,
+            18,
+            18
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "tips-card",
+          "type": "card",
+          "text": "Tips · Use these ingredients first to reduce food waste!",
+          "bbox_pt": [
+            16,
+            423,
+            358,
+            113
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "tip-card",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "tips-icon",
+          "type": "illustration",
+          "text": "Lightbulb",
+          "bbox_pt": [
+            26,
+            436,
+            33,
+            35
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "tips-title",
+          "type": "text",
+          "text": "Tips",
+          "bbox_pt": [
+            64,
+            435,
+            70,
+            25
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "section-title",
+          "style_token": "section-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "tips-copy-line-1",
+          "type": "text",
+          "text": "Use these ingredients first",
+          "bbox_pt": [
+            30,
+            471,
+            270,
+            22
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "body-copy",
+          "style_token": "body-copy",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "tips-copy-line-2",
+          "type": "text",
+          "text": "to reduce food waste!",
+          "bbox_pt": [
+            30,
+            495,
+            242,
+            22
+          ],
+          "rotation_deg": 0.1,
+          "type_role": "body-copy",
+          "style_token": "body-copy",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        }
+      ],
+      "notes": "Alert panel first, then three priority rows and a highlighted tips card. There is no persistent bottom navigation visible in this reference screen."
+    },
+    {
+      "id": "settings",
+      "title": "Settings",
+      "reference_image": "reference/rectified/13-settings.jpg",
+      "coordinate_space": {
+        "width_pt": 390,
+        "height_pt": 844,
+        "origin": "top-left of rectified visible mockup panel",
+        "rotation_positive": "clockwise",
+        "bbox_format": "[x,y,width,height] in logical points, approximate"
+      },
+      "elements": [
+        {
+          "id": "status-row",
+          "type": "status",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            16,
+            331,
+            23
+          ],
+          "rotation_deg": 0,
+          "type_role": "status",
+          "style_token": "status",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 1
+        },
+        {
+          "id": "settings-gear",
+          "type": "icon",
+          "text": "Settings gear",
+          "bbox_pt": [
+            19,
+            52,
+            31,
+            33
+          ],
+          "rotation_deg": -1,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 2
+        },
+        {
+          "id": "page-title",
+          "type": "text",
+          "text": "Settings",
+          "bbox_pt": [
+            55,
+            54,
+            120,
+            37
+          ],
+          "rotation_deg": 0.45,
+          "type_role": "page-title",
+          "style_token": "page-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 3
+        },
+        {
+          "id": "storage-zones-row",
+          "type": "settings-row",
+          "text": "Storage Zones · Pantry, Fridge, Freezer",
+          "bbox_pt": [
+            16,
+            108,
+            357,
+            75
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "settings-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 4
+        },
+        {
+          "id": "storage-zones-icon",
+          "type": "icon",
+          "text": "Storage cabinet",
+          "bbox_pt": [
+            26,
+            125,
+            28,
+            32
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 5
+        },
+        {
+          "id": "storage-zones-title",
+          "type": "text",
+          "text": "Storage Zones",
+          "bbox_pt": [
+            62,
+            119,
+            171,
+            24
+          ],
+          "rotation_deg": -0.25,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 6
+        },
+        {
+          "id": "storage-zones-subtitle",
+          "type": "text",
+          "text": "Pantry, Fridge, Freezer",
+          "bbox_pt": [
+            62,
+            146,
+            205,
+            20
+          ],
+          "rotation_deg": 0.1,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 7
+        },
+        {
+          "id": "units-row",
+          "type": "settings-row",
+          "text": "Units · Grams, milliliters, pieces",
+          "bbox_pt": [
+            16,
+            190,
+            357,
+            75
+          ],
+          "rotation_deg": 0.3,
+          "type_role": "settings-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 8
+        },
+        {
+          "id": "units-icon",
+          "type": "icon",
+          "text": "Measurement units",
+          "bbox_pt": [
+            26,
+            207,
+            28,
+            32
+          ],
+          "rotation_deg": 0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 9
+        },
+        {
+          "id": "units-title",
+          "type": "text",
+          "text": "Units",
+          "bbox_pt": [
+            62,
+            202,
+            95,
+            24
+          ],
+          "rotation_deg": 0.2,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 10
+        },
+        {
+          "id": "units-subtitle",
+          "type": "text",
+          "text": "Grams, milliliters, pieces",
+          "bbox_pt": [
+            62,
+            229,
+            212,
+            20
+          ],
+          "rotation_deg": -0.1,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 11
+        },
+        {
+          "id": "offline-row",
+          "type": "settings-row",
+          "text": "Offline Mode · Works without internet",
+          "bbox_pt": [
+            16,
+            272,
+            357,
+            75
+          ],
+          "rotation_deg": -0.2,
+          "type_role": "settings-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 12
+        },
+        {
+          "id": "offline-icon",
+          "type": "icon",
+          "text": "Offline symbol",
+          "bbox_pt": [
+            26,
+            289,
+            28,
+            32
+          ],
+          "rotation_deg": -0.5,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 13
+        },
+        {
+          "id": "offline-title",
+          "type": "text",
+          "text": "Offline Mode",
+          "bbox_pt": [
+            62,
+            284,
+            142,
+            24
+          ],
+          "rotation_deg": -0.15,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 14
+        },
+        {
+          "id": "offline-subtitle",
+          "type": "text",
+          "text": "Works without internet",
+          "bbox_pt": [
+            62,
+            310,
+            192,
+            20
+          ],
+          "rotation_deg": 0.15,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 15
+        },
+        {
+          "id": "offline-toggle",
+          "type": "toggle",
+          "text": "On",
+          "bbox_pt": [
+            320,
+            295,
+            44,
+            26
+          ],
+          "rotation_deg": 0,
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 16
+        },
+        {
+          "id": "about-row",
+          "type": "settings-row",
+          "text": "About · Version 1.0.0",
+          "bbox_pt": [
+            16,
+            354,
+            357,
+            75
+          ],
+          "rotation_deg": 0.25,
+          "type_role": "settings-row",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 17
+        },
+        {
+          "id": "about-icon",
+          "type": "icon",
+          "text": "About / information",
+          "bbox_pt": [
+            26,
+            371,
+            28,
+            32
+          ],
+          "rotation_deg": 0.45,
+          "measurement_confidence": "low-to-medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 18
+        },
+        {
+          "id": "about-title",
+          "type": "text",
+          "text": "About",
+          "bbox_pt": [
+            62,
+            367,
+            95,
+            24
+          ],
+          "rotation_deg": 0.1,
+          "type_role": "item-title",
+          "style_token": "item-title",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "text_color": "#282E28",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 19
+        },
+        {
+          "id": "about-subtitle",
+          "type": "text",
+          "text": "Version 1.0.0",
+          "bbox_pt": [
+            62,
+            394,
+            140,
+            20
+          ],
+          "rotation_deg": -0.15,
+          "type_role": "metadata",
+          "style_token": "metadata",
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "text_color": "#6B604F",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 20
+        },
+        {
+          "id": "bottom-navigation",
+          "type": "navigation",
+          "text": "Home / Inventory / Add / Recipes / More",
+          "bbox_pt": [
+            0,
+            752,
+            390,
+            78
+          ],
+          "rotation_deg": 0,
+          "type_role": "bottom-nav",
+          "measurement_confidence": "medium",
+          "bbox_tolerance_pt": {
+            "x": 6,
+            "y": 7,
+            "w": 8,
+            "h": 8
+          },
+          "overlay_index": 21
+        }
+      ],
+      "notes": "Handwritten explanatory text under the phone and the sticky-note card overlapping the source collage are annotations, not in-app content. Omit them in the actual screen. The source panel lower-right is occluded by a presentation sticky note; it is not UI. Derive obscured tab-bar detail from the Home screen."
+    }
+  ]
+}

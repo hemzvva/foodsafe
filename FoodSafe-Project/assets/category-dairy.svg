@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 110" role="img" aria-label="Hand-drawn milk bottle category icon"><defs>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx=".7" dy="1.5" stdDeviation="1.1" flood-color="#7A6245" flood-opacity=".14"/></filter>
+ <pattern id="grain" width="13" height="13" patternUnits="userSpaceOnUse"><path d="M2 4l2-.5M9 10l1.5-.5" stroke="#CBB995" stroke-width=".45" opacity=".22"/></pattern>
+ </defs>
+ <rect width="120" height="110" rx="15" fill="#F8EED9"/>
+ <rect width="120" height="110" rx="15" fill="url(#grain)"/>
+ <path d="M13 17l3 6 6 1-5 4-1 6-4-5-6-1 5-4Z" fill="#EAB95B" stroke="#5A4B38" stroke-width=".8"/>
+ <path d="M98 18q5-5 9 0q-4 2-6 7" fill="none" stroke="#4E8060" stroke-width="1.7" stroke-linecap="round"/>
+ <path d="M12 91l5-3m-2 7 3-4" stroke="#D96F51" stroke-width="1.6" stroke-linecap="round"/>
+<g filter="url(#shadow)">
+<path d="M46 19h26v12l7 10v47q-20 10-40 0V41l7-10Z" fill="#EAF2E7" stroke="#5A4B38" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M46 19v-6h26v6M40 49q20 7 39 0" fill="none" stroke="#5A4B38" stroke-width="1.8"/>
+<path d="M48 60q9-12 18 0q-9 13-18 0Z" fill="#84B9CF" stroke="#5A4B38" stroke-width="1.2"/>
+<path d="M53 74q8 4 14 0" fill="none" stroke="#9FCBDE" stroke-width="2" stroke-linecap="round"/>
+</g></svg>

@@ -1,0 +1,5179 @@
+{
+  "title": "FoodSafe individual text-run coordinate map",
+  "version": "1.0",
+  "source": "Flattened 1536x1024 JPEG, manually perspective rectified per screen",
+  "coordinate_convention": {
+    "canvas_pt": [
+      390,
+      844
+    ],
+    "origin": "top-left",
+    "bbox_pt": "[x,y,width,height] of visible text run/line on rectified canvas",
+    "rotation_deg": "clockwise-positive rotation of the text wrapper, estimated target not recovered original transform",
+    "accuracy": "medium estimate; typically ±5pt x/y and ±6–7pt size/width due original panel perspective and JPEG resolution",
+    "font": "All app-authored text must use FoodSafe Hand / Purisa Regular except the source-derived brand wordmark; native iOS status UI remains OS-owned."
+  },
+  "screens": [
+    {
+      "id": "welcome",
+      "title": "Welcome / onboarding",
+      "text_runs": [
+        {
+          "id": "tagline-1",
+          "text": "Good food.",
+          "bbox_pt": [
+            101,
+            243,
+            192,
+            37
+          ],
+          "type_role": "tagline",
+          "rotation_deg": -1.0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#315C43",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tagline-2",
+          "text": "Less waste.",
+          "bbox_pt": [
+            101,
+            278,
+            204,
+            37
+          ],
+          "type_role": "tagline",
+          "rotation_deg": -1.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#315C43",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "support-1",
+          "text": "Your Kitchen.",
+          "bbox_pt": [
+            61,
+            590,
+            234,
+            33
+          ],
+          "type_role": "support",
+          "rotation_deg": -2.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 18,
+          "color": "#514B3E",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "support-2",
+          "text": "Your ingredients.",
+          "bbox_pt": [
+            73,
+            620,
+            224,
+            34
+          ],
+          "type_role": "support",
+          "rotation_deg": -2.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 18,
+          "color": "#514B3E",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "support-3",
+          "text": "Better meals.",
+          "bbox_pt": [
+            88,
+            654,
+            182,
+            33
+          ],
+          "type_role": "support",
+          "rotation_deg": -2.0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 18,
+          "color": "#514B3E",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "get-started",
+          "text": "Get Started",
+          "bbox_pt": [
+            95,
+            730,
+            188,
+            28
+          ],
+          "type_role": "button-label",
+          "rotation_deg": -0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "sign-in",
+          "text": "Sign In",
+          "bbox_pt": [
+            147,
+            790,
+            91,
+            25
+          ],
+          "type_role": "secondary-action",
+          "rotation_deg": 0.6,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#315C43",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "home",
+      "title": "My Kitchen",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            29,
+            18,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "My Kitchen",
+          "bbox_pt": [
+            91,
+            51,
+            160,
+            34
+          ],
+          "type_role": "page-title",
+          "rotation_deg": -0.8,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "zone-fridge",
+          "text": "Fridge",
+          "bbox_pt": [
+            40,
+            124,
+            70,
+            27
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.5,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "zone-pantry",
+          "text": "Pantry",
+          "bbox_pt": [
+            162,
+            126,
+            71,
+            25
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "zone-freezer",
+          "text": "Freezer",
+          "bbox_pt": [
+            281,
+            124,
+            75,
+            27
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "search-placeholder",
+          "text": "Search ingredients…",
+          "bbox_pt": [
+            76,
+            191,
+            235,
+            24
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "category-vegetables",
+          "text": "Vegetables",
+          "bbox_pt": [
+            28,
+            307,
+            68,
+            16
+          ],
+          "type_role": "category-label",
+          "rotation_deg": -0.5,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "category-fruits",
+          "text": "Fruits",
+          "bbox_pt": [
+            137,
+            307,
+            45,
+            16
+          ],
+          "type_role": "category-label",
+          "rotation_deg": 0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "category-dairy",
+          "text": "Dairy",
+          "bbox_pt": [
+            233,
+            307,
+            41,
+            16
+          ],
+          "type_role": "category-label",
+          "rotation_deg": -0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "category-grains",
+          "text": "Grains",
+          "bbox_pt": [
+            316,
+            307,
+            45,
+            16
+          ],
+          "type_role": "category-label",
+          "rotation_deg": 0.5,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "category-proteins",
+          "text": "Proteins",
+          "bbox_pt": [
+            30,
+            404,
+            64,
+            16
+          ],
+          "type_role": "category-label",
+          "rotation_deg": 0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "category-others",
+          "text": "Others",
+          "bbox_pt": [
+            135,
+            404,
+            48,
+            16
+          ],
+          "type_role": "category-label",
+          "rotation_deg": -0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "category-leaves",
+          "text": "Leaves",
+          "bbox_pt": [
+            222,
+            404,
+            62,
+            16
+          ],
+          "type_role": "category-label",
+          "rotation_deg": 0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          },
+          "notes": "Source caption is low-resolution but appears to read Leaves."
+        },
+        {
+          "id": "quick-overview",
+          "text": "Quick Overview",
+          "bbox_pt": [
+            20,
+            436,
+            176,
+            23
+          ],
+          "type_role": "section-title",
+          "rotation_deg": -0.45,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "attention-summary",
+          "text": "3 items need attention",
+          "bbox_pt": [
+            68,
+            478,
+            222,
+            23
+          ],
+          "type_role": "alert-label",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12.5,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "expiring-title",
+          "text": "Expiring Soon",
+          "bbox_pt": [
+            86,
+            530,
+            126,
+            20
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "expiring-sub",
+          "text": "2 items · within 24h",
+          "bbox_pt": [
+            86,
+            552,
+            150,
+            18
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "low-stock-title",
+          "text": "Low Stock",
+          "bbox_pt": [
+            86,
+            608,
+            105,
+            20
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "low-stock-sub",
+          "text": "4 items",
+          "bbox_pt": [
+            86,
+            632,
+            74,
+            17
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "almost-empty-title",
+          "text": "Almost Empty",
+          "bbox_pt": [
+            86,
+            686,
+            136,
+            20
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "almost-empty-sub",
+          "text": "2 items",
+          "bbox_pt": [
+            86,
+            709,
+            76,
+            17
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-home",
+          "text": "Home",
+          "bbox_pt": [
+            26,
+            807,
+            34,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-inventory",
+          "text": "Inventory",
+          "bbox_pt": [
+            86,
+            807,
+            62,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-recipes",
+          "text": "Recipes",
+          "bbox_pt": [
+            251,
+            807,
+            52,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-more",
+          "text": "More",
+          "bbox_pt": [
+            332,
+            807,
+            34,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "add",
+      "title": "Add Ingredient",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "Add Ingredient",
+          "bbox_pt": [
+            101,
+            57,
+            193,
+            31
+          ],
+          "type_role": "page-title",
+          "rotation_deg": 0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tomato-name",
+          "text": "Tomatoes",
+          "bbox_pt": [
+            178,
+            145,
+            131,
+            31
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.7,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "vegetable-chip",
+          "text": "Vegetable",
+          "bbox_pt": [
+            206,
+            199,
+            80,
+            20
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "quantity-label",
+          "text": "Quantity",
+          "bbox_pt": [
+            20,
+            276,
+            88,
+            20
+          ],
+          "type_role": "field-label",
+          "rotation_deg": -0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "quantity-value",
+          "text": "500",
+          "bbox_pt": [
+            39,
+            312,
+            43,
+            28
+          ],
+          "type_role": "field-value",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "unit-value",
+          "text": "g",
+          "bbox_pt": [
+            276,
+            313,
+            19,
+            26
+          ],
+          "type_role": "field-value",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "storage-label",
+          "text": "Storage Zone",
+          "bbox_pt": [
+            20,
+            386,
+            144,
+            22
+          ],
+          "type_role": "field-label",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "storage-pantry",
+          "text": "Pantry",
+          "bbox_pt": [
+            62,
+            434,
+            55,
+            25
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "storage-fridge",
+          "text": "Fridge",
+          "bbox_pt": [
+            186,
+            433,
+            62,
+            25
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.35,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "storage-freezer",
+          "text": "Freezer",
+          "bbox_pt": [
+            293,
+            434,
+            67,
+            25
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "expiration-label",
+          "text": "Expiration Date",
+          "bbox_pt": [
+            20,
+            504,
+            151,
+            22
+          ],
+          "type_role": "field-label",
+          "rotation_deg": -0.45,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "expiration-value",
+          "text": "Apr 20, 2026",
+          "bbox_pt": [
+            80,
+            552,
+            139,
+            25
+          ],
+          "type_role": "field-value",
+          "rotation_deg": 0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "notes-label",
+          "text": "Notes",
+          "bbox_pt": [
+            20,
+            622,
+            55,
+            22
+          ],
+          "type_role": "field-label",
+          "rotation_deg": 0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "notes-optional",
+          "text": "(optional)",
+          "bbox_pt": [
+            79,
+            625,
+            72,
+            18
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "notes-placeholder",
+          "text": "e.g. organic, fresh, etc.",
+          "bbox_pt": [
+            28,
+            666,
+            245,
+            23
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "save-label",
+          "text": "Save",
+          "bbox_pt": [
+            171,
+            759,
+            50,
+            24
+          ],
+          "type_role": "button-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "inventory",
+      "title": "Inventory",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "Inventory",
+          "bbox_pt": [
+            129,
+            57,
+            132,
+            29
+          ],
+          "type_role": "page-title",
+          "rotation_deg": -0.65,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "search-placeholder",
+          "text": "Search…",
+          "bbox_pt": [
+            48,
+            111,
+            108,
+            21
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "filter-all",
+          "text": "All",
+          "bbox_pt": [
+            28,
+            159,
+            24,
+            18
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.5,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "filter-fridge",
+          "text": "Fridge",
+          "bbox_pt": [
+            80,
+            159,
+            39,
+            18
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "filter-pantry",
+          "text": "Pantry",
+          "bbox_pt": [
+            149,
+            159,
+            43,
+            18
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "filter-freezer",
+          "text": "Freezer",
+          "bbox_pt": [
+            218,
+            159,
+            50,
+            18
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tomato-soon",
+          "text": "Soon",
+          "bbox_pt": [
+            334,
+            212,
+            28,
+            14
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tomato-name",
+          "text": "Tomatoes",
+          "bbox_pt": [
+            70,
+            199,
+            90,
+            17
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tomato-meta",
+          "text": "50 g · Fridge",
+          "bbox_pt": [
+            70,
+            216,
+            105,
+            14
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tomato-exp",
+          "text": "Exp: 2 days",
+          "bbox_pt": [
+            70,
+            231,
+            92,
+            14
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "eggs-name",
+          "text": "Eggs",
+          "bbox_pt": [
+            70,
+            263,
+            52,
+            17
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "eggs-meta",
+          "text": "6 pcs · Fridge",
+          "bbox_pt": [
+            70,
+            279,
+            109,
+            14
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "eggs-exp",
+          "text": "Exp: 5 days",
+          "bbox_pt": [
+            70,
+            294,
+            92,
+            14
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "spinach-soon",
+          "text": "Soon",
+          "bbox_pt": [
+            334,
+            339,
+            28,
+            14
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0.35,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "spinach-name",
+          "text": "Spinach",
+          "bbox_pt": [
+            70,
+            327,
+            76,
+            17
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "spinach-meta",
+          "text": "2 pcs · Fridge",
+          "bbox_pt": [
+            70,
+            343,
+            110,
+            14
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "spinach-exp",
+          "text": "Exp: 1 day",
+          "bbox_pt": [
+            70,
+            358,
+            83,
+            14
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-name",
+          "text": "Pasta",
+          "bbox_pt": [
+            70,
+            391,
+            57,
+            17
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-meta",
+          "text": "50 g · Pantry",
+          "bbox_pt": [
+            70,
+            407,
+            107,
+            14
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-exp",
+          "text": "Exp: 6 months",
+          "bbox_pt": [
+            70,
+            422,
+            104,
+            14
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "oil-name",
+          "text": "Olive Oil",
+          "bbox_pt": [
+            70,
+            455,
+            84,
+            17
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "oil-meta",
+          "text": "1 L · Pantry",
+          "bbox_pt": [
+            70,
+            471,
+            99,
+            14
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "oil-exp",
+          "text": "Exp: 1 year",
+          "bbox_pt": [
+            70,
+            486,
+            87,
+            14
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-soon",
+          "text": "Soon",
+          "bbox_pt": [
+            334,
+            533,
+            28,
+            14
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-name",
+          "text": "Chicken Breast",
+          "bbox_pt": [
+            70,
+            519,
+            129,
+            17
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-meta",
+          "text": "400 g · Fridge",
+          "bbox_pt": [
+            70,
+            535,
+            110,
+            14
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-exp",
+          "text": "Exp: 3 days",
+          "bbox_pt": [
+            70,
+            550,
+            92,
+            14
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-home",
+          "text": "Home",
+          "bbox_pt": [
+            26,
+            807,
+            34,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-inventory",
+          "text": "Inventory",
+          "bbox_pt": [
+            86,
+            807,
+            62,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-recipes",
+          "text": "Recipes",
+          "bbox_pt": [
+            251,
+            807,
+            52,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-more",
+          "text": "More",
+          "bbox_pt": [
+            332,
+            807,
+            34,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "suggestions",
+      "title": "Recipe Suggestions",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "Recipe Suggestions",
+          "bbox_pt": [
+            61,
+            56,
+            304,
+            34
+          ],
+          "type_role": "page-title",
+          "rotation_deg": 0.75,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-for-you",
+          "text": "For You",
+          "bbox_pt": [
+            34,
+            132,
+            73,
+            24
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.55,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-by-ingredient",
+          "text": "By Ingredient",
+          "bbox_pt": [
+            147,
+            132,
+            110,
+            24
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-by-season",
+          "text": "By Season",
+          "bbox_pt": [
+            283,
+            132,
+            76,
+            24
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "based-on",
+          "text": "Based on your kitchen",
+          "bbox_pt": [
+            20,
+            200,
+            194,
+            22
+          ],
+          "type_role": "body-strong",
+          "rotation_deg": -0.35,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "sort-label",
+          "text": "Sort: Best Match",
+          "bbox_pt": [
+            236,
+            200,
+            130,
+            21
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "ready-now",
+          "text": "Ready Now",
+          "bbox_pt": [
+            87,
+            255,
+            102,
+            23
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#315C43",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-title",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            125,
+            302,
+            143,
+            25
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-meta",
+          "text": "15 min · 3 servings",
+          "bbox_pt": [
+            126,
+            335,
+            167,
+            22
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-status",
+          "text": "Almost Ready",
+          "bbox_pt": [
+            120,
+            415,
+            122,
+            23
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#9E6C2A",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-title",
+          "text": "Chicken Stir-fry",
+          "bbox_pt": [
+            126,
+            448,
+            177,
+            23
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-meta",
+          "text": "25 min · 2 servings",
+          "bbox_pt": [
+            126,
+            477,
+            173,
+            22
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-missing",
+          "text": "Missing: Soy Sauce (optional)",
+          "bbox_pt": [
+            126,
+            502,
+            223,
+            19
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lentil-status",
+          "text": "Smart Swap",
+          "bbox_pt": [
+            120,
+            580,
+            104,
+            23
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#477F95",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lentil-title",
+          "text": "Lentil Soup",
+          "bbox_pt": [
+            126,
+            613,
+            132,
+            23
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lentil-meta",
+          "text": "40 min · 4 servings",
+          "bbox_pt": [
+            126,
+            642,
+            172,
+            22
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lentil-swap",
+          "text": "Swap: chicken → lentils",
+          "bbox_pt": [
+            126,
+            671,
+            210,
+            19
+          ],
+          "type_role": "swap-metadata",
+          "rotation_deg": 0.35,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.3,
+          "color": "#B87937",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "view-all-label",
+          "text": "View All Suggestions",
+          "bbox_pt": [
+            83,
+            752,
+            220,
+            29
+          ],
+          "type_role": "button-label",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "title": "Tomato Pasta detail",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "recipe-title",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            15,
+            235,
+            254,
+            39
+          ],
+          "type_role": "recipe-title",
+          "rotation_deg": -0.8,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 27,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "ready-chip",
+          "text": "Ready Now",
+          "bbox_pt": [
+            50,
+            296,
+            91,
+            22
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#315C43",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "time-servings",
+          "text": "15 min · 3 servings",
+          "bbox_pt": [
+            179,
+            297,
+            185,
+            24
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "ingredients-heading",
+          "text": "Ingredients",
+          "bbox_pt": [
+            21,
+            353,
+            142,
+            25
+          ],
+          "type_role": "section-title",
+          "rotation_deg": -0.35,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-name",
+          "text": "Pasta",
+          "bbox_pt": [
+            83,
+            400,
+            72,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-amount",
+          "text": "300 g",
+          "bbox_pt": [
+            280,
+            399,
+            53,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tomatoes-name",
+          "text": "Tomatoes",
+          "bbox_pt": [
+            83,
+            448,
+            85,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tomatoes-amount",
+          "text": "400 g",
+          "bbox_pt": [
+            280,
+            447,
+            53,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "oil-name",
+          "text": "Olive oil",
+          "bbox_pt": [
+            83,
+            496,
+            82,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "oil-amount",
+          "text": "30 ml",
+          "bbox_pt": [
+            280,
+            495,
+            53,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "garlic-name",
+          "text": "Garlic",
+          "bbox_pt": [
+            83,
+            544,
+            65,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "garlic-amount",
+          "text": "2 cloves",
+          "bbox_pt": [
+            272,
+            543,
+            68,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "basil-name",
+          "text": "Basil",
+          "bbox_pt": [
+            83,
+            592,
+            60,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "basil-amount",
+          "text": "10 g",
+          "bbox_pt": [
+            286,
+            591,
+            46,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "salt-name",
+          "text": "Salt",
+          "bbox_pt": [
+            83,
+            639,
+            51,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "salt-amount",
+          "text": "1 g",
+          "bbox_pt": [
+            300,
+            638,
+            32,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pepper-name",
+          "text": "Pepper",
+          "bbox_pt": [
+            83,
+            683,
+            69,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pepper-amount",
+          "text": "2 g",
+          "bbox_pt": [
+            297,
+            682,
+            35,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "start-cooking-label",
+          "text": "Start Cooking",
+          "bbox_pt": [
+            89,
+            761,
+            175,
+            28
+          ],
+          "type_role": "button-label",
+          "rotation_deg": -0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "cooking",
+      "title": "Cooking step",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "Cooking…",
+          "bbox_pt": [
+            120,
+            55,
+            154,
+            35
+          ],
+          "type_role": "page-title",
+          "rotation_deg": 0.65,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "summary-recipe",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            96,
+            121,
+            181,
+            24
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "summary-step",
+          "text": "Step 2 of 7",
+          "bbox_pt": [
+            98,
+            155,
+            119,
+            21
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step-heading",
+          "text": "2. Cook the pasta",
+          "bbox_pt": [
+            28,
+            417,
+            285,
+            35
+          ],
+          "type_role": "recipe-title-small",
+          "rotation_deg": -0.65,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 21,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "instruction-1",
+          "text": "Bring a large pot of salted water to",
+          "bbox_pt": [
+            29,
+            468,
+            330,
+            27
+          ],
+          "type_role": "body-copy",
+          "rotation_deg": -0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "instruction-2",
+          "text": "a boil. Add pasta and cook for 8–10",
+          "bbox_pt": [
+            29,
+            500,
+            334,
+            27
+          ],
+          "type_role": "body-copy",
+          "rotation_deg": 0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "instruction-3",
+          "text": "minutes (or according to package",
+          "bbox_pt": [
+            29,
+            532,
+            335,
+            27
+          ],
+          "type_role": "body-copy",
+          "rotation_deg": -0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "instruction-4",
+          "text": "instructions).",
+          "bbox_pt": [
+            29,
+            564,
+            188,
+            25
+          ],
+          "type_role": "body-copy",
+          "rotation_deg": 0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "timer",
+          "text": "03:42 left",
+          "bbox_pt": [
+            283,
+            617,
+            81,
+            21
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "scaled-label",
+          "text": "Scaled for 3 servings",
+          "bbox_pt": [
+            65,
+            678,
+            200,
+            25
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "back-label",
+          "text": "Back",
+          "bbox_pt": [
+            72,
+            761,
+            65,
+            27
+          ],
+          "type_role": "secondary-action",
+          "rotation_deg": -0.45,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#315C43",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "next-label",
+          "text": "Next",
+          "bbox_pt": [
+            251,
+            761,
+            65,
+            27
+          ],
+          "type_role": "button-label",
+          "rotation_deg": -0.55,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "scaling",
+      "title": "Portion Scaling",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "Portion Scaling",
+          "bbox_pt": [
+            90,
+            61,
+            221,
+            34
+          ],
+          "type_role": "page-title",
+          "rotation_deg": -0.7,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "recipe-name",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            91,
+            157,
+            181,
+            25
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "adjust-servings",
+          "text": "Adjust servings",
+          "bbox_pt": [
+            23,
+            241,
+            187,
+            24
+          ],
+          "type_role": "section-title",
+          "rotation_deg": -0.45,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "serving-1",
+          "text": "1",
+          "bbox_pt": [
+            52,
+            301,
+            20,
+            29
+          ],
+          "type_role": "field-value",
+          "rotation_deg": -0.45,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "serving-2",
+          "text": "2",
+          "bbox_pt": [
+            142,
+            301,
+            20,
+            29
+          ],
+          "type_role": "field-value",
+          "rotation_deg": 0.45,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "serving-3",
+          "text": "3",
+          "bbox_pt": [
+            230,
+            300,
+            20,
+            29
+          ],
+          "type_role": "field-value",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "serving-4",
+          "text": "4",
+          "bbox_pt": [
+            320,
+            301,
+            20,
+            29
+          ],
+          "type_role": "field-value",
+          "rotation_deg": 0.35,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "adjusted-quantities",
+          "text": "Adjusted Quantities",
+          "bbox_pt": [
+            23,
+            382,
+            223,
+            25
+          ],
+          "type_role": "section-title",
+          "rotation_deg": -0.35,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-name",
+          "text": "Pasta",
+          "bbox_pt": [
+            88,
+            444,
+            72,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-amount",
+          "text": "300 g",
+          "bbox_pt": [
+            299,
+            443,
+            53,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tomatoes-name",
+          "text": "Tomatoes",
+          "bbox_pt": [
+            88,
+            503,
+            85,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tomatoes-amount",
+          "text": "400 g",
+          "bbox_pt": [
+            299,
+            502,
+            53,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "oil-name",
+          "text": "Olive oil",
+          "bbox_pt": [
+            88,
+            562,
+            82,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "oil-amount",
+          "text": "30 ml",
+          "bbox_pt": [
+            299,
+            561,
+            53,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "garlic-name",
+          "text": "Garlic",
+          "bbox_pt": [
+            88,
+            621,
+            65,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "garlic-amount",
+          "text": "2 cloves",
+          "bbox_pt": [
+            291,
+            620,
+            68,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "basil-name",
+          "text": "Basil",
+          "bbox_pt": [
+            88,
+            680,
+            60,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "basil-amount",
+          "text": "10 g",
+          "bbox_pt": [
+            305,
+            679,
+            46,
+            22
+          ],
+          "type_role": "quantity",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "update-label",
+          "text": "Update Recipe",
+          "bbox_pt": [
+            87,
+            755,
+            218,
+            31
+          ],
+          "type_role": "button-label",
+          "rotation_deg": -0.45,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "swaps",
+      "title": "Ingredient Swaps",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "Ingredient Swaps",
+          "bbox_pt": [
+            82,
+            57,
+            232,
+            31
+          ],
+          "type_role": "page-title",
+          "rotation_deg": 0.6,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "intro",
+          "text": "Try these swaps",
+          "bbox_pt": [
+            20,
+            125,
+            165,
+            22
+          ],
+          "type_role": "body-strong",
+          "rotation_deg": -0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lemon-name",
+          "text": "Lemon",
+          "bbox_pt": [
+            86,
+            164,
+            77,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lemon-sub",
+          "text": "can be swapped with:",
+          "bbox_pt": [
+            86,
+            184,
+            154,
+            17
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lime-name",
+          "text": "Lime",
+          "bbox_pt": [
+            86,
+            237,
+            64,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "vinegar-name",
+          "text": "Vinegar",
+          "bbox_pt": [
+            86,
+            308,
+            88,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "orange-name",
+          "text": "Orange",
+          "bbox_pt": [
+            86,
+            379,
+            84,
+            22
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "why",
+          "text": "Why?",
+          "bbox_pt": [
+            20,
+            459,
+            84,
+            23
+          ],
+          "type_role": "section-title",
+          "rotation_deg": -0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "why-1",
+          "text": "✓ Similar acidity and flavor profile.",
+          "bbox_pt": [
+            20,
+            491,
+            321,
+            19
+          ],
+          "type_role": "body-copy",
+          "rotation_deg": -0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "why-2",
+          "text": "✓ Works in the same type of recipes.",
+          "bbox_pt": [
+            20,
+            517,
+            332,
+            20
+          ],
+          "type_role": "body-copy",
+          "rotation_deg": 0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "use-lime-label",
+          "text": "Use Lime Instead",
+          "bbox_pt": [
+            89,
+            759,
+            214,
+            28
+          ],
+          "type_role": "button-label",
+          "rotation_deg": -0.45,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "meals",
+      "title": "Meal Suggestions",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "Meal Suggestions",
+          "bbox_pt": [
+            59,
+            57,
+            275,
+            34
+          ],
+          "type_role": "page-title",
+          "rotation_deg": -0.45,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-ready",
+          "text": "Ready Now (2)",
+          "bbox_pt": [
+            12,
+            142,
+            113,
+            22
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-almost",
+          "text": "Almost Ready (1)",
+          "bbox_pt": [
+            145,
+            142,
+            108,
+            22
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.35,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-smart",
+          "text": "Smart Swap (1)",
+          "bbox_pt": [
+            276,
+            142,
+            90,
+            22
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-status",
+          "text": "Ready Now",
+          "bbox_pt": [
+            18,
+            227,
+            110,
+            25
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#315C43",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-title",
+          "text": "Tomato Pasta",
+          "bbox_pt": [
+            143,
+            228,
+            183,
+            26
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-meta",
+          "text": "15 min · 3 servings",
+          "bbox_pt": [
+            142,
+            266,
+            207,
+            22
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "pasta-availability",
+          "text": "All ingredients available",
+          "bbox_pt": [
+            142,
+            310,
+            215,
+            22
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-status",
+          "text": "Ready Now",
+          "bbox_pt": [
+            18,
+            396,
+            110,
+            25
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#315C43",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-title",
+          "text": "Chicken Stir-fry",
+          "bbox_pt": [
+            143,
+            398,
+            203,
+            26
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "chicken-meta",
+          "text": "25 min · 2 servings",
+          "bbox_pt": [
+            142,
+            435,
+            207,
+            22
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "curry-status",
+          "text": "Almost Ready",
+          "bbox_pt": [
+            17,
+            557,
+            121,
+            25
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#9E6C2A",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "curry-title",
+          "text": "Vegetable Curry",
+          "bbox_pt": [
+            143,
+            557,
+            207,
+            26
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "curry-meta",
+          "text": "35 min · 3 servings",
+          "bbox_pt": [
+            142,
+            594,
+            205,
+            22
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "curry-missing",
+          "text": "Missing: coconut milk (optional)",
+          "bbox_pt": [
+            142,
+            631,
+            217,
+            25
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lentil-status",
+          "text": "Smart Swap",
+          "bbox_pt": [
+            18,
+            727,
+            120,
+            25
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#477F95",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lentil-title",
+          "text": "Lentil Soup",
+          "bbox_pt": [
+            143,
+            728,
+            190,
+            26
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lentil-meta",
+          "text": "40 min · 4 servings",
+          "bbox_pt": [
+            142,
+            765,
+            205,
+            22
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "lentil-swap",
+          "text": "Swap: chicken → lentils",
+          "bbox_pt": [
+            142,
+            790,
+            210,
+            22
+          ],
+          "type_role": "swap-metadata",
+          "rotation_deg": 0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.3,
+          "color": "#B87937",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "lentil",
+      "title": "Lentil Soup / Steps",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "Lentil Soup",
+          "bbox_pt": [
+            64,
+            58,
+            203,
+            33
+          ],
+          "type_role": "page-title",
+          "rotation_deg": 0.65,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "smart-swap",
+          "text": "Smart Swap",
+          "bbox_pt": [
+            40,
+            196,
+            80,
+            20
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#477F95",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "time-meta",
+          "text": "40 min · 4 servings",
+          "bbox_pt": [
+            126,
+            195,
+            171,
+            22
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "ingredients-tab",
+          "text": "Ingredients",
+          "bbox_pt": [
+            62,
+            255,
+            94,
+            20
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "steps-tab",
+          "text": "Steps",
+          "bbox_pt": [
+            257,
+            255,
+            55,
+            20
+          ],
+          "type_role": "chip-label",
+          "rotation_deg": 0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step1-number",
+          "text": "1",
+          "bbox_pt": [
+            21,
+            299,
+            12,
+            20
+          ],
+          "type_role": "step-number",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step1-title",
+          "text": "Prep vegetables",
+          "bbox_pt": [
+            48,
+            297,
+            150,
+            18
+          ],
+          "type_role": "item-title-small",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 13,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step1-copy",
+          "text": "Chop onion, carrot, celery.",
+          "bbox_pt": [
+            48,
+            318,
+            246,
+            16
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step2-number",
+          "text": "2",
+          "bbox_pt": [
+            21,
+            357,
+            12,
+            20
+          ],
+          "type_role": "step-number",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step2-title",
+          "text": "Sauté",
+          "bbox_pt": [
+            48,
+            356,
+            91,
+            18
+          ],
+          "type_role": "item-title-small",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 13,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step2-copy",
+          "text": "Cook in olive oil for 5 minutes.",
+          "bbox_pt": [
+            48,
+            377,
+            278,
+            16
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step3-number",
+          "text": "3",
+          "bbox_pt": [
+            21,
+            416,
+            12,
+            20
+          ],
+          "type_role": "step-number",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step3-title",
+          "text": "Add lentils & broth",
+          "bbox_pt": [
+            48,
+            415,
+            187,
+            18
+          ],
+          "type_role": "item-title-small",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 13,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step3-copy",
+          "text": "Simmer for 25 minutes.",
+          "bbox_pt": [
+            48,
+            436,
+            224,
+            16
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step4-number",
+          "text": "4",
+          "bbox_pt": [
+            21,
+            475,
+            12,
+            20
+          ],
+          "type_role": "step-number",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step4-title",
+          "text": "Season",
+          "bbox_pt": [
+            48,
+            474,
+            90,
+            18
+          ],
+          "type_role": "item-title-small",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 13,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "step4-copy",
+          "text": "Add salt, pepper, herbs.",
+          "bbox_pt": [
+            48,
+            495,
+            224,
+            16
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "start-cooking",
+          "text": "Start Cooking",
+          "bbox_pt": [
+            102,
+            809,
+            157,
+            25
+          ],
+          "type_role": "button-label",
+          "rotation_deg": -0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 16,
+          "color": "#FBF4E5",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "expiry",
+      "title": "Expiration Priority",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "Expiration Priority",
+          "bbox_pt": [
+            56,
+            57,
+            280,
+            34
+          ],
+          "type_role": "page-title",
+          "rotation_deg": -0.4,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "alert-line1",
+          "text": "3 items need to be used within",
+          "bbox_pt": [
+            48,
+            117,
+            279,
+            20
+          ],
+          "type_role": "alert-label",
+          "rotation_deg": -0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12.5,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "alert-line2",
+          "text": "24–48 hours",
+          "bbox_pt": [
+            116,
+            140,
+            146,
+            20
+          ],
+          "type_role": "alert-label",
+          "rotation_deg": 0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 12.5,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "spinach-title",
+          "text": "Spinach",
+          "bbox_pt": [
+            76,
+            195,
+            94,
+            21
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "spinach-exp",
+          "text": "Expires in 1 day",
+          "bbox_pt": [
+            76,
+            220,
+            144,
+            19
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "beef-title",
+          "text": "Ground Beef",
+          "bbox_pt": [
+            76,
+            271,
+            139,
+            21
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "beef-exp",
+          "text": "Expires in 1 day",
+          "bbox_pt": [
+            76,
+            296,
+            144,
+            19
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "mozz-title",
+          "text": "Mozzarella Cheese",
+          "bbox_pt": [
+            76,
+            347,
+            170,
+            21
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.3,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "mozz-exp",
+          "text": "Expires in 2 days",
+          "bbox_pt": [
+            76,
+            372,
+            145,
+            19
+          ],
+          "type_role": "warning-metadata",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.2,
+          "color": "#C96658",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tips-title",
+          "text": "Tips",
+          "bbox_pt": [
+            64,
+            438,
+            70,
+            22
+          ],
+          "type_role": "section-title",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 17,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tips-line1",
+          "text": "Use these ingredients first",
+          "bbox_pt": [
+            30,
+            472,
+            270,
+            19
+          ],
+          "type_role": "body-copy",
+          "rotation_deg": -0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tips-line2",
+          "text": "to reduce food waste!",
+          "bbox_pt": [
+            30,
+            496,
+            242,
+            19
+          ],
+          "type_role": "body-copy",
+          "rotation_deg": 0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 14,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "settings",
+      "title": "Settings",
+      "text_runs": [
+        {
+          "id": "status-time",
+          "text": "9:41",
+          "bbox_pt": [
+            27,
+            17,
+            38,
+            16
+          ],
+          "type_role": "status",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "page-title",
+          "text": "Settings",
+          "bbox_pt": [
+            55,
+            58,
+            120,
+            32
+          ],
+          "type_role": "page-title",
+          "rotation_deg": 0.45,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 22,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "storage-title",
+          "text": "Storage Zones",
+          "bbox_pt": [
+            62,
+            121,
+            171,
+            21
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.25,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "storage-sub",
+          "text": "Pantry, Fridge, Freezer",
+          "bbox_pt": [
+            62,
+            148,
+            205,
+            18
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "units-title",
+          "text": "Units",
+          "bbox_pt": [
+            62,
+            204,
+            95,
+            21
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.2,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "units-sub",
+          "text": "Grams, milliliters, pieces",
+          "bbox_pt": [
+            62,
+            231,
+            212,
+            18
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "offline-title",
+          "text": "Offline Mode",
+          "bbox_pt": [
+            62,
+            286,
+            142,
+            21
+          ],
+          "type_role": "item-title",
+          "rotation_deg": -0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "offline-sub",
+          "text": "Works without internet",
+          "bbox_pt": [
+            62,
+            312,
+            192,
+            18
+          ],
+          "type_role": "metadata",
+          "rotation_deg": 0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "about-title",
+          "text": "About",
+          "bbox_pt": [
+            62,
+            369,
+            95,
+            21
+          ],
+          "type_role": "item-title",
+          "rotation_deg": 0.1,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 15,
+          "color": "#282E28",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "about-sub",
+          "text": "Version 1.0.0",
+          "bbox_pt": [
+            62,
+            396,
+            140,
+            18
+          ],
+          "type_role": "metadata",
+          "rotation_deg": -0.15,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 11.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-home",
+          "text": "Home",
+          "bbox_pt": [
+            26,
+            807,
+            34,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-inventory",
+          "text": "Inventory",
+          "bbox_pt": [
+            86,
+            807,
+            62,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-recipes",
+          "text": "Recipes",
+          "bbox_pt": [
+            251,
+            807,
+            52,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        },
+        {
+          "id": "tab-more",
+          "text": "More",
+          "bbox_pt": [
+            332,
+            807,
+            34,
+            17
+          ],
+          "type_role": "nav-label",
+          "rotation_deg": 0,
+          "font_family": "FoodSafe Hand",
+          "font_weight": 400,
+          "font_size_pt": 10.5,
+          "color": "#6B604F",
+          "bbox_tolerance_pt": {
+            "x": 5,
+            "y": 5,
+            "w": 7,
+            "h": 6
+          }
+        }
+      ]
+    }
+  ]
+}

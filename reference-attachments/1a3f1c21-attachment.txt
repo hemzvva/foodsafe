@@ -1,0 +1,726 @@
+Deep Research Mission: Building World-Class Native iOS Apps with AI — Engineering, Design, Agents, and the Elimination of AI Slop
+
+1. Your mission
+
+I want you to conduct an extensive, evidence-driven investigation into how to build exceptionally high-quality native iOS applications using AI coding agents.
+
+I am not looking for a beginner’s guide to Swift, a generic list of best practices, a collection of prompting tips, or a tutorial on how to use an AI coding assistant.
+
+I want to understand the entire system behind producing an outstanding application: the engineering standards, architectural decisions, product thinking, design principles, development workflows, quality assurance, AI agent architecture, context engineering, reusable skills, prompting strategies, and validation mechanisms that make it possible.
+
+The ultimate ambition is to establish a development environment in which, after the necessary preparation, specifications, design references, rules, tools, and agent instructions are in place, an AI agent or coordinated team of agents can take a well-defined application from its initial requirements all the way to a genuinely release-ready product.
+
+The quality bar should be comparable to the applications that receive serious recognition from Apple and the wider iOS development and design community. Think Apple Design Awards-level ambition, exceptional App Store presentation, outstanding interaction design, reliable engineering, and the sort of product that knowledgeable developers would respect when examining its internals.
+
+This is an aspiration, not a request to pretend that an award or flawless output can be guaranteed.
+
+I want to investigate how to make an app so good that it deserves to compete at that level.
+
+My focus is native iOS development using Swift and SwiftUI, with UIKit where there is a good technical reason to use it. Research the current state of Apple’s platforms and tools rather than relying on outdated assumptions.
+
+⸻
+
+2. The central problem: AI slop and how to eliminate it
+
+Investigate what I call AI slop in software development.
+
+I want to understand why AI-generated applications frequently look convincing in demonstrations but fall apart under serious examination.
+
+Investigate problems such as:
+
+* Generic, repetitive, template-like interfaces that lack identity.
+* Superficial visual polish masking poor UX.
+* Inconsistent spacing, typography, layouts, components, and interaction behavior.
+* Overcomplicated or unnecessarily abstracted code.
+* Poor separation of responsibilities and fragile architecture.
+* Duplicate logic, enormous files, excessive dependencies, and unnecessary frameworks.
+* Inconsistent naming and coding conventions.
+* Repeated patches instead of understanding the underlying problem.
+* Incorrect assumptions about Apple’s APIs and platform conventions.
+* Code that compiles but behaves incorrectly.
+* Memory leaks, inefficient rendering, poor responsiveness, and unnecessary background work.
+* Inadequate error handling, accessibility, localization, and edge-case coverage.
+* Agents implementing features without understanding the overall product.
+* AI-generated tests that merely confirm the implementation instead of testing actual behavior.
+* Agents confidently declaring tasks complete without meaningful verification.
+
+Go beyond identifying these problems.
+
+Investigate the actual methods experienced developers use to prevent them, the review processes they follow, and how those methods can be converted into instructions, tools, automated checks, and workflows that AI agents can consistently follow.
+
+I want a rigorous distinction between:
+
+1. Problems that can be prevented through better context and prompting.
+2. Problems requiring architectural constraints or tooling.
+3. Problems requiring automated testing and objective measurements.
+4. Problems that still require human product judgment, design judgment, or engineering review.
+
+Do not assume that adding more instructions to AGENTS.md magically solves everything.
+
+⸻
+
+3. Learn from exceptional iOS developers
+
+Investigate how genuinely experienced iOS developers, senior engineers, staff engineers, principal engineers, respected indie developers, and influential designers approach their work.
+
+I specifically want the opinions and working practices of people who have demonstrated expertise through real applications, production engineering, open-source projects, technical writing, conference presentations, and substantial contributions to the iOS ecosystem.
+
+Investigate:
+
+* How they structure large and small Swift applications.
+* How they make architectural decisions.
+* Their approach to SwiftUI and UIKit.
+* How they organize their codebases.
+* Their preferred development and debugging workflows.
+* How they decide whether an abstraction is necessary.
+* How they handle state, navigation, data flow, concurrency, and dependencies.
+* How they maintain code quality as applications grow.
+* How they approach performance and memory management.
+* Their design philosophies and standards for interaction quality.
+* Their opinions about AI-generated code and AI-assisted development.
+* What they believe inexperienced developers and AI agents consistently get wrong.
+
+Look beyond popular tutorial creators. Prioritize people whose expertise can be substantiated.
+
+Find actual interviews, conference talks, WWDC sessions, engineering blogs, podcasts, GitHub repositories, code reviews, technical discussions, and developer discussions.
+
+Do not simply summarize what these people say. Extract their underlying principles, compare their practices, identify disagreements, and determine what is applicable to an AI-assisted development workflow.
+
+Where appropriate, identify specific developers and link to the original material that supports your conclusions.
+
+⸻
+
+4. Native iOS engineering: investigate everything that matters
+
+Develop a detailed technical investigation of modern iOS engineering practices.
+
+Swift and code quality
+
+Investigate current best practices for:
+
+* Swift language features and modern Swift conventions.
+* Swift 6 and strict concurrency.
+* Type safety, value semantics, protocols, generics, and error handling.
+* Structured concurrency, actors, isolation, Sendable, and MainActor.
+* Memory ownership, ARC, retain cycles, and resource management.
+* Dependency management and dependency injection.
+* API design, naming, readability, and maintainability.
+* Modularization and code organization.
+* Avoiding unnecessary abstraction and overengineering.
+* Code documentation and developer-facing documentation.
+* Static analysis, formatting, linting, and automated quality checks.
+
+Explain not only what to do, but why, when, and when not to do it.
+
+Architecture
+
+Investigate the architectural approaches used in production-quality iOS applications.
+
+Compare relevant approaches such as:
+
+* MVVM.
+* MVC.
+* Clean Architecture.
+* Feature-based architecture.
+* Modular architecture.
+* Reducer-based architectures.
+* Unidirectional data flow.
+* Apple’s own architectural guidance and frameworks.
+
+Do not automatically recommend the most elaborate architecture.
+
+Explain which patterns are appropriate for different project sizes, complexity levels, and product requirements.
+
+Investigate how to design architecture that is understandable to AI agents, resilient to incremental development, easy to test, and resistant to uncontrolled code generation.
+
+SwiftUI and UIKit
+
+Investigate:
+
+* SwiftUI’s current capabilities and limitations.
+* State management and data flow.
+* Observation and modern state-management approaches.
+* View composition and reusable components.
+* Navigation and deep linking.
+* Layout systems and adaptive interfaces.
+* Animations and transitions.
+* UIKit interoperability.
+* Rendering behavior and performance implications.
+* Common SwiftUI performance mistakes.
+* When using UIKit is preferable.
+* How experienced developers structure substantial SwiftUI projects.
+
+Use current Apple documentation and WWDC material. Verify the availability and relevance of APIs against current supported platform versions.
+
+Data, persistence, and application reliability
+
+Investigate:
+
+* SwiftData, Core Data, and other persistence approaches.
+* Local-first and offline-first architectures.
+* Networking and API integration.
+* Caching and synchronization.
+* Data modeling and migrations.
+* File management.
+* Error handling and recovery.
+* Background tasks.
+* Application lifecycle management.
+* Privacy, permissions, security, and sensitive data handling.
+
+Focus on choosing the right approach for the product instead of adopting technologies just because they are fashionable.
+
+⸻
+
+5. Performance: make the application genuinely excellent
+
+I want a deep investigation into iOS performance engineering.
+
+Investigate how top developers identify, measure, diagnose, and eliminate performance problems.
+
+Cover:
+
+* Startup and launch time.
+* Frame rate and rendering smoothness.
+* Scrolling performance.
+* SwiftUI view update behavior.
+* Memory usage and allocation patterns.
+* CPU and GPU usage.
+* Animation performance.
+* Image loading and processing.
+* Disk and database performance.
+* Network efficiency.
+* Battery and energy consumption.
+* Background processing.
+* App size and resource loading.
+* Responsiveness under heavy workloads.
+* Performance differences across older and newer devices.
+
+Investigate Apple’s Instruments, Xcode profiling tools, performance diagnostics, signposts, MetricKit, and other relevant tools.
+
+Explain which measurements matter, how to reproduce problems, how to interpret profiling results, and how to prevent regressions.
+
+I want practical performance budgets, testing strategies, and measurable acceptance criteria where defensible—not arbitrary numbers presented as universal truths.
+
+Explain how AI agents can participate in performance optimization without blindly rewriting code or optimizing things that have not been measured.
+
+⸻
+
+6. UI, UX, and visual excellence
+
+This is one of the most important sections.
+
+I do not want an application that simply looks like a typical AI-generated SwiftUI project with rounded rectangles, gradients, generic cards, and standard components arranged on a screen.
+
+I want to understand the difference between an interface that is technically acceptable and one that feels intentionally designed by a highly skilled product design team.
+
+Investigate:
+
+Visual design
+
+* Visual hierarchy.
+* Typography and type systems.
+* Spacing systems and layout rhythm.
+* Color systems and semantic colors.
+* Contrast and readability.
+* Composition and visual balance.
+* Materials, depth, and layering.
+* Iconography and illustration.
+* Component consistency.
+* Brand identity and visual personality.
+* Motion and micro-interactions.
+* Haptics and interaction feedback.
+* Design systems and reusable design tokens.
+
+User experience
+
+* User journeys and task flows.
+* Information architecture.
+* Navigation models.
+* Onboarding.
+* Empty states.
+* Loading states.
+* Error states.
+* Feedback and confirmation.
+* Progressive disclosure.
+* Cognitive load.
+* Affordances and discoverability.
+* Accessibility and inclusive design.
+* Localization and internationalization.
+* Edge cases and unusual user behavior.
+
+Apple’s design philosophy
+
+Investigate Apple’s Human Interface Guidelines, relevant WWDC design sessions, Apple Design Awards, and excellent examples of native iOS applications.
+
+Understand what makes an application feel genuinely at home on Apple’s platforms without simply copying Apple’s own applications.
+
+Investigate how outstanding developers and designers balance convention, originality, usability, visual identity, and platform consistency.
+
+I want concrete examples of excellent applications and an explanation of what makes their design successful.
+
+Important: Do not equate visual excellence with decoration. Investigate how product clarity, interaction quality, visual identity, accessibility, and engineering contribute to the overall experience.
+
+⸻
+
+7. AI development: agents, skills, and orchestration
+
+This is the other central pillar of the investigation.
+
+I want to understand how to create an effective AI development system rather than simply giving one coding agent a large prompt and hoping it produces a good application.
+
+Investigate the current state of AI coding agents and agentic software development.
+
+Cover:
+
+Agent architecture
+
+* Single-agent versus multi-agent workflows.
+* Orchestrators and specialized agents.
+* Task decomposition.
+* Parallel execution.
+* Dependencies between tasks.
+* Agent handoffs.
+* Shared project context.
+* Conflict prevention when multiple agents modify the same project.
+* Code ownership and file boundaries.
+* Review agents.
+* Testing agents.
+* Debugging agents.
+* Research agents.
+* Design and UX analysis agents.
+* Performance auditing agents.
+* Documentation agents.
+
+Determine which roles should actually be separate agents and which should remain responsibilities of one agent.
+
+Do not recommend multi-agent complexity just for the sake of having more agents.
+
+AI skills and reusable capabilities
+
+Investigate how to build a reusable collection of specialized AI skills for iOS development.
+
+For example:
+
+* Swift engineering standards.
+* SwiftUI implementation standards.
+* Architecture evaluation.
+* Code review.
+* Accessibility audits.
+* UI/UX audits.
+* Human Interface Guidelines compliance.
+* Performance investigation.
+* Instruments analysis.
+* Testing and test planning.
+* Bug investigation.
+* Refactoring.
+* Design system implementation.
+* App Store preparation.
+
+Explain how a good skill should be structured, what information it should contain, how it should be triggered, how it should use tools, and how to keep it reliable.
+
+Investigate agent instruction files, such as AGENTS.md and equivalent project-specific instruction systems, alongside reusable skill definitions and repository-level documentation.
+
+Determine what belongs in global instructions, project instructions, task-specific instructions, skills, and actual source-of-truth specifications.
+
+Context engineering
+
+Investigate how to give AI agents enough project knowledge without overwhelming their context windows.
+
+Cover:
+
+* Project documentation.
+* Architecture decision records.
+* Feature specifications.
+* Design specifications.
+* Dependency maps.
+* API contracts.
+* Component inventories.
+* Coding conventions.
+* Existing implementation analysis.
+* Relevant source-code retrieval.
+* Context compression and summarization.
+* Persistent project memory.
+* Keeping documentation synchronized with the actual codebase.
+
+Explain how agents should discover the existing architecture before implementing anything and how they should avoid inventing files, APIs, functionality, or requirements.
+
+Tooling
+
+Investigate tools that allow agents to interact with:
+
+* Xcode projects.
+* Swift compiler and build system.
+* Simulators.
+* iOS devices where supported.
+* Build logs and diagnostics.
+* Unit and UI tests.
+* Accessibility inspection.
+* Screenshots and visual comparisons.
+* Git and version control.
+* Instruments and profiling data.
+* Documentation and source-code search.
+* Design tools and design references.
+
+Investigate MCP servers and other integrations where they provide demonstrable value.
+
+For every tool or integration, explain its actual capabilities, limitations, reliability, setup complexity, and whether it is worth including in a serious workflow.
+
+Do not recommend tools simply because they are popular in AI development.
+
+⸻
+
+8. Prompt engineering: what to tell agents and when
+
+I want a comprehensive investigation into prompting strategies specifically for high-quality iOS app development.
+
+Do not stop at generic advice such as “be specific” or “provide context.”
+
+Investigate how to prompt agents at every stage of development:
+
+1. Researching the product and understanding requirements.
+2. Auditing an existing project.
+3. Challenging assumptions and evaluating architecture.
+4. Designing information architecture.
+5. Establishing a design system.
+6. Translating design references into implementation specifications.
+7. Planning feature implementation.
+8. Implementing features.
+9. Refactoring and reviewing code.
+10. Debugging and diagnosing issues.
+11. Testing actual user behavior.
+12. Auditing accessibility and usability.
+13. Profiling and optimizing performance.
+14. Conducting a final release-readiness audit.
+
+For each stage, explain:
+
+* The objective.
+* The necessary context.
+* The relevant agent or role.
+* The tools and files it should access.
+* What instructions it should receive.
+* What it should produce.
+* How its output should be evaluated.
+* What conditions must be satisfied before moving forward.
+
+Develop actual reusable prompts for these stages.
+
+The prompts must be practical enough to use in an actual AI-assisted iOS development environment, not merely illustrative examples.
+
+Investigate how agents should challenge requirements, detect contradictions, ask for missing information, and stop rather than inventing decisions that should be made by the product owner.
+
+Also investigate how to prevent agents from:
+
+* Implementing too much at once.
+* Changing unrelated files.
+* Replacing established architecture without justification.
+* Producing unnecessary abstractions.
+* Hiding failures behind mock data.
+* Claiming tests passed without executing them.
+* Modifying the design without authorization.
+* Marking unfinished tasks as complete.
+
+⸻
+
+9. The complete development lifecycle: from zero to App Store
+
+Build a detailed workflow showing how the ideal AI-assisted iOS development process should work.
+
+Investigate and organize the entire lifecycle:
+
+Phase 1 — Product discovery
+
+Research the problem, target users, competing products, differentiators, core value, and requirements.
+
+Phase 2 — Product definition
+
+Produce a detailed product specification, feature scope, requirements, user journeys, edge cases, and acceptance criteria.
+
+Phase 3 — UX and information architecture
+
+Define navigation, screen hierarchy, user flows, interaction models, and application structure.
+
+Phase 4 — Visual design
+
+Establish the design direction, design system, components, typography, colors, icons, motion, and screen-level specifications.
+
+Phase 5 — Technical architecture
+
+Evaluate technology choices, establish the architecture, model data, define boundaries, plan dependencies, and document technical decisions.
+
+Phase 6 — AI development environment
+
+Configure agents, skills, instruction files, tools, repository documentation, validation scripts, and quality gates.
+
+Phase 7 — Implementation
+
+Implement the application incrementally while maintaining architecture, design consistency, and feature-level acceptance criteria.
+
+Phase 8 — Verification
+
+Run builds, tests, visual inspections, accessibility audits, functional tests, and regression checks.
+
+Phase 9 — Optimization
+
+Profile the application, fix measurable performance issues, investigate reliability, and refine the user experience.
+
+Phase 10 — Final product review
+
+Conduct independent engineering, design, UX, security, accessibility, and product-quality audits.
+
+Phase 11 — Release preparation
+
+Investigate signing, provisioning, TestFlight, App Store Connect, privacy requirements, screenshots, metadata, review guidelines, and submission readiness.
+
+For every phase, identify its inputs, outputs, responsible agents, required human decisions, tools, deliverables, and criteria for completion.
+
+I want a workflow in which one phase cannot casually declare itself complete merely because the agent generated the expected documents.
+
+⸻
+
+10. Quality assurance and objective evaluation
+
+Investigate how to measure whether the application is genuinely good.
+
+I want a multi-dimensional evaluation framework covering:
+
+* Functional correctness.
+* Code quality.
+* Architectural integrity.
+* Maintainability.
+* Performance.
+* Reliability.
+* Security and privacy.
+* Accessibility.
+* Visual quality.
+* Interaction quality.
+* UX consistency.
+* Platform integration.
+* Product differentiation.
+* App Store readiness.
+
+Research what can be objectively measured, what can be automated, and what needs expert judgment.
+
+Develop a serious scorecard with evaluation criteria, evidence requirements, and release gates.
+
+Investigate how to use:
+
+* Unit tests.
+* Integration tests.
+* UI automation.
+* Snapshot testing.
+* Regression testing.
+* Visual comparison.
+* Accessibility testing.
+* Static analysis.
+* Compiler warnings.
+* Performance benchmarks.
+* Manual exploratory testing.
+* Independent code and design reviews.
+
+Explain how to construct a feedback loop where test results, screenshots, build failures, profiling data, and review findings feed back into the AI development process.
+
+I want to avoid a workflow where an agent writes code, reviews its own code superficially, and declares its work excellent.
+
+⸻
+
+11. Research Apple-level quality and industry recognition
+
+Investigate the standards and characteristics of applications that receive exceptional recognition within Apple’s ecosystem.
+
+Research:
+
+* Apple Design Awards.
+* App Store Awards.
+* Apple’s Human Interface Guidelines.
+* Apple’s developer guidance.
+* Outstanding native iOS applications.
+* Notable independent developers and their products.
+* Applications widely praised for their design and engineering.
+
+Be precise about the distinction between different Apple awards and recognition programs.
+
+Identify recurring qualities in recognized applications, but do not claim that there is a formula for winning.
+
+Examine product originality, craftsmanship, accessibility, innovation, usefulness, technical execution, and platform integration.
+
+I want to understand how to build something that would stand up to serious scrutiny from experienced Apple-platform engineers and designers.
+
+⸻
+
+12. Research methodology and source standards
+
+This is not a quick-answer task.
+
+I expect genuine, deep research. Do not return after a few search results or produce an answer based primarily on general knowledge.
+
+Investigate the subject across multiple independent sources, including:
+
+Highest priority
+
+* Apple’s official developer documentation.
+* Apple Human Interface Guidelines.
+* WWDC sessions and official transcripts.
+* Swift Evolution proposals.
+* Official framework documentation.
+* Engineering articles from established companies.
+* Production-quality open-source iOS repositories.
+* Technical presentations and conference talks by recognized developers.
+
+Additional sources
+
+* GitHub discussions, issues, pull requests, and code.
+* Developer blogs and independent engineering write-ups.
+* Detailed interviews and podcasts.
+* YouTube technical presentations and developer discussions.
+* Reddit communities such as r/iOSProgramming and relevant SwiftUI discussions.
+* Other specialist developer communities.
+
+Use community discussions to understand practical problems, disagreements, and real-world experiences, not as unquestioned technical authority.
+
+Research rules
+
+1. Prioritize material current as of November 2026.
+2. Verify that APIs, tools, frameworks, and recommendations remain relevant.
+3. Investigate original sources rather than repeatedly citing articles that summarize one another.
+4. Open and examine important source material. Do not rely only on search snippets.
+5. Examine actual repositories and implementations where relevant.
+6. Use multiple independent sources to corroborate important claims.
+7. Distinguish established best practices from personal preferences and emerging approaches.
+8. Identify disagreements between respected developers and explain the trade-offs.
+9. Do not invent developer quotations, benchmarks, statistics, or technical capabilities.
+10. Provide direct links and citations for substantive claims.
+11. Clearly indicate when evidence is weak, anecdotal, outdated, or inconclusive.
+12. Do not confuse popularity with technical quality.
+
+Do not artificially shorten the investigation to make the report look concise. Depth, accuracy, and practical usefulness are more important than brevity.
+
+⸻
+
+13. Required final deliverables
+
+I do not want the final result to be a collection of disconnected research notes.
+
+Turn the investigation into a coherent, practical system.
+
+Deliver the following:
+
+A. The research report
+
+A detailed explanation of the most important findings, including developer opinions, technical recommendations, evidence, comparisons, and trade-offs.
+
+B. The ideal AI-assisted iOS development operating model
+
+Explain how all the components work together:
+
+* Human product owner.
+* AI orchestrator.
+* Specialized agents.
+* Reusable skills.
+* Project instructions.
+* Context and documentation.
+* Development tools.
+* Testing and validation.
+* Quality gates.
+
+Show the actual flow of work and agent responsibilities.
+
+C. Recommended project structure
+
+Design a practical repository and documentation structure for a serious AI-assisted Swift application.
+
+Include example files and explain what belongs in each one.
+
+Consider files such as:
+
+* AGENTS.md.
+* Product requirements.
+* Architecture documentation.
+* Architecture decision records.
+* Design specifications.
+* Design system documentation.
+* Screen specifications.
+* Feature specifications.
+* Testing standards.
+* Performance requirements.
+* Security and privacy requirements.
+* Reusable agent skills.
+* Task templates.
+* Release checklists.
+
+Do not create documentation merely for the sake of having more documentation. Explain what provides real value and what would become unnecessary overhead.
+
+D. The AI agent team
+
+Propose the ideal configuration of agents and responsibilities.
+
+Explain how they communicate, share context, divide work, review each other, and handle dependencies.
+
+Provide a sensible alternative for smaller projects where a large multi-agent system would be counterproductive.
+
+E. The reusable skill library
+
+Propose the actual skills that should exist, their purposes, their triggers, and their contents.
+
+Prioritize the skills that will have the greatest effect on the quality of the final application.
+
+F. The prompt library
+
+Provide production-oriented prompts for the complete development lifecycle.
+
+Include planning, design, implementation, review, debugging, testing, performance, and release preparation.
+
+The prompts should be ready to adapt and use, not vague examples.
+
+G. Quality gates and scorecards
+
+Create measurable criteria and checklists for judging whether the application is ready to advance through each stage and eventually ship.
+
+H. The implementation roadmap
+
+Give a prioritized, practical sequence for setting up this entire system.
+
+Explain what to establish first, what depends on it, what can be automated, and what should remain under human supervision.
+
+⸻
+
+14. How I want you to think about the research
+
+Approach this as a cross-disciplinary investigation involving:
+
+* A principal iOS engineer.
+* A senior Swift and SwiftUI specialist.
+* A software architect.
+* A performance engineer.
+* A product designer.
+* A UX researcher.
+* An accessibility specialist.
+* An AI agent systems architect.
+* An expert in AI-assisted software engineering.
+* An experienced App Store developer.
+
+Have these perspectives challenge one another.
+
+For example:
+
+* Is a proposed architecture genuinely beneficial, or is it overengineering?
+* Does a proposed design system improve consistency, or does it make every screen look identical?
+* Can a particular task safely be delegated to an AI agent?
+* Does an automated test provide meaningful evidence?
+* Is a performance optimization supported by measurements?
+* Does an agent need another skill, or does it need better project context?
+* Is the proposed multi-agent workflow more reliable, or simply more complicated?
+
+Do not force consensus. Explain genuine trade-offs and provide recommendations based on project circumstances.
+
+Final instruction
+
+I want to come away with a deep understanding of how to engineer an environment in which AI can consistently build exceptional iOS applications.
+
+I want to know what to research, what to learn, what to prepare, which tools to use, which agents and skills to create, what documentation to write, what prompts to give, how to validate the output, and how to recognize when the AI is producing mediocre work.
+
+The objective is not to maximize the amount of code AI generates.
+
+The objective is to maximize the quality of the final product: its engineering, design, usability, performance, reliability, originality, and overall craftsmanship.
+
+Do not give me a generic AI coding workflow. Investigate what exceptional developers actually do, identify which practices translate effectively into AI-assisted development, and turn those findings into a complete, evidence-backed system I can use to build a genuinely world-class native iOS application. @Deep research 

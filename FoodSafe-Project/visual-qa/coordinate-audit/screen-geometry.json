@@ -1,0 +1,871 @@
+{
+  "source_image": "09D9C5A2-D90F-4E05-844E-8912D4858573(2).jpeg",
+  "source_size_px": [
+    1536,
+    1024
+  ],
+  "rectified_canvas_px": [
+    390,
+    844
+  ],
+  "screens": [
+    {
+      "id": "01-welcome",
+      "title": "Welcome / onboarding",
+      "source_quad_px": [
+        [
+          22,
+          34
+        ],
+        [
+          218,
+          28
+        ],
+        [
+          237,
+          535
+        ],
+        [
+          24,
+          538
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          2.010551050391744,
+          -0.007978377184094223,
+          -43.960858284359155
+        ],
+        [
+          0.05597398598563015,
+          1.8284835421972587,
+          -63.39986812639068
+        ],
+        [
+          3.826796924654312e-05,
+          0.0001717476874624472,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.4969568996855241,
+          0.00011569036614895116,
+          21.853986594467152
+        ],
+        [
+          -0.015778408295341783,
+          0.5436600470687525,
+          33.77434291872198
+        ],
+        [
+          -1.6307626217459803e-05,
+          -9.337678308515734e-05,
+          0.9933630270212345
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/01-welcome.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "02-my-kitchen",
+      "title": "My Kitchen",
+      "source_quad_px": [
+        [
+          246,
+          58
+        ],
+        [
+          475,
+          61
+        ],
+        [
+          478,
+          550
+        ],
+        [
+          251,
+          555
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.6414125510923352,
+          -0.016513204739359546,
+          -402.8297216938316
+        ],
+        [
+          -0.02163862327688619,
+          1.651748243469022,
+          -90.47829679508925
+        ],
+        [
+          -6.918198979601303e-05,
+          -1.6139038708543284e-05,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.6199032600694131,
+          0.008645010324113422,
+          250.4976435407623
+        ],
+        [
+          0.010479454492305964,
+          0.6061009792145353,
+          59.06042002180573
+        ],
+        [
+          4.305526933433309e-05,
+          1.0379966180858616e-05,
+          1.018283103824237
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/02-my-kitchen.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "03-add-ingredient",
+      "title": "Add Ingredient",
+      "source_quad_px": [
+        [
+          505,
+          58
+        ],
+        [
+          739,
+          60
+        ],
+        [
+          738,
+          531
+        ],
+        [
+          504,
+          534
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.6084218527405865,
+          0.0033790375057574516,
+          -812.4490198093303
+        ],
+        [
+          -0.014800195378416592,
+          1.7316228592747438,
+          -92.96002717183477
+        ],
+        [
+          -4.389382236774708e-05,
+          -1.8540590457240658e-07,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.6358105433325042,
+          -0.0011854048593980626,
+          516.4534574469915
+        ],
+        [
+          0.006932561866666617,
+          0.5774857768199585,
+          59.31544659787228
+        ],
+        [
+          2.790944038648159e-05,
+          5.503732249672054e-08,
+          1.0226801137564185
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/03-add-ingredient.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "04-inventory",
+      "title": "Inventory",
+      "source_quad_px": [
+        [
+          771,
+          59
+        ],
+        [
+          996,
+          61
+        ],
+        [
+          1001,
+          551
+        ],
+        [
+          774,
+          555
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.6421390393221096,
+          -0.009932292576544915,
+          -1265.5031940553304
+        ],
+        [
+          -0.014657193857677275,
+          1.6489343089887178,
+          -85.9864277660652
+        ],
+        [
+          -5.153605997980229e-05,
+          1.8068881332376705e-05,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.6340874330581574,
+          -0.004968982122012007,
+          802.0124068231386
+        ],
+        [
+          0.007333490851437642,
+          0.6058239482223036,
+          61.373193258839414
+        ],
+        [
+          3.254586000657738e-05,
+          -1.120264278941931e-05,
+          1.0402236145566
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/04-inventory.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "05-recipe-suggestions",
+      "title": "Recipe Suggestions",
+      "source_quad_px": [
+        [
+          1023,
+          60
+        ],
+        [
+          1253,
+          63
+        ],
+        [
+          1258,
+          527
+        ],
+        [
+          1024,
+          533
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.5339150011371268,
+          -0.0032429492624460586,
+          -1569.0004692075343
+        ],
+        [
+          -0.021870320736881246,
+          1.676724589827556,
+          -78.23013727582386
+        ],
+        [
+          -7.604658563666932e-05,
+          3.4974498919499e-05,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.7064875387975688,
+          -0.021719713492507755,
+          1106.780143694551
+        ],
+        [
+          0.011702625304446879,
+          0.5950694763740956,
+          64.91379141903525
+        ],
+        [
+          5.3316671664343375e-05,
+          -2.2463966810584554e-05,
+          1.0818965236505873
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/05-recipe-suggestions.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "06-tomato-pasta",
+      "title": "Tomato Pasta detail",
+      "source_quad_px": [
+        [
+          1280,
+          71
+        ],
+        [
+          1514,
+          75
+        ],
+        [
+          1514,
+          523
+        ],
+        [
+          1278,
+          528
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.4730564046757066,
+          0.006446636344313987,
+          -1885.9699091653508
+        ],
+        [
+          -0.028743205730979444,
+          1.6814775352622982,
+          -82.59360166796948
+        ],
+        [
+          -7.600444265914198e-05,
+          1.6572329933969434e-05,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.7515977671139722,
+          -0.016838378039193528,
+          1416.1000302843147
+        ],
+        [
+          0.01564104198832568,
+          0.5938809184523234,
+          78.54929855483307
+        ],
+        [
+          5.6865560885011435e-05,
+          -1.1121782060233538e-05,
+          1.1063281486596208
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/06-tomato-pasta.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "07-cooking",
+      "title": "Cooking step",
+      "source_quad_px": [
+        [
+          39,
+          580
+        ],
+        [
+          257,
+          575
+        ],
+        [
+          261,
+          949
+        ],
+        [
+          48,
+          954
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.7215199176519824,
+          -0.04142694989002098,
+          -43.11164585221513
+        ],
+        [
+          0.04874726726434189,
+          2.125380852725317,
+          -1234.622038003993
+        ],
+        [
+          -2.745564045783198e-06,
+          -5.91350885350114e-05,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.580594185521355,
+          0.012440448065597787,
+          40.38962225448312
+        ],
+        [
+          -0.012831167180112055,
+          0.4869663195266479,
+          600.6661771179542
+        ],
+        [
+          8.352863137547531e-07,
+          2.8830952465699315e-05,
+          1.0356313398585417
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/07-cooking.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "08-portion-scaling",
+      "title": "Portion Scaling",
+      "source_quad_px": [
+        [
+          276,
+          580
+        ],
+        [
+          475,
+          578
+        ],
+        [
+          477,
+          945
+        ],
+        [
+          283,
+          950
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.8443909838504924,
+          -0.03489388347825263,
+          -488.8134591253493
+        ],
+        [
+          0.021243764288483177,
+          2.1137545467041297,
+          -1231.8409160320166
+        ],
+        [
+          -4.106420219149449e-05,
+          -6.363921547959052e-05,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.5484360026417625,
+          0.01778438546628486,
+          289.9904332440539
+        ],
+        [
+          0.007905993044239532,
+          0.49156966789631157,
+          609.4001858027221
+        ],
+        [
+          2.3024218096498847e-05,
+          3.201340961912311e-05,
+          1.0506899755219348
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/08-portion-scaling.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "09-ingredient-swaps",
+      "title": "Ingredient Swaps",
+      "source_quad_px": [
+        [
+          496,
+          583
+        ],
+        [
+          690,
+          580
+        ],
+        [
+          694,
+          942
+        ],
+        [
+          505,
+          947
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.8867307644859692,
+          -0.046649936484543054,
+          -908.6215462145523
+        ],
+        [
+          0.03302710010725622,
+          2.1357524736026043,
+          -1261.5251337635175
+        ],
+        [
+          -2.959222253333007e-05,
+          -6.600227564088908e-05,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.5377445477263012,
+          0.027934316380336666,
+          523.8461246318135
+        ],
+        [
+          0.001127693039510385,
+          0.4872719235417612,
+          615.730424718442
+        ],
+        [
+          1.5987486629233716e-05,
+          3.298769431631293e-05,
+          1.0561413803060755
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/09-ingredient-swaps.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "10-meal-suggestions",
+      "title": "Meal Suggestions",
+      "source_quad_px": [
+        [
+          711,
+          583
+        ],
+        [
+          919,
+          582
+        ],
+        [
+          919,
+          945
+        ],
+        [
+          719,
+          949
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.6998724849963398,
+          -0.037155682732160494,
+          -1186.947573799548
+        ],
+        [
+          0.009762120569738478,
+          2.0305210785057093,
+          -1190.7346564939126
+        ],
+        [
+          -3.8503794747033605e-05,
+          -9.551589391300899e-05,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.6055700434291004,
+          0.04755628706007628,
+          775.4068129504636
+        ],
+        [
+          0.011400540716316885,
+          0.5226016790203587,
+          635.8117748946839
+        ],
+        [
+          2.4405677494756975e-05,
+          5.1747864047961134e-05,
+          1.0905862348107787
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/10-meal-suggestions.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "11-lentil-soup",
+      "title": "Lentil Soup detail",
+      "source_quad_px": [
+        [
+          937,
+          583
+        ],
+        [
+          1121,
+          582
+        ],
+        [
+          1120,
+          945
+        ],
+        [
+          942,
+          949
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.9128253368503927,
+          -0.026131493672819313,
+          -1777.0826798175644
+        ],
+        [
+          0.011050671031652396,
+          2.0333234698240523,
+          -1195.7820616640809
+        ],
+        [
+          -4.2910343778686874e-05,
+          -8.084053668595463e-05,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.5455417308697043,
+          0.04782910742184942,
+          1026.6659497266985
+        ],
+        [
+          0.011341157398027789,
+          0.5173483240794887,
+          638.7900199473481
+        ],
+        [
+          2.4326208467935335e-05,
+          4.387507961426436e-05,
+          1.09569471689082
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/11-lentil-soup.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "12-expiration-priority",
+      "title": "Expiration Priority",
+      "source_quad_px": [
+        [
+          1141,
+          583
+        ],
+        [
+          1307,
+          583
+        ],
+        [
+          1307,
+          941
+        ],
+        [
+          1150,
+          946
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.94738404664806,
+          -0.048282249090447704,
+          -2193.8166460057055
+        ],
+        [
+          0.0,
+          1.8522047337955345,
+          -1079.8353598027966
+        ],
+        [
+          -7.392603606975085e-05,
+          -0.00012411889226336177,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.5648729370019505,
+          0.10539363758339278,
+          1353.0354286337995
+        ],
+        [
+          0.02624447508583962,
+          0.5869089713423574,
+          691.3406265499608
+        ],
+        [
+          4.50162522913201e-05,
+          8.063782523595468e-05,
+          1.1858329786448727
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/12-expiration-priority.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    },
+    {
+      "id": "13-settings",
+      "title": "Settings",
+      "source_quad_px": [
+        [
+          1327,
+          585
+        ],
+        [
+          1505,
+          585
+        ],
+        [
+          1507,
+          925
+        ],
+        [
+          1330,
+          930
+        ]
+      ],
+      "source_quad_uncertainty_px": {
+        "typical": 3,
+        "reason": "manual corners on perspective-skewed raster; bezel edge is soft"
+      },
+      "rectified_size_px": [
+        390,
+        844
+      ],
+      "source_to_rectified_homography": [
+        [
+          1.927187070705205,
+          -0.016758148440915225,
+          -2547.5737259878715
+        ],
+        [
+          -1.8506172779418667e-16,
+          2.1747175684460367,
+          -1272.209777540931
+        ],
+        [
+          -7.325544912949717e-05,
+          -1.3506756306351333e-05,
+          1.0
+        ]
+      ],
+      "rectified_to_source_homography": [
+        [
+          0.575257091367365,
+          0.013642670862168525,
+          1482.8661909183272
+        ],
+        [
+          0.024848659709806365,
+          0.46408139152741135,
+          653.7126764786898
+        ],
+        [
+          4.247634138428432e-05,
+          7.267634243007225e-06,
+          1.117457566630239
+        ]
+      ],
+      "source_path": "FoodSafe-Design-Pack/reference/rectified/13-settings.jpg",
+      "note": "Rectified visual reference only. W/H normalized from approximate visible screen/frame quadrilateral; not exact original iOS view bounds."
+    }
+  ]
+}

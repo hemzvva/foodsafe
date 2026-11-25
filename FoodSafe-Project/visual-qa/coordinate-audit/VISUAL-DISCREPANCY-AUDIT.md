@@ -1,0 +1,43 @@
+# FoodSafe Visual Discrepancy Audit — Measurement Pass 01
+
+**Comparison source:** supplied `1536 × 1024` collage, each screen perspective-rectified to `390 × 844`, compared with the currently available `asset-integration-v1/*-device.png` HTML captures. This is a human visual review of the comparison boards, not a pixel-difference metric. The board reference screenshots are still photographic in the source; the production artwork must remain illustrated per the user's explicit direction.
+
+## Global discrepancies (highest impact first)
+
+1. **Overall scale and vertical use:** several prototype screens shrink components and leave large unused gaps. The source uses a denser, more organically packed vertical rhythm. Make recipe art and cards occupy their measured boxes rather than a small centered illustration inside a large empty box.
+2. **Food artwork scale:** source panels show an illustration with a similar visual footprint to the source hero (large pan/bowl or a substantial thumbnail). Prototype screens often use a small isolated icon centered in a large pale box. Use the full supplied element rectangle for a composition of the same footprint, never shrink the drawing to icon scale.
+3. **Text sizes:** primary titles are often too small/thin; row names, helper copy, button labels, and ingredient quantities also tend to be too faint/small at device size. Retain one handwritten family everywhere but tune size and ink contrast per role.
+4. **Control silhouette:** reference cards, input outlines and chips are close-set, softly hand-drawn and have slightly varying contour/angles. Current boxes are more geometrically clean and uniformly rounded; keep outlines subtly irregular and component-specific, not cartoon-jagged.
+5. **Vertical alignment:** bottom CTAs on Add, Scaling, Swaps and other full forms sit too close to the bottom edge or are reduced in height. The measured source CTA baseline is often about y=740–800 with a visible ~35–45pt lower margin on the rectified canvas.
+6. **Illustration compliance:** in the app prototype, any food art must be a drawing. Even where the original mockup displays photographic imagery, the replacement drawing must occupy the same measured rectangle and approximate subject composition.
+7. **Native status bar:** source has a simulated 9:41 header. Treat this as a reference row for browser previews; real iOS status symbols remain OS-owned and should not be manually typeset into the production app.
+
+## Per-screen discrepancy and correction plan
+
+| # | Screen | Target geometry from rectified source | Current HTML render observation | Corrective priority |
+|---:|---|---|---|---|
+| 01 | Welcome | Wordmark spans most of the upper third; tagline directly below; grocery-bag illustration is large and central; 3-line copy; broad green CTA and separate Sign In text. | Wordmark and bag are visibly too small, leaving the hero composition under-filled; CTA narrower/shorter relative to source. | **P0:** use source-derived logo at bbox `x18 y103 w354 h132`, bag `x36 y327 w321 h246`; preserve 3-line copy and CTA `x18 y714 w346 h57`. |
+| 02 | My Kitchen | Title row, 3 storage chips, search, 4+3 category grid, quick overview, alert strip, three summary rows, bottom tab bar. Category tiles about 80pt high; summary rows about 65–70pt. | Type and illustrated category tiles feel smaller and more uniform; overview/cards are under-scaled and leave a less dense vertical rhythm. | **P0:** align to boxes in JSON, increase category drawing presence, use tile grid y≈247 and 344, summary rows y≈518/597/675; keep 5-tab nav at y≈752. |
+| 03 | Add Ingredient | Large tomato square at upper left with the name/chip on the right; quantity + unit side-by-side; 3 storage choices; date picker; tall notes field; green Save CTA. | Fields and labels are more compact; button is pushed too low/has less breathing room in the previous capture; title/art hierarchy is weak. | **P0:** use image frame `20,127,139,124`; quantity row `20,300,358,54`; storage row y≈414 h≈60; notes `18,651,355,70`; Save `20,743,353,55`. |
+| 04 | Inventory | Search, four small filters, six rows spaced at ~64pt intervals, image/metadata/expiry badge hierarchy, bottom tabs. | Row density and art scale vary; page header action pattern differs from the source; labels are too small. | **P0:** row top positions 191,255,319,383,447,511; each ~61pt; art ~50pt; nav y≈752. |
+| 05 | Recipe Suggestions | Three large cards at about y232 / 391 / 540, each with substantial bowl art, status badge, name, time/servings and missing/swap line; CTA below cards. | Current cards are much shorter, bowl drawings thumbnail-sized, and the list finishes too early, creating excess blank space. | **P0:** target card boxes `14,232,360,151`, `14,391,360,140`, `14,540,360,180`; CTA `11,735,340,62`. |
+| 06 | Tomato Pasta | Full-width hero plate spanning ~171pt height; back/heart over hero; large recipe title; ready/time metadata; seven ingredient rows; bottom CTA. | Hero art occupies a small centered icon-like rectangle instead of the entire hero area; ingredient list and line work too condensed. | **P0:** hero `14,54,359,171`; title `15,234,254,43`; ingredients container `22,383,344,341`; CTA `28,740,324,65`. Use drawn pasta art filling hero bounds. |
+| 07 | Cooking | Recipe step summary, wide pan illustration ~341×203, bold numbered step, 4 lines of instruction, progress + timer, scaled banner, paired Back/Next buttons. | Current pan art is tiny and floating inside a large blank card; body instruction scale and structure under-use vertical space. | **P0:** pan `29,193,341,203`; heading `28,414,285,41`; instruction 4 authored line boxes between y466–591; buttons y742 h71. |
+| 08 | Portion Scaling | Recipe summary, serving selector 1–4, selected 3, large adjusted-quantities container with five ~59pt rows, full-width Update Recipe CTA. | Five rows and artwork are significantly more compact; bottom CTA sits lower and closer to edge. | **P0:** quantities container `21,415,349,310`; row heights ~59pt; CTA `14,736,348,66`. |
+| 09 | Ingredient Swaps | Four tall ingredient/swap choices; drawn food item on left, text and optional helper at center, radio/selected check on right; explanation; full-width CTA. | The list looks like generic small outline rows; choice items and food drawings are undersized and tightly compressed. | **P1:** choices `x18 w354 h65` at y153/224/295/366; art ~45pt; CTA `21,744,350,56`. |
+| 10 | Meal Suggestions | Three top filter pills; cards of ~150–160pt containing substantial food art, status, title, metadata and optional missing/swap note; fourth card clips at bottom. | Cards compress so all 4 fit much higher; their thumbnails are tiny, defeating the reference's image-led layout. | **P0:** preserve card heights/top positions y208/378/539/707; do not force a bottom tab bar or compact all cards to fit. |
+| 11 | Lentil Soup | Hero soup bowl spanning almost full width; Smart Swap / time row; segmented Ingredients/Steps selector; 4 numbered step rows; CTA bottom. | Hero is an icon-sized bowl in an empty panel and steps/card geometry are more compressed than source. | **P1:** hero `15,101,356,85`; segmented `18,245,353,40`; step row starts y295 with ~58–59pt interval; CTA `15,795,356,51`. |
+| 12 | Expiration Priority | Large coral alert; three tall priority cards; illustrative spinach/beef/mozzarella drawings; tips card around 113pt high. No visible persistent tab bar. | Alert and rows are too short; tips card has too little presence; icon art undersized. | **P1:** alert `12,101,366,75`; rows y184/260/336, h71; tips `16,423,358,113`. |
+| 13 | Settings | Heading with gear; four tall rows (~75pt) with 28–32pt doodle icons, two-line copy and right-side control; bottom nav. | Rows and icons are significantly smaller, so the page looks sparse and generic instead of like the hand-drawn reference. | **P1:** rows `x16 w357 h75` at y108/190/272/354; icon `x26 w28` around each row's y+17; nav y≈752. |
+
+## Acceptance checklist for the next render loop
+
+- [ ] capture every screen again at 390×844 after CSS/HTML changes
+- [ ] show rectified source and current render side by side per screen
+- [ ] use per-screen coordinate boxes in `reference/SCREEN-COORDINATE-MASTER.json`
+- [ ] ensure each food image is an illustration filling its mapped image rectangle
+- [ ] check text line breaks and title/body hierarchy against source crops
+- [ ] ensure all visible text, including metadata, fields, tab labels and button labels, uses `FoodSafe Hand`
+- [ ] inspect rotations at 100% size; never let tilted border reduce the hit target
+- [ ] do not mark a screen “matched” solely because it rendered without errors
+

@@ -1,0 +1,506 @@
+{
+  "screen_count": 13,
+  "font_audit": {
+    "family": "FoodSafe Hand",
+    "regular": true,
+    "bold": true
+  },
+  "screen_reports": [
+    {
+      "screen": "welcome",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "FoodSafe",
+          "src": "data:image/png;base64,iV",
+          "ok": true,
+          "w": 188
+        },
+        {
+          "alt": "Illustrated grocery bag full of vegetables",
+          "src": "data:image/png;base64,iV",
+          "ok": true,
+          "w": 186
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 6
+      },
+      "textCount": 6,
+      "expected": "welcome"
+    },
+    {
+      "screen": "home",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "",
+          "src": "data:image/png;base64,iV",
+          "ok": true,
+          "w": 140
+        },
+        {
+          "alt": "",
+          "src": "data:image/png;base64,iV",
+          "ok": true,
+          "w": 132
+        },
+        {
+          "alt": "",
+          "src": "data:image/png;base64,iV",
+          "ok": true,
+          "w": 128
+        },
+        {
+          "alt": "",
+          "src": "data:image/png;base64,iV",
+          "ok": true,
+          "w": 124
+        },
+        {
+          "alt": "",
+          "src": "data:image/png;base64,iV",
+          "ok": true,
+          "w": 152
+        },
+        {
+          "alt": "",
+          "src": "data:image/png;base64,iV",
+          "ok": true,
+          "w": 148
+        },
+        {
+          "alt": "",
+          "src": "data:image/png;base64,iV",
+          "ok": true,
+          "w": 128
+        },
+        {
+          "alt": "",
+          "src": "../assets/pasta-icon.svg",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/olive-oil-icon",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 32
+      },
+      "textCount": 32,
+      "expected": "home"
+    },
+    {
+      "screen": "add",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "",
+          "src": "../assets/tomato-large.s",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 19
+      },
+      "textCount": 19,
+      "expected": "add"
+    },
+    {
+      "screen": "inventory",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "",
+          "src": "../assets/tomato-invento",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/eggs-inventory",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/spinach-invent",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/pasta-inventor",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/olive-oil-inve",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/chicken-invent",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 40
+      },
+      "textCount": 40,
+      "expected": "inventory"
+    },
+    {
+      "screen": "suggestions",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "",
+          "src": "../assets/tomato-pasta-t",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/chicken-thumb.",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/lentil-thumb.s",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 25
+      },
+      "textCount": 25,
+      "expected": "suggestions"
+    },
+    {
+      "screen": "detail",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "",
+          "src": "../assets/tomato-pasta-h",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/pasta-icon.svg",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/tomato-icon.sv",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/olive-oil-icon",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/garlic-icon.sv",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/basil-icon.svg",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/salt-icon.svg",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/pepper-icon.sv",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 24
+      },
+      "textCount": 24,
+      "expected": "detail"
+    },
+    {
+      "screen": "cooking",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "",
+          "src": "../assets/cooking-pasta.",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 13
+      },
+      "textCount": 13,
+      "expected": "cooking"
+    },
+    {
+      "screen": "scaling",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "",
+          "src": "../assets/scaling-tomato",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/pasta-icon.svg",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/tomato-icon.sv",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/olive-oil-icon",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/garlic-icon.sv",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/basil-icon.svg",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 22
+      },
+      "textCount": 22,
+      "expected": "scaling"
+    },
+    {
+      "screen": "swaps",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "Lemon illustration",
+          "src": "data:image/svg+xml;base6",
+          "ok": true,
+          "w": 164
+        },
+        {
+          "alt": "",
+          "src": "../assets/lime-swap.svg",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/vinegar-swap.s",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/orange-swap.sv",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 13
+      },
+      "textCount": 13,
+      "expected": "swaps"
+    },
+    {
+      "screen": "meals",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "",
+          "src": "../assets/meal-tomato-cl",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/meal-chicken-c",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/meal-curry-cle",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/meal-lentil-cl",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 25
+      },
+      "textCount": 25,
+      "expected": "meals"
+    },
+    {
+      "screen": "lentil",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "",
+          "src": "../assets/lentil-soup-he",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 25
+      },
+      "textCount": 25,
+      "expected": "lentil"
+    },
+    {
+      "screen": "expiry",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [
+        {
+          "alt": "",
+          "src": "../assets/spinach-invent",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/chicken-invent",
+          "ok": false,
+          "w": 0
+        },
+        {
+          "alt": "",
+          "src": "../assets/eggs-inventory",
+          "ok": false,
+          "w": 0
+        }
+      ],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 13
+      },
+      "textCount": 13,
+      "expected": "expiry"
+    },
+    {
+      "screen": "settings",
+      "fontStatus": "loaded",
+      "fontAudit": {
+        "family": "FoodSafe Hand",
+        "regular": true,
+        "bold": true
+      },
+      "imgs": [],
+      "families": {
+        "\"FoodSafe Hand\", cursive": 18
+      },
+      "textCount": 18,
+      "expected": "settings"
+    }
+  ],
+  "runtime_errors": []
+}
