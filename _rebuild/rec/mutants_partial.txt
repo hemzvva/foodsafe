@@ -1,0 +1,163 @@
+280	    add("B-22", "AlarmPlanner.title", "a hyphen instead of the middle dot", "alarm_title", [('"%s · %s"', '"%s - %s"')])
+281	    return M
+282	
+283	
+284	# ------------------------------------------------------------------------------------------------ machinery
+285	def apply_mutant(rr, m: Mutant, saved: Dict[str, object]) -> None:
+286	    if m.const is not None:
+287	        name, value = m.const
+288	        saved.setdefault(name, getattr(rr, name))
+289	        setattr(rr, name, value)
+290	        return
+291	    original = saved.get(m.func) or getattr(rr, m.func)
+292	    saved.setdefault(m.func, original)
+293	    src = textwrap.dedent(inspect.getsource(saved[m.func]))
+294	    for old, new in m.edits:
+295	        if src.count(old) != 1:
+296	            raise ValueError("%s: the text %r occurs %d times in %s" % (m.id, old, src.count(old), m.func))
+297	        src = src.replace(old, new)
+298	    rr.rr_rhu = rr.rhu if "rr_rhu" not in rr.__dict__ else rr.rr_rhu  # the original rounding, for mutants that name it
+299	    exec(compile(src, "<mutant %s>" % m.id, "exec"), rr.__dict__)
+300	
+301	
+302	def restore(rr, saved: Dict[str, object]) -> None:
+303	    for name, value in saved.items():
+304	        setattr(rr, name, value)
+305	    saved.clear()
+306	
+307	
+308	def flatten(v: dict) -> Dict[Tuple[str, str], str]:
+309	    out: Dict[Tuple[str, str], str] = {}
+310	    for rule, cases in v.items():  # vectors() returns {rule: [case, ...]}
+311	        for c in cases:
+312	            out[(rule, c["name"])] = json.dumps([c.get("input"), c.get("expected")], sort_keys=True)
+313	    return out
+314	
+315	
+316	def run_with(rr, mutants: List[Mutant], base: Dict[Tuple[str, str], str]):
+317	    saved: Dict[str, object] = {}
+318	    try:
+319	        for m in mutants:
+320	            apply_mutant(rr, m, saved)
+321	        try:
+322	            now = flatten(rr.vectors())
+323	        except Exception as e:  # a mutant that stops the oracle itself
+324	            return None, "%s: %s" % (type(e).__name__, e)
+325	        diff = sorted(k for k in set(base) | set(now) if base.get(k) != now.get(k))
+326	        return diff, None
+327	    finally:
+328	        restore(rr, saved)
+329	
+330	
+331	def batches_of(mutants: List[Mutant]) -> List[List[Mutant]]:
+332	    """Mutants that touch the same function never share a batch, so every batch can be applied in one commit."""
+333	    out: List[List[Mutant]] = []
+334	    for m in mutants:
+335	        for b in out:
+336	            if all(x.target != m.target for x in b):
+337	                b.append(m)
+338	                break
+339	        else:
+340	            out.append([m])
+341	    return out
+342	
+343	
+344	def select(ms: List[Mutant], rules: Optional[str], task: Optional[str]) -> List[Mutant]:
+345	    if rules:
+346	        want = {r.strip() for r in rules.split(",")}
+347	        ms = [m for m in ms if m.rule in want]
+348	    if task:
+349	        ms = [m for m in ms if m.task == task]
+350	    return ms
+351	
+352	
+353	def main(argv: List[str]) -> int:
+354	    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+355	    ap.add_argument("--list", action="store_true")
+356	    ap.add_argument("--rules")
+357	    ap.add_argument("--task", choices=["T-09", "T-10", "T-10b"])
+358	    ap.add_argument("--batches", action="store_true")
+359	    ap.add_argument("--batch", type=int)
+360	    ap.add_argument("--self-test", action="store_true")
+361	    args = ap.parse_args(argv)
+362	
+363	    rr = load_oracle()
+364	    all_mutants = catalog(rr)
+365	    ms = select(all_mutants, args.rules, args.task)
+366	
+367	    if args.list:
+368	        for m in ms:
+369	            print("%s  %-5s %-5s %-36s %s" % (m.id, m.rule, m.task, m.swift, m.change))
+370	        print("%d mutant(s)" % len(ms))
+371	        return 0
+372	
+373	    base = flatten(rr.vectors())
+374	
+375	    if args.batches or args.batch:
+376	        bs = batches_of(ms)
+377	        if args.batches:
+378	            for i, b in enumerate(bs, 1):
+379	                diff, err = run_with(rr, b, base)
+380	                print("batch %d: %d mutant(s), %s" % (i, len(b), ("%d case(s) must fail" % len(diff)) if diff is not None else "oracle stops: " + err))
+381	                for m in b:
+382	                    print("  %s  %-5s %-36s %s" % (m.id, m.rule, m.swift, m.change))
+383	            return 0
+384	        if not 1 <= args.batch <= len(bs):
+385	            print("batch %d does not exist (1..%d)" % (args.batch, len(bs)))
+386	            return 2
+387	        b = bs[args.batch - 1]
+388	        diff, err = run_with(rr, b, base)
+389	        print("batch %d: apply these %d mutant(s) in one commit, run CI, and every case below must fail:" % (args.batch, len(b)))
+390	        for m in b:
+391	            print("  %s  %-5s %-36s %s" % (m.id, m.rule, m.swift, m.change))
+392	        if err:
+393	            print("the oracle itself stops with the batch (%s); run the mutants singly" % err)
+394	            return 1
+395	        for rule, name in diff:
+396	            print("    %s  %s" % (rule, name))
+397	        return 0
+398	
+399	    if args.self_test:
+400	        problems = []
+401	        ids = [m.id for m in all_mutants]
+402	        if len(set(ids)) != len(ids):
+403	            problems.append("duplicate mutant id")
+404	        for m in all_mutants:
+405	            if m.rule not in TASK_OF_RULE:
+406	                problems.append("%s: rule %s has no task" % (m.id, m.rule))
+407	        # applying and restoring must leave the vectors as they were
+408	        for m in all_mutants:
+409	            try:
+410	                run_with(rr, [m], base)
+411	            except Exception as e:
+412	                problems.append("%s: %s" % (m.id, e))
+413	        after, err = run_with(rr, [], base)
+414	        if err or after:
+415	            problems.append("the oracle differs after the mutants were removed")
+416	        for p in problems:
+417	            print("self-test problem:", p)
+418	        print("self-test: %d mutants, %d problem(s)" % (len(all_mutants), len(problems)))
+419	        return 1 if problems else 0
+420	
+421	    survivors, crashed = [], []
+422	    rows = []
+423	    for m in ms:
+424	        diff, err = run_with(rr, [m], base)
+425	        if diff is None:
+426	            crashed.append((m, err))
+427	            rows.append((m, "CRASH", err))
+428	        elif not diff:
+429	            survivors.append(m)
+430	            rows.append((m, "SURVIVED", ""))
+431	        else:
+432	            rows.append((m, "killed", "%d case(s): %s" % (len(diff), "; ".join("%s %s" % k for k in diff[:2]))))
+433	    for m, state, note in rows:
+434	        print("%s  %-5s %-8s %s | %s" % (m.id, m.rule, state, m.change, note))
+435	    print("vector_mutants: %d mutants, %d killed, %d survived, %d stopped the oracle" % (
+436	        len(ms), len(ms) - len(survivors) - len(crashed), len(survivors), len(crashed)))
+437	    return 1 if survivors or crashed else 0
+438	
+439	
+440	if __name__ == "__main__":
+441	    sys.exit(main(sys.argv[1:]))
+442	

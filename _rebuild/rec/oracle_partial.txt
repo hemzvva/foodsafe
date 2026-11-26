@@ -1,0 +1,1800 @@
+48	
+49	# ----------------------------------------------------------------------------- units (B-06)
+50	KIND = {"g": "mass", "ml": "volume", "L": "volume", "pcs": "piece", "cloves": "clove"}
+51	TO_BASE = {"g": F(1), "ml": F(1), "L": F(1000), "pcs": F(1), "cloves": F(1)}
+52	
+53	
+54	def comparable(a: str, b: str) -> bool:
+55	    return KIND[a] == KIND[b]
+56	
+57	
+58	def convert(q: F, u_from: str, u_to: str) -> F:
+59	    assert comparable(u_from, u_to), (u_from, u_to)
+60	    return q * TO_BASE[u_from] / TO_BASE[u_to]
+61	
+62	
+63	def rhu(x: F) -> int:
+64	    """Round half up (ties go up). Only non-negative values are used."""
+65	    return math.floor(x + F(1, 2))
+66	
+67	
+68	def q2(x: F) -> F:
+69	    """Keep at most two decimals (round half up)."""
+70	    return F(rhu(x * 100), 100)
+71	
+72	
+73	def dec(v: F) -> str:
+74	    """Exact decimal string of a fraction whose denominator divides a power of ten."""
+75	    n, d = v.numerator, v.denominator
+76	    for k in range(0, 7):
+77	        if (n * 10 ** k) % d == 0:
+78	            x = n * 10 ** k // d
+79	            s = str(abs(x)).rjust(k + 1, "0")
+80	            ip, fp = (s[:-k], s[-k:]) if k else (s, "")
+81	            return ("-" if x < 0 else "") + ip + ("." + fp if k else "")
+82	    raise ValueError("not a short decimal: %s" % v)
+83	
+84	
+85	# ----------------------------------------------------------------------------- B-05 writing an amount
+86	def _trim(n: int, digits: int) -> str:
+87	    whole, frac = divmod(n, 10 ** digits)
+88	    s = "%d.%0*d" % (whole, digits, frac)
+89	    return s.rstrip("0").rstrip(".")
+90	
+91	
+92	def number_text(v: F, unit: str) -> str:
+93	    if unit in ("g", "ml"):
+94	        if v >= 10:
+95	            return str(rhu(v))
+96	        return _trim(rhu(v * 10), 1)
+97	    if unit == "L":
+98	        return _trim(rhu(v * 100), 2)
+99	    if unit in ("pcs", "cloves"):
+100	        n = rhu(v * 2)
+101	        whole, odd = divmod(n, 2)
+102	        return "%d.5" % whole if odd else str(whole)
+103	    raise ValueError(unit)
+104	
+105	
+106	def amount_text(v: F, unit: str) -> str:
+107	    return "%s %s" % (number_text(v, unit), unit)
+108	
+109	
+110	def displayed(v: F, unit: str) -> F:
+111	    """The numeric value that B-05 writes (what the person reads)."""
+112	    if unit in ("g", "ml"):
+113	        return F(rhu(v)) if v >= 10 else F(rhu(v * 10), 10)
+114	    if unit == "L":
+115	        return F(rhu(v * 100), 100)
+116	    return F(rhu(v * 2), 2)
+117	
+118	
+119	# ----------------------------------------------------------------------------- B-01, B-02, B-03
+120	def days_left(expiry: date, today: date) -> int:
+121	    return (expiry - today).days
+122	
+123	
+124	def badge(d: int) -> Optional[str]:
+125	    if d < 0:
+126	        return "Expired"
+127	    if d <= SOON_BADGE_MAX_DAYS:
+128	        return "Soon"
+129	    return None
+130	
+131	
+132	def in_expiring_card(d: int) -> bool:
+133	    return d <= EXPIRING_SOON_CARD_MAX_DAYS
+134	
+135	
+136	def in_alert(d: int) -> bool:
+137	    return d <= ALERT_MAX_DAYS
+138	
+139	
+140	def _plural(n: int, one: str, many: str) -> str:
+141	    return one if n == 1 else many
+142	
+143	
+144	def expiry_text(d: int, estimate: bool = False) -> str:
+145	    t = "~" if estimate else ""
+146	    if d < 0:
+147	        return "Expired %d %s ago" % (-d, _plural(-d, "day", "days"))
+148	    if d == 0:
+149	        return "Exp: today"
+150	    if d == 1:
+151	        return "Exp: %s1 day" % t
+152	    if d < 60:
+153	        return "Exp: %s%d days" % (t, d)
+154	    if d < 365:
+155	        return "Exp: %s%d months" % (t, d // 30)
+156	    n = d // 365
+157	    return "Exp: %s%d %s" % (t, n, _plural(n, "year", "years"))
+158	
+159	
+160	def expires_in_text(d: int, estimate: bool = False) -> str:
+161	    t = "~" if estimate else ""
+162	    if d < 0:
+163	        return "Expired %d %s ago" % (-d, _plural(-d, "day", "days"))
+164	    if d == 0:
+165	        return "Expires today"
+166	    return "Expires in %s%d %s" % (t, d, _plural(d, "day", "days"))
+167	
+168	
+169	# ----------------------------------------------------------------------------- entities
+170	@dataclass(frozen=True)
+171	class Item:
+172	    id: str
+173	    ingredient: Optional[str]  # None = custom item
+174	    name: str
+175	    qty: F
+176	    start: F
+177	    unit: str
+178	    zone: str
+179	    expiry: date
+180	    added: int = 0
+181	    estimate: bool = False
+182	
+183	
+184	@dataclass(frozen=True)
+185	class Ing:
+186	    id: str
+187	    name: str
+188	    category: str
+189	    unit: str
+190	    zone: str
+191	    shelf: int
+192	    qty: F
+193	    starter: bool
+194	    cluster: Optional[str] = None
+195	    aliases: Tuple[str, ...] = ()
+196	
+197	
+198	@dataclass(frozen=True)
+199	class Line:
+200	    ing: str
+201	    amount: F
+202	    unit: str
+203	    optional: bool = False
+204	
+205	
+206	@dataclass(frozen=True)
+207	class Step:
+208	    title: str
+209	    instruction: str
+210	    picture: str
+211	    timer: Optional[int] = None
+212	    ings: Tuple[str, ...] = ()
+213	
+214	
+215	@dataclass(frozen=True)
+216	class Recipe:
+217	    id: str
+218	    title: str
+219	    minutes: int
+220	    base: int
+221	    lines: Tuple[Line, ...]
+222	    steps: Tuple[Step, ...]
+223	
+224	
+225	@dataclass
+226	class Content:
+227	    ings: Dict[str, Ing]
+228	    recipes: List[Recipe]
+229	    clusters: Dict[str, List[str]]  # cluster id -> member ids in authored order
+230	    factors: Dict[Tuple[str, str, str], Tuple[F, str]]  # (from, fromUnit, to) -> (amount per from unit, to unit)
+231	
+232	    def cluster_of(self, ing: str) -> Optional[List[str]]:
+233	        c = self.ings[ing].cluster
+234	        return self.clusters[c] if c else None
+235	
+236	
+237	# ----------------------------------------------------------------------------- B-04 scaling
+238	def scaled(amount: F, servings: int, base: int) -> F:
+239	    return amount * servings / base
+240	
+241	
+242	# ----------------------------------------------------------------------------- B-07 availability
+243	def rows_of(ing: str, items: List[Item], today: date) -> List[Item]:
+244	    return [r for r in items if r.ingredient == ing and days_left(r.expiry, today) >= 0]
+245	
+246	
+247	def available(ing: str, amount: F, unit: str, items: List[Item], today: date) -> bool:
+248	    rows = rows_of(ing, items, today)
+249	    if not rows:
+250	        return False
+251	    if any(not comparable(r.unit, unit) for r in rows):
+252	        return True
+253	    stock = sum((convert(r.qty, r.unit, unit) for r in rows), F(0))
+254	    return stock >= displayed(amount, unit)
+255	
+256	
+257	# ----------------------------------------------------------------------------- B-10 substitute amount
+258	def substitute_amount(content: Content, from_ing: str, from_unit: str, amount: F, sub: str) -> Optional[Tuple[F, str]]:
+259	    """B-10. None when the units differ in kind and no factor exists (invariant I-10 makes that unreachable with valid content)."""
+260	    if KIND[from_unit] == KIND[content.ings[sub].unit]:
+261	        return amount, from_unit
+262	    found = content.factors.get((from_ing, from_unit, sub))
+263	    if found is None:
+264	        return None
+265	    per, to_unit = found
+266	    return amount * per, to_unit
+267	
+268	
+269	# ----------------------------------------------------------------------------- B-08 / B-09 match and order
+270	@dataclass
+271	class Match:
+272	    recipe: Recipe
+273	    servings: int
+274	    status: List[Tuple[str, Optional[str]]]  # ("have"|"swap"|"missing"|"missingOptional", substitute id)
+275	    tier: Optional[str]
+276	    rescue: List[str]
+277	
+278	    @property
+279	    def n_missing(self) -> int:
+280	        return sum(1 for s, _ in self.status if s == "missing")
+281	
+282	    @property
+283	    def n_optional(self) -> int:
+284	        return sum(1 for s, _ in self.status if s == "missingOptional")
+285	
+286	    @property
+287	    def n_swap(self) -> int:
+288	        return sum(1 for s, _ in self.status if s == "swap")
+289	
+290	    @property
+291	    def n_have(self) -> int:
+292	        return sum(1 for s, _ in self.status if s == "have")
+293	
+294	
+295	def use_first_ingredients(items: List[Item], today: date) -> set:
+296	    return {r.ingredient for r in items
+297	            if r.ingredient and 0 <= days_left(r.expiry, today) <= ALERT_MAX_DAYS}
+298	
+299	
+300	def match_recipe(content: Content, r: Recipe, servings: int, items: List[Item], today: date) -> Match:
+301	    status: List[Tuple[str, Optional[str]]] = []
+302	    for ln in r.lines:
+303	        amt = scaled(ln.amount, servings, r.base)
+304	        if available(ln.ing, amt, ln.unit, items, today):
+305	            status.append(("have", None))
+306	            continue
+307	        if ln.optional:
+308	            status.append(("missingOptional", None))
+309	            continue
+310	        found = None
+311	        members = content.cluster_of(ln.ing)
+312	        if members:
+313	            for s in members:
+314	                if s == ln.ing:
+315	                    continue
+316	                sub_amt = substitute_amount(content, ln.ing, ln.unit, amt, s)
+317	                if sub_amt is None:
+318	                    continue  # no factor: this member is not offered
+319	                samt, sunit = sub_amt
+320	                if available(s, samt, sunit, items, today):
+321	                    found = s
+322	                    break
+323	        status.append(("swap", found) if found else ("missing", None))
+324	    n_missing = sum(1 for s, _ in status if s == "missing")
+325	    n_swap = sum(1 for s, _ in status if s == "swap")
+326	    # D-X-69: an optional line never changes the tier; only required lines decide it
+327	    if n_missing == 0 and n_swap == 0:
+328	        tier = "readyNow"
+329	    elif n_missing == 0 and n_swap >= 1:
+330	        tier = "smartSwap"
+331	    elif 1 <= n_missing <= K_MISSING:
+332	        tier = "almostReady"
+333	    else:
+334	        tier = None
+335	    uf = use_first_ingredients(items, today)
+336	    eff: List[str] = []
+337	    for (s, sub), ln in zip(status, r.lines):
+338	        if s == "have":
+339	            eff.append(ln.ing)
+340	        elif s == "swap":
+341	            eff.append(sub)
+342	    rescue = [e for e in dict.fromkeys(eff) if e in uf]
+343	    return Match(r, servings, status, tier, rescue)
+344	
+345	
+346	TIER_ORDER = ["readyNow", "almostReady", "smartSwap", None]
+347	TIER_TITLE = {"readyNow": "Ready Now", "almostReady": "Almost Ready", "smartSwap": "Smart Swap", None: "Need a few things"}
+348	
+349	
+350	def order_matches(matches: List[Match]) -> List[Match]:
+351	    def key(m: Match):
+352	        missing = m.n_missing if m.tier is None else m.n_missing + m.n_optional
+353	        return (TIER_ORDER.index(m.tier), -len(m.rescue), missing, m.recipe.minutes, m.recipe.title.lower(), m.recipe.id)
+354	    return sorted(matches, key=key)
+355	
+356	
+357	def suggestions(content: Content, items: List[Item], today: date, servings: Optional[Dict[str, int]] = None) -> List[Match]:
+358	    servings = servings or {}
+359	    ms = [match_recipe(content, r, servings.get(r.id, r.base), items, today) for r in content.recipes]
+360	    return order_matches(ms)
+361	
+362	
+363	def cook_next(ordered: List[Match]) -> Optional[Match]:
+364	    for m in ordered:
+365	        if m.n_have >= 1:
+366	            return m
+367	    return None
+368	
+369	
+370	def _names(content: Content, ids: List[str]) -> List[str]:
+371	    return [content.ings[i].name.lower() for i in ids]
+372	
+373	
+374	def status_line(content: Content, m: Match) -> str:
+375	    r = m.recipe
+376	    if m.tier == "readyNow":
+377	        left_out = [content.ings[ln.ing].name.lower() + " (optional)" for (s, _), ln in zip(m.status, r.lines) if s == "missingOptional"]
+378	        return "Missing: " + ", ".join(left_out) if left_out else "All ingredients available"
+379	    if m.tier == "smartSwap":
+380	        pairs = ["%s → %s" % (content.ings[ln.ing].name.lower(), content.ings[sub].name.lower())
+381	                 for (s, sub), ln in zip(m.status, r.lines) if s == "swap"]
+382	        return "Swap: " + ", ".join(pairs)
+383	    req = [content.ings[ln.ing].name.lower() for (s, _), ln in zip(m.status, r.lines) if s == "missing"]
+384	    opt = [content.ings[ln.ing].name.lower() + " (optional)" for (s, _), ln in zip(m.status, r.lines) if s == "missingOptional"]
+385	    if m.tier == "almostReady":
+386	        return "Missing: " + ", ".join(req + opt)
+387	    names = req
+388	    if len(names) > 3:
+389	        return "Missing: %s and %d more" % (", ".join(names[:3]), len(names) - 3)
+390	    return "Missing: " + ", ".join(names)
+391	
+392	
+393	def cook_next_line(content: Content, m: Match) -> str:
+394	    if not m.rescue:
+395	        return status_line(content, m)
+396	    names = _names(content, m.rescue)
+397	    if len(names) == 1:
+398	        return "Uses your %s" % names[0]
+399	    if len(names) == 2:
+400	        return "Uses your %s and %s" % (names[0], names[1])
+401	    return "Uses your %s, %s and %d more" % (names[0], names[1], len(names) - 2)
+402	
+403	
+404	# ----------------------------------------------------------------------------- B-11 low stock
+405	def stock_state(qty: F, start: F) -> Optional[str]:
+406	    if qty * 5 <= start:
+407	        return "Almost Empty"
+408	    if qty * 2 <= start:
+409	        return "Low Stock"
+410	    return None
+411	
+412	
+413	# ----------------------------------------------------------------------------- B-12 orders and search
+414	def sort_items(items: List[Item], today: date) -> List[Item]:
+415	    return sorted(items, key=lambda r: (days_left(r.expiry, today), r.name.lower(), r.added, r.id))
+416	
+417	
+418	def search_items(items: List[Item], text: str, zone: Optional[str] = None) -> List[Item]:
+419	    t = text.strip(QUERY_TRIM).lower()
+420	    return [r for r in items if (not t or t in r.name.lower()) and (zone is None or r.zone == zone)]
+421	
+422	
+423	# ----------------------------------------------------------------------------- B-27 add picker (S-15) and owned text (S-03, S-15)
+424	
+425	def about_text(shelf_days: int) -> str:
+426	    """`about 5 days`, `about 2 months`, `about 1 year`: the thresholds of B-03; a value below 1 is read as 1."""
+427	    d = max(1, shelf_days)
+428	    if d < 60:
+429	        return "about %d %s" % (d, _plural(d, "day", "days"))
+430	    if d < 365:
+431	        return "about %d months" % (d // 30)
+432	    n = d // 365
+433	    return "about %d %s" % (n, _plural(n, "year", "years"))
+434	
+435	
+436	def _name_key(i: "Ing"):
+437	    return (i.name.lower(), i.id.lower())
+438	
+439	
+440	def catalog_search(content: "Content", query: str) -> List[str]:
+441	    """Ids of the matching ingredients, in the order the list shows them."""
+442	    q = query.strip(QUERY_TRIM).lower()
+443	    if not q:
+444	        return []
+445	    groups: List[List["Ing"]] = [[], [], []]
+446	    for i in content.ings.values():
+447	        name = i.name.lower()
+448	        if name.startswith(q):
+449	            groups[0].append(i)
+450	        elif q in name:
+451	            groups[1].append(i)
+452	        elif any(q in a.lower() for a in i.aliases):
+453	            groups[2].append(i)
+454	    out: List[str] = []
+455	    for g in groups:
+456	        out += [i.id for i in sorted(g, key=_name_key)]
+457	    return out
+458	
+459	
+460	def catalog_category(content: "Content", category: str) -> List[str]:
+461	    return [i.id for i in sorted((i for i in content.ings.values() if i.category == category), key=_name_key)]
+462	
+463	
+464	def custom_item_name(content: "Content", query: str) -> Optional[str]:
+465	    """The text of the last row `Add "{query}" as your own item`; None when no such row is offered."""
+466	    t = query.strip(QUERY_TRIM)
+467	    q = t.lower()
+468	    if not q:
+469	        return None
+470	    for i in content.ings.values():
+471	        if i.name.lower() == q or any(a.lower() == q for a in i.aliases):
+472	            return None
+473	    return t
+474	
+475	
+476	def you_have_text(items: List[Item], ingredient_id: str) -> Optional[str]:
+477	    """The line `You have 450 g`; None when the person owns no row of the ingredient. Expired rows count."""
+478	    rows = sorted((r for r in items if r.ingredient == ingredient_id), key=lambda r: (r.expiry, r.added, r.id.lower()))
+479	    groups: List[list] = []  # [unit of the first row of a kind, the total of that kind in that unit]
+480	    for r in rows:
+481	        for g in groups:
+482	            if comparable(g[0], r.unit):
+483	                g[1] += convert(r.qty, r.unit, g[0])
+484	                break
+485	        else:
+486	            groups.append([r.unit, r.qty])
+487	    if not groups:
+488	        return None
+489	    parts = [amount_text(total, unit) for unit, total in groups]
+490	    return "You have " + (parts[0] if len(parts) == 1 else ", ".join(parts[:-1]) + " and " + parts[-1])
+491	
+492	
+493	# ----------------------------------------------------------------------------- B-21 Home
+494	@dataclass
+495	class Home:
+496	    alert_count: int
+497	    alert_rows: List[str]
+498	    expiring: int
+499	    low: int
+500	    almost: int
+501	
+502	
+503	def home_model(items: List[Item], today: date) -> Home:
+504	    srt = sort_items(items, today)
+505	    alert = [r for r in srt if in_alert(days_left(r.expiry, today))]
+506	    return Home(
+507	        len(alert),
+508	        [r.name for r in alert[:3]],
+509	        sum(1 for r in items if in_expiring_card(days_left(r.expiry, today))),
+510	        sum(1 for r in items if stock_state(r.qty, r.start) == "Low Stock"),
+511	        sum(1 for r in items if stock_state(r.qty, r.start) == "Almost Empty"),
+512	    )
+513	
+514	
+515	# ----------------------------------------------------------------------------- B-16 cook-and-deduct
+516	@dataclass
+517	class Proposal:
+518	    line: int
+519	    ingredient: str
+520	    kind: str            # "amount" | "presence"
+521	    amount: F            # in the line's unit (amount proposals)
+522	    unit: str
+523	    stock: F             # in the line's unit (amount proposals)
+524	    row: Optional[str] = None  # first matching row id (presence proposals)
+525	
+526	
+527	@dataclass
+528	class Event:
+529	    outcome: str
+530	    source: str
+531	    ingredient: Optional[str]
+532	    name: str
+533	    qty: F
+534	    unit: str
+535	    zone: str
+536	    days_left: int
+537	
+538	
+539	def stock_line(p: Proposal, items: List[Item], today: date) -> str:
+540	    """S-16: `You have 450 g`. An amount proposal states its stock in the unit of the line; a presence proposal states what the
+541	    matching rows hold, as B-27 does, over the rows that B-16 can take from (daysLeft >= 0). The empty text is unreachable."""
+542	    if p.kind == "amount":
+543	        return "You have " + amount_text(p.stock, p.unit)
+544	    return you_have_text([r for r in items if days_left(r.expiry, today) >= 0], p.ingredient) or ""
+545	
+546	
+547	def propose_deductions(content: Content, r: Recipe, servings: int, swaps: Dict[int, str],
+548	                       items: List[Item], today: date) -> List[Proposal]:
+549	    out: List[Proposal] = []
+550	    for i, ln in enumerate(r.lines):
+551	        base_amt = scaled(ln.amount, servings, r.base)
+552	        if i in swaps:
+553	            e = swaps[i]
+554	            sub_amt = substitute_amount(content, ln.ing, ln.unit, base_amt, e)
+555	            if sub_amt is None:
+556	                continue  # no factor: the line gets no deduction
+557	            amt, unit = sub_amt
+558	        else:
+559	            e, amt, unit = ln.ing, base_amt, ln.unit
+560	        line_amt = displayed(amt, unit)
+561	        rows = sorted(rows_of(e, items, today), key=lambda x: (x.expiry, x.added, x.id))
+562	        if not rows:
+563	            continue
+564	        if any(not comparable(x.unit, unit) for x in rows):
+565	            out.append(Proposal(i, e, "presence", F(0), unit, F(0), rows[0].id))
+566	            continue
+567	        stock = sum((convert(x.qty, x.unit, unit) for x in rows), F(0))
+568	        out.append(Proposal(i, e, "amount", min(line_amt, stock), unit, stock))
+569	    return out
+570	
+571	
+572	def apply_deductions(items: List[Item], proposals: List[Proposal], presence_on: List[str], today: date) -> Tuple[List[Item], List[Event]]:
+573	    rows = list(items)
+574	    events: List[Event] = []
+575	
+576	    def remove(item: Item):
+577	        events.append(Event("used", "cook", item.ingredient, item.name, item.qty, item.unit, item.zone, days_left(item.expiry, today)))
+578	        rows.remove(item)
+579	
+580	    for p in proposals:
+581	        if p.kind == "presence":
+582	            if p.row in presence_on:
+583	                gone = next((x for x in rows if x.id == p.row), None)  # an earlier proposal may have removed it
+584	                if gone is not None:
+585	                    remove(gone)
+586	            continue
+587	        remaining = p.amount
+588	        order = sorted(rows_of(p.ingredient, rows, today), key=lambda x: (x.expiry, x.added, x.id))
+589	        for row in order:
+590	            if remaining <= 0:
+591	                break
+592	            remaining_in_row_unit = convert(remaining, p.unit, row.unit)
+593	            take = min(remaining_in_row_unit, row.qty)
+594	            new_qty = q2(row.qty - take)
+595	            remaining -= convert(take, row.unit, p.unit)
+596	            idx = rows.index(row)
+597	            if new_qty == 0:
+598	                remove(row)
+599	            else:
+600	                rows[idx] = replace(row, qty=new_qty)
+601	    return rows, events
+602	
+603	
+604	# ----------------------------------------------------------------------------- B-17 daily reminder
+605	def digest_schedule(items: List[Item], today: date, now_minute: int, reminder_minute: int = 1080) -> List[Tuple[str, str, str]]:
+606	    out = []
+607	    for k in range(14):
+608	        d = today + timedelta(days=k)
+609	        if k == 0 and now_minute >= reminder_minute:
+610	            continue
+611	        u = [(days_left(r.expiry, d), r.name) for r in items if 0 <= days_left(r.expiry, d) <= ALERT_MAX_DAYS]
+612	        if not u:
+613	            continue
+614	        u.sort(key=lambda t: (t[0], t[1].lower(), t[1]))
+615	        names: List[str] = []
+616	        seen: set = set()
+617	        for _, n in u:
+618	            if n.lower() not in seen:
+619	                seen.add(n.lower())
+620	                names.append(n)
+621	        if len(names) == 1:
+622	            body = "Close to its date: %s." % names[0]
+623	        elif len(names) == 2:
+624	            body = "Close to their date: %s and %s." % (names[0], names[1])
+625	        elif len(names) == 3:
+626	            body = "Close to their date: %s, %s and %s." % tuple(names)
+627	        else:
+628	            body = "Close to their date: %s, %s, %s and %d more." % (names[0], names[1], names[2], len(names) - 3)
+629	        out.append(("digest-%s" % d.isoformat(), "Use these first", body))
+630	    return out
+631	
+632	
+633	# ----------------------------------------------------------------------------- B-18 tally
+634	def tally(events: List[Tuple[str, int, datetime]], now: datetime) -> Tuple[int, int]:
+635	    """events: (outcome, daysLeftAtEvent, at). Returns (usedInTime, thrownAway) for the month of now."""
+636	    month = [e for e in events if (e[2].year, e[2].month) == (now.year, now.month)]
+637	    return (sum(1 for o, d, _ in month if o == "used" and d >= 0), sum(1 for o, _, _ in month if o == "thrownAway"))
+638	
+639	
+640	# ----------------------------------------------------------------------------- B-19 / B-20 estimates and starters
+641	def starter_item(ing: Ing, today: date, item_id: str, added: int = 0) -> Item:
+642	    return Item(item_id, ing.id, ing.name, ing.qty, ing.qty, ing.unit, ing.zone, today + timedelta(days=ing.shelf), added, True)
+643	
+644	
+645	# ----------------------------------------------------------------------------- B-22 timers
+646	@dataclass(frozen=True)
+647	class Timer:
+648	    started: int   # epoch seconds
+649	    duration: int  # seconds
+650	    ends: int
+651	
+652	
+653	def start_timer(now: int, seconds: int) -> Timer:
+654	    return Timer(now, seconds, now + seconds)
+655	
+656	
+657	def plus_minute(t: Timer) -> Timer:
+658	    return Timer(t.started, t.duration + 60, t.ends + 60)
+659	
+660	
+661	def remaining(t: Timer, now) -> F:
+662	    return max(F(0), F(t.ends) - F(now))
+663	
+664	
+665	def fill(t: Timer, now) -> F:
+666	    return max(F(0), min(F(1), (F(now) - F(t.started)) / t.duration))
+667	
+668	
+669	def timer_label(t: Timer, now) -> str:
+670	    rem = remaining(t, now)
+671	    if rem == 0:
+672	        return "Time's up"
+673	    r = math.ceil(rem)
+674	    h, rest = divmod(r, 3600)
+675	    m, s = divmod(rest, 60)
+676	    return "%d:%02d:%02d left" % (h, m, s) if h else "%02d:%02d left" % (m, s)
+677	
+678	
+679	def idle_text(seconds: int) -> str:
+680	    if seconds < 60:
+681	        return "%d sec" % seconds
+682	    if seconds < 3600:
+683	        m, s = divmod(seconds, 60)
+684	        return "%d min" % m if s == 0 else "%d min %d sec" % (m, s)
+685	    h, rest = divmod(seconds, 3600)
+686	    assert rest % 60 == 0, "I-19: timers of an hour or more are whole minutes"
+687	    m = rest // 60
+688	    return "%d h" % h if m == 0 else "%d h %d min" % (h, m)
+689	
+690	
+691	def session_discarded(now: int, last_touched: int, timers: List[Timer]) -> bool:
+692	    return now - last_touched > 6 * 3600 and not any(t.ends > now for t in timers)
+693	
+694	
+695	# ----------------------------------------------------------------------------- B-22 alarm plan
+696	# 03-ENGINEERING/COOKING-TIMERS-AND-ALARMS.md section 5. The plan says which calls to make so that the
+697	# system's set of alarms equals the set of running timers. It performs no call itself.
+698	@dataclass(frozen=True)
+699	class AlarmTimer:
+700	    step: int              # StepTimer.stepPosition
+701	    ends: F                # endsAt, epoch seconds
+702	    alarm: Optional[str]   # StepTimer.alarmId, lower-case text, or None
+703	    title: str
+704	
+705	
+706	@dataclass(frozen=True)
+707	class SysAlarm:
+708	    id: str                # lower-case text
+709	    fire: Optional[F]      # the fixed fire date in epoch seconds; None when the alarm has no fixed date
+710	
+711	
+712	ALARM_SYNC_TOLERANCE_SECONDS = 1  # a system alarm whose fire date is this far or farther from endsAt is stale
+713	
+
+#### GAP: lines 714..811 missing ####
+
+812	]
+813	
+814	
+815	def _num(x: F):
+816	    return int(x) if x.denominator == 1 else float(x)
+817	
+818	
+819	def _step_json(s: tuple) -> dict:
+820	    if s[0] == "cancel":
+821	        return {"op": "cancel", "id": s[1]}
+822	    if s[0] == "forget":
+823	        return {"op": "forget", "stepPosition": s[1]}
+824	    if s[0] == "request":
+825	        return {"op": "requestAuthorization"}
+826	    return {"op": "schedule", "stepPosition": s[1], "fireDate": _num(s[2]), "title": s[3]}
+827	
+828	
+829	def alarm_case_input_json(now, timers, system, auth) -> dict:
+830	    return {"kind": "alarmPlan", "now": _num(F(now)), "authorization": auth,
+831	            "timers": [{"stepPosition": t.step, "endsAt": _num(t.ends), "alarmId": t.alarm, "title": t.title} for t in timers],
+832	            "system": [{"id": a.id, "fireDate": None if a.fire is None else _num(a.fire)} for a in system]}
+833	
+834	
+835	ALARM_BEGIN = "<!-- BEGIN GENERATED ALARM CASES (python3 tools/rules_reference.py --print-alarm-cases) -->"
+836	ALARM_END = "<!-- END GENERATED ALARM CASES -->"
+837	
+838	
+839	def alarm_cases_markdown() -> str:
+840	    short = {_A1: "A1", _A2: "A2", _A9: "A9"}
+841	
+
+#### GAP: lines 842..867 missing ####
+
+868	
+869	
+870	# ----------------------------------------------------------------------------- B-23 share text
+871	def share_text(content: Content, r: Recipe, servings: int, shown: List[str]) -> Optional[str]:
+872	    """shown: per line, the status the screen currently shows: have|swap|missing|missingOptional."""
+873	    body = []
+874	    for ln, st in zip(r.lines, shown):
+875	        if st in ("missing", "missingOptional"):
+876	            amt = amount_text(scaled(ln.amount, servings, r.base), ln.unit)
+877	            body.append("• %s — %s%s" % (content.ings[ln.ing].name, amt, " (optional)" if st == "missingOptional" else ""))
+878	    if not body:
+879	        return None
+880	    head = "For %s (%d %s):" % (r.title, servings, _plural(servings, "serving", "servings"))
+881	    return "\n".join([head] + body)
+882	
+883	
+884	# ----------------------------------------------------------------------------- B-24 stepper
+885	def stepper_up(v: F, unit: str) -> F:
+886	    if unit in ("g", "ml"):
+887	        return v + (10 if v >= 10 else 1)
+888	    if unit == "L":
+889	        return q2(v + F(1, 10))
+890	    return q2(v + F(1, 2))
+891	
+892	
+893	def stepper_down(v: F, unit: str) -> Optional[F]:
+894	    if unit in ("g", "ml"):
+895	        step = 10 if v >= 10 else 1
+896	        if v - step > 0:
+897	            return v - step
+898	        if v - 1 > 0:
+899	            return v - 1
+900	        return None
+901	    smallest = F(1, 10) if unit == "L" else F(1, 2)
+902	    w = q2(v - smallest)
+903	    return w if w >= smallest else None
+904	
+905	
+906	# ----------------------------------------------------------------------------- B-25 / B-26 problem report, format v1
+907	# The text a person can send from S-19 and the event log it reads (03-ENGINEERING/FIELD-QUALITY.md sections 5, 6 and 8).
+908	# Everything here is integer arithmetic and string handling, so that the Swift twin can match it byte for byte.
+909	REPORT_FIRST_LINE = "FOODSAFE-REPORT 1"
+
+#### GAP: lines 910..1688 missing ####
+
+1689	def I(code, name, cat, unit, zone, shelf, qty, starter, cluster=None, aliases=()):
+1690	    return Ing(code, name, cat, unit, zone, shelf, F(str(qty)), starter, cluster, tuple(aliases))
+1691	
+1692	
+1693	def L(ing, amount, unit, optional=False):
+1694	    return Line(ing, F(str(amount)), unit, optional)
+1695	
+1696	
+1697	def S(title, instruction, picture, timer=None, ings=()):
+1698	    return Step(title, instruction, picture, timer, tuple(ings))
+1699	
+1700	
+1701	def build_c1() -> Content:
+1702	    """C1: the mini content of the tests. It reproduces what the mockup shows (DEBUG fixture);
+1703	    it is not release content (the release recipes are authored under RECIPE-CONTENT-SPEC.md)."""
+1704	    ings = [
+1705	        I("tomato", "Tomatoes", "vegetables", "g", "fridge", 7, 500, True),
+1706	        I("spinach", "Spinach", "vegetables", "g", "fridge", 5, 250, True),
+1707	        I("onion", "Onion", "vegetables", "pcs", "pantry", 21, 3, True),
+1708	        I("carrot", "Carrots", "vegetables", "pcs", "fridge", 21, 5, True),
+1709	        I("broccoli", "Broccoli", "vegetables", "g", "fridge", 7, 300, False),
+1710	        I("potato", "Potatoes", "vegetables", "g", "pantry", 30, 1000, True),
+1711	        I("garlic", "Garlic", "vegetables", "pcs", "pantry", 30, 2, True),
+1712	        I("egg", "Eggs", "proteins", "pcs", "fridge", 28, 6, True),
+1713	        I("chicken", "Chicken Breast", "proteins", "g", "fridge", 3, 400, True, "protein"),
+1714	        I("lentil", "Lentils", "proteins", "g", "pantry", 365, 500, False, "protein"),
+1715	        I("ground-beef", "Ground Beef", "proteins", "g", "fridge", 2, 300, False, None, ("mince", "minced beef")),
+1716	        I("mozzarella", "Mozzarella Cheese", "dairy", "g", "fridge", 14, 125, False),
+1717	        I("pasta", "Pasta", "grains", "g", "pantry", 365, 500, True),
+1718	        I("rice", "Rice", "grains", "g", "pantry", 365, 500, True),
+1719	        I("olive-oil", "Olive Oil", "others", "L", "pantry", 365, 1, True),
+1720	        I("salt", "Salt", "others", "g", "pantry", 730, 500, True),
+1721	        I("pepper", "Pepper", "others", "g", "pantry", 730, 50, True),
+1722	        I("basil", "Basil", "others", "g", "fridge", 7, 20, False),
+1723	        I("soy-sauce", "Soy Sauce", "others", "ml", "pantry", 365, 250, False, None, ("shoyu",)),
+1724	        I("coconut-milk", "Coconut Milk", "others", "ml", "pantry", 365, 400, False),
+1725	        I("vegetable-broth", "Vegetable Broth", "others", "ml", "pantry", 365, 1000, False),
+1726	    ]
+1727	    steps_pasta = (
+1728	        S("Prep the ingredients", "Chop the garlic and the tomatoes. Tear the basil.", "technique.chop", None, ("garlic", "tomato", "basil")),
+1729	        S("Cook the pasta", "Bring a large pot of salted water to a boil. Add pasta and cook for 8-10 minutes (or according to package instructions).", "technique.boil", 480, ("pasta", "salt")),
+1730	        S("Warm the oil", "Warm the olive oil in a wide pan over medium heat.", "technique.heat", None, ("olive-oil",)),
+1731	        S("Cook the garlic", "Add the garlic and cook until it smells sweet.", "technique.saute", None, ("garlic",)),
+1732	        S("Simmer the tomatoes", "Add the tomatoes and the salt. Simmer until saucy.", "technique.simmer", None, ("tomato", "salt")),
+1733	        S("Toss together", "Drain the pasta and toss it with the sauce.", "technique.toss", None, ("pasta",)),
+1734	        S("Season and serve", "Add the pepper and the basil. Serve warm.", "technique.season", None, ("pepper", "basil")),
+1735	    )
+1736	    recipes = [
+1737	        Recipe("tomato-pasta", "Tomato Pasta", 15, 3, (
+1738	            L("pasta", 300, "g"), L("tomato", 400, "g"), L("olive-oil", 30, "ml"), L("garlic", 2, "cloves"),
+1739	            L("basil", 10, "g", True), L("salt", 1, "g"), L("pepper", 2, "g")), steps_pasta),
+1740	        Recipe("chicken-stir-fry", "Chicken Stir-fry", 25, 2, (
+1741	            L("chicken", 300, "g"), L("rice", 150, "g"), L("broccoli", 200, "g"), L("garlic", 2, "cloves"),
+1742	            L("olive-oil", 15, "ml"), L("soy-sauce", 30, "ml", True)), (
+1743	            S("Cook the rice", "Rinse the rice and cook it until tender.", "technique.boil", 720, ("rice",)),
+1744	            S("Brown the chicken", "Cut the chicken into strips and brown it in oil.", "technique.saute", None, ("chicken", "olive-oil")),
+1745	            S("Add the vegetables", "Add the broccoli and the garlic. Stir until bright green.", "technique.stir", None, ("broccoli", "garlic")),
+1746	            S("Finish", "Add the soy sauce and serve over the rice.", "technique.season", None, ("soy-sauce", "rice")))),
+1747	        Recipe("vegetable-curry", "Vegetable Curry", 35, 3, (
+1748	            L("potato", 400, "g"), L("tomato", 300, "g"), L("onion", 1, "pcs"), L("garlic", 2, "cloves"),
+1749	            L("coconut-milk", 200, "ml", True)), (
+1750	            S("Prep vegetables", "Cube the potatoes. Chop the onion and the tomatoes.", "technique.chop", None, ("potato", "onion", "tomato")),
+1751	            S("Soften the onion", "Cook the onion and the garlic until soft.", "technique.saute", None, ("onion", "garlic")),
+1752	            S("Simmer", "Add the potatoes, the tomatoes and the coconut milk. Simmer until the potatoes are tender.", "technique.simmer", 1500, ("potato", "tomato", "coconut-milk")))),
+1753	        Recipe("lentil-soup", "Lentil Soup", 40, 4, (
+1754	            L("chicken", 200, "g"), L("onion", 1, "pcs"), L("carrot", 2, "pcs"), L("vegetable-broth", 800, "ml"),
+1755	            L("salt", 2, "g"), L("pepper", 1, "g")), (
+1756	            S("Prep vegetables", "Chop onion, carrot, celery.", "technique.chop", None, ("onion", "carrot")),
+1757	            S("Sauté", "Cook in olive oil for 5 minutes.", "technique.saute", 300, ("chicken",)),
+1758	            S("Add lentils & broth", "Simmer for 25 minutes.", "technique.simmer", 1500, ("vegetable-broth",)),
+1759	            S("Season", "Add salt, pepper, herbs.", "technique.season", None, ("salt", "pepper")))),
+1760	    ]
+1761	    clusters = {"protein": ["chicken", "lentil"]}
+1762	    return Content({i.id: i for i in ings}, recipes, clusters, {})
+1763	
+1764	
+1765	def _item(n: int, ing: str, content: Content, qty, unit, zone, expiry: date, start=None) -> Item:
+1766	    q = F(str(qty))
+1767	    return Item("00000000-0000-4000-8000-%012d" % n, ing, content.ings[ing].name, q, F(str(start)) if start is not None else q,
+1768	                unit, zone, expiry, n)
+1769	
+1770	
+1771	def build_kitchens(content: Content) -> Dict[str, List[Item]]:
+1772	    t = TODAY
+1773	    d = lambda days: t + timedelta(days=days)
+1774	
+1775	    def k1(tomato_days=2):
+1776	        rows = [
+1777	            (1, "tomato", 500, "g", "fridge", d(tomato_days)),
+1778	            (2, "egg", 6, "pcs", "fridge", d(5)),
+1779	            (3, "spinach", 250, "g", "fridge", d(1)),
+1780	            (4, "pasta", 500, "g", "pantry", d(180)),
+1781	            (5, "olive-oil", 1, "L", "pantry", d(365)),
+1782	            (6, "chicken", 400, "g", "fridge", d(3)),
+1783	            (7, "ground-beef", 300, "g", "fridge", d(1)),
+1784	            (8, "mozzarella", 125, "g", "fridge", d(2)),
+1785	        ]
+1786	        return [_item(n, i, content, q, u, z, e) for n, i, q, u, z, e in rows]
+1787	
+1788	    K1 = k1()
+1789	    K3 = K1[:6]
+1790	    quantities = {"egg": 2, "pasta": 200, "olive-oil": "0.4", "chicken": 100, "ground-beef": 50, "mozzarella": 20}
+1791	    K2 = []
+1792	    for r in k1(tomato_days=4):
+1793	        if r.ingredient in quantities:
+1794	            r = replace(r, qty=F(str(quantities[r.ingredient])))
+1795	        K2.append(r)
+1796	    far = d(365)
+1797	    K5 = [_item(n, i, content, q, u, z, far) for n, i, q, u, z in [
+1798	        (1, "pasta", 500, "g", "pantry"), (2, "tomato", 450, "g", "fridge"), (3, "olive-oil", 1, "L", "pantry"),
+1799	        (4, "garlic", 2, "pcs", "pantry"), (5, "basil", 20, "g", "fridge"), (6, "salt", 500, "g", "pantry"),
+1800	        (7, "pepper", 50, "g", "pantry"), (8, "chicken", 400, "g", "fridge"), (9, "rice", 500, "g", "pantry"),
+1801	        (10, "broccoli", 300, "g", "fridge")]]
+1802	    K6 = [_item(n, i, content, q, u, z, far) for n, i, q, u, z in [
+1803	        (1, "lentil", 500, "g", "pantry"), (2, "onion", 2, "pcs", "pantry"), (3, "carrot", 4, "pcs", "fridge"),
+1804	        (4, "vegetable-broth", 1000, "ml", "pantry"), (5, "salt", 500, "g", "pantry"), (6, "pepper", 50, "g", "pantry")]]
+1805	    K7 = [_item(n, i, content, q, u, z, d(25)) for n, i, q, u, z in [
+1806	        (1, "pasta", 500, "g", "pantry"), (2, "tomato", 450, "g", "fridge"), (3, "olive-oil", 1, "L", "pantry"),
+1807	        (4, "garlic", 1, "pcs", "pantry"), (5, "basil", 20, "g", "fridge"), (6, "salt", 500, "g", "pantry"),
+1808	        (7, "pepper", 50, "g", "pantry")]]
+1809	    K8 = [r for r in K5 if r.ingredient not in ("basil", "pepper")]  # D-X-69: one required line (pepper) and one optional line (basil) of Tomato Pasta are missing
+1810	    return {"K1": K1, "K2": K2, "K3": K3, "K5": K5, "K6": K6, "K7": K7, "K8": K8}
+1811	
+1812	
+1813	# ============================================================================= SELF-TEST
+1814	class Checks:
+1815	    def __init__(self):
+1816	        self.n = 0
+1817	
+1818	    def eq(self, label, actual, expected):
+1819	        self.n += 1
+1820	        if actual != expected:
+1821	            raise AssertionError("%s\n  document says: %r\n  model says:    %r" % (label, expected, actual))
+1822	
+1823	    def raises(self, label, fn, exc):
+1824	        self.n += 1
+1825	        try:
+1826	            fn()
+1827	        except exc:
+1828	            return
+1829	        except Exception as e:
+1830	            raise AssertionError("%s\n  expected %s, got %s: %s" % (label, exc.__name__, type(e).__name__, e))
+1831	        raise AssertionError("%s\n  expected %s, nothing was raised" % (label, exc.__name__))
+1832	
+1833	
+1834	def selftest() -> int:
+1835	    c = Checks()
+1836	    t = TODAY
+1837	    D = lambda s: date.fromisoformat(s)
+1838	    content = build_c1()
+1839	    kit = build_kitchens(content)
+1840	
+1841	    # B-01
+1842	    for exp, want in [("2026-04-20", 2), ("2026-04-18", 0), ("2026-04-17", -1), ("2026-05-18", 30), ("2027-04-18", 365)]:
+1843	        c.eq("B-01 %s" % exp, days_left(D(exp), t), want)
+1844	
+1845	    # B-02 table
+1846	    table = {-2: (True, True, "Expired"), 0: (True, True, "Soon"), 1: (True, True, "Soon"), 2: (False, True, "Soon"),
+1847	             3: (False, False, "Soon"), 4: (False, False, None), 5: (False, False, None)}
+1848	    for d_, (card, alert, bdg) in table.items():
+1849	        c.eq("B-02 card %d" % d_, in_expiring_card(d_), card)
+1850	        c.eq("B-02 alert %d" % d_, in_alert(d_), alert)
+1851	        c.eq("B-02 badge %d" % d_, badge(d_), bdg)
+1852	
+1853	    # B-03
+1854	    for d_, want in [(2, "Exp: 2 days"), (60, "Exp: 2 months"), (364, "Exp: 12 months"), (365, "Exp: 1 year"),
+1855	                     (730, "Exp: 2 years"), (-1, "Expired 1 day ago"), (0, "Exp: today"), (1, "Exp: 1 day"), (59, "Exp: 59 days"),
+1856	                     (-3, "Expired 3 days ago")]:
+1857	        c.eq("B-03 %d" % d_, expiry_text(d_), want)
+1858	    c.eq("B-03 estimate 2", expiry_text(2, True), "Exp: ~2 days")
+1859	    c.eq("B-03 estimate 180", expiry_text(180, True), "Exp: ~6 months")
+1860	    c.eq("B-03 estimate today unchanged", expiry_text(0, True), "Exp: today")
+1861	    c.eq("B-03 estimate expired unchanged", expiry_text(-2, True), "Expired 2 days ago")
+1862	    c.eq("B-03 expires in 1", expires_in_text(1), "Expires in 1 day")
+1863	    c.eq("B-03 expires in 2", expires_in_text(2), "Expires in 2 days")
+1864	    c.eq("B-03 expires in ~2", expires_in_text(2, True), "Expires in ~2 days")
+1865	    c.eq("B-03 expires today", expires_in_text(0), "Expires today")
+1866	
+1867	    # B-04 / B-05 table for Tomato Pasta
+1868	    pasta = next(r for r in content.recipes if r.id == "tomato-pasta")
+1869	    want = {
+1870	        4: ["400 g", "533 g", "40 ml", "2.5 cloves", "13 g", "1.3 g", "2.7 g"],
+1871	        3: ["300 g", "400 g", "30 ml", "2 cloves", "10 g", "1 g", "2 g"],
+1872	        2: ["200 g", "267 g", "20 ml", "1.5 cloves", "6.7 g", "0.7 g", "1.3 g"],
+1873	    }
+
+#### GAP: lines 1874..1950 missing ####
+
+1951	    # B-09 order examples
+1952	    def mk(rid, title, minutes, lines, kitchen):
+1953	        return Recipe(rid, title, minutes, 1, tuple(lines), ())
+1954	    spinach_soon = _item(1, "spinach", content, 100, "g", "fridge", D("2026-04-19"))
+1955	    pan = _item(2, "pasta", content, 500, "g", "pantry", D("2027-01-01"))
+1956	    ri = _item(3, "rice", content, 500, "g", "pantry", D("2027-01-01"))
+1957	    A = Recipe("a", "A pasta", 25, 1, (L("pasta", 100, "g"), L("spinach", 50, "g")), ())
+1958	    B = Recipe("b", "B rice", 15, 1, (L("rice", 100, "g"),), ())
+1959	    # none uses a use-first ingredient: 15 min before 25 min
+1960	    far_spinach = replace(spinach_soon, expiry=D("2027-01-01"))
+1961	    cont2 = Content(content.ings, [A, B], content.clusters, {})
+1962	    o = suggestions(cont2, [far_spinach, pan, ri], t)
+1963	    c.eq("B-09 faster first", [m.recipe.title for m in o], ["B rice", "A pasta"])
+1964	    o = suggestions(cont2, [spinach_soon, pan, ri], t)
+1965	    c.eq("B-09 rescue first", [m.recipe.title for m in o], ["A pasta", "B rice"])
+1966	    c.eq("B-09 rescue count", [len(m.rescue) for m in o], [1, 0])
+1967	    # an expired row never makes an ingredient use-first (B-09), the fresh row alone decides
+1968	    two_spinach = [_item(50, "spinach", content, 100, "g", "fridge", D("2026-04-17")), _item(51, "spinach", content, 200, "g", "fridge", D("2026-05-30")), pan, ri]
+1969	    o_exp = suggestions(cont2, two_spinach, t)
+1970	    c.eq("B-09 expired row is not use-first", [len(m.rescue) for m in o_exp], [0, 0])
+1971	    c.eq("B-09 fresh row still makes the line available", next(m for m in o_exp if m.recipe.id == "a").status[1], ("have", None))
+1972	    # almost ready and smart swap follow ready now regardless of minutes
+1973	    # B-09 sort inside need-a-few-things uses required lines only
+1974	    # Home Cook-next line
+1975	    c.eq("B-21 cook-next line", cook_next_line(content, next(m for m in o if m.recipe.id == "a")), "Uses your spinach")
+1976	    many = Match(A, 1, [("have", None)] * 2, "readyNow", ["spinach", "egg", "onion"])
+1977	    c.eq("B-21 cook-next line, three", cook_next_line(content, many), "Uses your spinach, eggs and 1 more")
+1978	    many2 = Match(A, 1, [("have", None)] * 2, "readyNow", ["spinach", "egg"])
+1979	    c.eq("B-21 cook-next line, two", cook_next_line(content, many2), "Uses your spinach and eggs")
+1980	
+1981	    # B-10 illustration
+1982	    lemon_content = Content({**content.ings, "lemon": I("lemon", "Lemon", "fruits", "pcs", "fridge", 14, 2, False, "acid"),
+1983	                             "lime": I("lime", "Lime", "fruits", "pcs", "fridge", 14, 2, False, "acid"),
+1984	                             "vinegar": I("vinegar", "Vinegar", "others", "ml", "pantry", 365, 500, False, "acid")},
+1985	                            [], {"acid": ["lemon", "lime", "vinegar"]}, {("lemon", "pcs", "vinegar"): (F(15), "ml")})
+1986	    c.eq("B-10 lemon -> vinegar", substitute_amount(lemon_content, "lemon", "pcs", F(2), "vinegar"), (F(30), "ml"))
+1987	    c.eq("B-10 lemon -> lime", substitute_amount(lemon_content, "lemon", "pcs", F(2), "lime"), (F(2), "pcs"))
+1988	
+1989	    # B-10, B-08 and B-16 with C2, computed by hand: pieces to millilitres, litres to millilitres, cloves to grams, no factor
+1990	    c2_, c2n_ = build_c2(), build_c2(False)
+1991	    c.eq("B-10 C2 lemon -> lime keeps pcs", substitute_amount(c2_, "lemon", "pcs", F(2), "lime"), (F(2), "pcs"))
+1992	    c.eq("B-10 C2 2 lemons -> 2 x 15 ml", substitute_amount(c2_, "lemon", "pcs", F(2), "vinegar"), (F(30), "ml"))
+1993	    c.eq("B-10 C2 half a lemon -> 7.5 ml", substitute_amount(c2_, "lemon", "pcs", F(1, 2), "vinegar"), (F(15, 2), "ml"))
+1994	    c.eq("B-10 C2 2 limes -> 2 x 10 ml", substitute_amount(c2_, "lime", "pcs", F(2), "vinegar"), (F(20), "ml"))
+1995	    c.eq("B-10 C2 0.5 L milk -> oat drink keeps the litre", substitute_amount(c2_, "milk", "L", F(1, 2), "oat-drink"), (F(1, 2), "L"))
+1996	    c.eq("B-10 C2 3 cloves -> 1.5 g", substitute_amount(c2_, "garlic", "cloves", F(3), "garlic-powder"), (F(3, 2), "g"))
+1997	    c.eq("B-10 C2 2.67 pcs -> 40.05 ml, not rounded", substitute_amount(c2_, "lemon", "pcs", F("2.67"), "vinegar"), (F("40.05"), "ml"))
+1998	    c.eq("B-10 C2 no factor gives None", substitute_amount(c2n_, "lemon", "pcs", F(2), "vinegar"), None)
+1999	    lp_ = c2_.recipes[0]
+2000	
+2001	    def lrow(n, ing, q, u, exp="2026-06-01", cont=c2_):
+2002	        return _item(n, ing, cont, q, u, cont.ings[ing].zone, D(exp))
+2003	    base_ = [lrow(1, "pasta", 500, "g"), lrow(2, "salt", 500, "g")]
+2004	    m_ = match_recipe(c2_, lp_, 2, base_ + [lrow(3, "vinegar", 250, "ml")], t)
+2005	    c.eq("B-08 C2 vinegar replaces the lemon", (m_.tier, m_.status[1]), ("smartSwap", ("swap", "vinegar")))
+2006	    c.eq("B-08 C2 swap line", status_line(c2_, m_), "Swap: lemons → white vinegar")
+2007	    m_ = match_recipe(c2_, lp_, 2, base_ + [lrow(3, "vinegar", 30, "ml")], t)
+2008	    c.eq("B-08 C2 30 ml is exactly enough", (m_.tier, m_.status[1]), ("smartSwap", ("swap", "vinegar")))
+2009	    m_ = match_recipe(c2_, lp_, 2, base_ + [lrow(3, "vinegar", 29, "ml")], t)
+2010	    c.eq("B-08 C2 29 ml is below 30 ml", (m_.tier, m_.status[1]), ("almostReady", ("missing", None)))
+2011	    c.eq("B-08 C2 almost ready line", status_line(c2_, m_), "Missing: lemons")
+2012	    m_ = match_recipe(c2_, lp_, 3, base_ + [lrow(3, "vinegar", 44, "ml")], t)
+2013	    c.eq("B-08 C2 three servings need 3 x 15 = 45 ml, 44 is short", m_.tier, "almostReady")
+2014	    m_ = match_recipe(c2_, lp_, 3, base_ + [lrow(3, "vinegar", 45, "ml")], t)
+2015	    c.eq("B-08 C2 three servings, 45 ml", m_.tier, "smartSwap")
+2016	    m_ = match_recipe(c2_, lp_, 2, base_ + [lrow(3, "lime", 2, "pcs"), lrow(4, "vinegar", 250, "ml")], t)
+2017	    c.eq("B-08 C2 the lime comes first in the cluster", m_.status[1], ("swap", "lime"))
+2018	    m_ = match_recipe(c2n_, lp_, 2, base_ + [lrow(3, "vinegar", 250, "ml", cont=c2n_)], t)
+2019	    c.eq("B-08 C2 without a factor nothing is offered", (m_.tier, m_.status[1]), ("almostReady", ("missing", None)))
+2020	    m_ = match_recipe(c2_, lp_, 2, base_ + [lrow(3, "vinegar", 250, "ml", "2026-04-19")], t)
+2021	    c.eq("B-08 C2 rescue counts the substitute", m_.rescue, ["vinegar"])
+2022	    rows_ = base_ + [lrow(3, "vinegar", 250, "ml")]
+2023	    props_ = propose_deductions(c2_, lp_, 2, {1: "vinegar"}, rows_, t)
+2024	    c.eq("B-16 C2 swapped line deducts the vinegar", [(p.line, p.ingredient, p.kind, p.amount, p.unit) for p in props_],
+2025	         [(0, "pasta", "amount", F(200), "g"), (1, "vinegar", "amount", F(30), "ml"), (2, "salt", "amount", F(1), "g")])
+2026	    after_, ev_ = apply_deductions(rows_, props_, [], t)
+2027	    c.eq("B-16 C2 vinegar 250 -> 220 ml", sorted((r.ingredient, r.qty) for r in after_), [("pasta", F(300)), ("salt", F(499)), ("vinegar", F(220))])
+2028	
+2029	    # B-16 total order and a vanished presence row, computed by hand
+2030	    tie_a = replace(_item(21, "tomato", content, 100, "g", "fridge", D("2026-04-20")), added=7)
+2031	    tie_b = replace(_item(20, "tomato", content, 100, "g", "fridge", D("2026-04-20")), added=7)  # same expiry and instant, smaller id, listed second
+2032	    one_tomato = replace(c2_.recipes[0], lines=(L("tomato", 100, "g"),), base=1)
+2033	    tie_content = Content(dict(content.ings), [one_tomato], content.clusters, content.factors)
+2034	    tie_props = propose_deductions(tie_content, one_tomato, 1, {}, [tie_a, tie_b], t)
+2035	    tie_after, tie_events = apply_deductions([tie_a, tie_b], tie_props, [], t)
+2036	    c.eq("B-16 rows that tie on expiry and instant are taken by the smaller id first", [r.id for r in tie_after], [tie_a.id])
+2037	    c.eq("B-16 the removed row of the tie is the smaller id", [(e.qty, e.unit) for e in tie_events], [(F(100), "g")])
+2038	    gone_props = [Proposal(0, "garlic", "presence", F(0), "cloves", F(0), tie_a.id), Proposal(1, "garlic", "presence", F(0), "cloves", F(0), tie_a.id)]
+2039	    gone_after, gone_events = apply_deductions([tie_a], gone_props, [tie_a.id], t)
+2040	    c.eq("B-16 a presence row that is already gone is skipped, not an error", (gone_after, len(gone_events)), ([], 1))
+2041	    c.eq("B-16 C2 no event while rows remain", ev_, [])
+2042	    k7_props = propose_deductions(content, next(r for r in content.recipes if r.id == "tomato-pasta"), 3, {}, kit["K7"], t)
+2043	    c.eq("B-16 the S-16 stock lines of K7 (A-16-1): the stock is written in the unit of the line, so 1 L of olive oil reads 1000 ml",
+2044	         [stock_line(p, kit["K7"], t) for p in k7_props],
+2045	         ["You have 500 g", "You have 450 g", "You have 1000 ml", "You have 1 pcs", "You have 20 g", "You have 500 g", "You have 50 g"])
+2046	    c.eq("B-16 a presence line names what the rows hold, not a converted stock",
+2047	         [stock_line(p, kit["K7"], t) for p in k7_props if p.kind == "presence"], ["You have 1 pcs"])
+2048	    gone_ = [_item(1, "tomato", content, 450, "g", "fridge", D("2026-04-17")), _item(2, "tomato", content, 100, "g", "fridge", D("2026-04-25"))]
+2049	    c.eq("B-16 an expired row is not in the stock line", [stock_line(p, gone_, t) for p in propose_deductions(content, next(r for r in content.recipes if r.id == "tomato-pasta"), 3, {}, gone_, t)],
+2050	         ["You have 100 g"])
+2051	    props_ = propose_deductions(c2_, lp_, 2, {1: "vinegar"}, base_ + [lrow(3, "vinegar", 10, "ml")], t)
+2052	    c.eq("B-16 C2 stock below the amount", [(p.amount, p.stock) for p in props_ if p.line == 1], [(F(10), F(10))])
+2053	    after_, ev_ = apply_deductions(base_ + [lrow(3, "vinegar", 10, "ml")], props_, [], t)
+2054	    c.eq("B-16 C2 the emptied row is removed with one event", [(e.ingredient, e.qty, e.unit) for e in ev_], [("vinegar", F(10), "ml")])
+2055	    props_ = propose_deductions(c2n_, lp_, 2, {1: "vinegar"}, base_ + [lrow(3, "vinegar", 250, "ml", cont=c2n_)], t)
+2056	    c.eq("B-16 C2 no factor, no proposal for the line", [p.line for p in props_], [0, 2])
+2057	    soup_ = next(r for r in content.recipes if r.id == "lentil-soup")
+2058	    props_ = propose_deductions(content, soup_, 4, {0: "lentil"}, [_item(1, "lentil", content, 500, "g", "pantry", D("2026-06-01"))], t)
+2059	    c.eq("B-16 chicken swapped for lentils, same kind", [(p.line, p.ingredient, p.amount, p.unit) for p in props_], [(0, "lentil", F(200), "g")])
+2060	
+2061	    # B-11
+2062	    for q_, s_, want_ in [(500, 500, None), (250, 500, "Low Stock"), (251, 500, None), (100, 500, "Almost Empty"), (101, 500, "Low Stock"), (600, 600, None)]:
+2063	        c.eq("B-11 %s/%s" % (q_, s_), stock_state(F(q_), F(s_)), want_)
+2064	
+2065	    # B-12 order and K1 / K2 (A-04-1, A-02-1, A-02-8, A-04-5)
+2066	    c.eq("A-04-1 K1 order", [r.name for r in sort_items(kit["K1"], t)],
+2067	         ["Ground Beef", "Spinach", "Mozzarella Cheese", "Tomatoes", "Chicken Breast", "Eggs", "Pasta", "Olive Oil"])
+2068	    h1 = home_model(kit["K1"], t)
+2069	    c.eq("K1 banner count (tomatoes 2 days)", h1.alert_count, 4)
+2070	    h2 = home_model(kit["K2"], t)
+2071	    c.eq("A-02-1 K2 banner", h2.alert_count, 3)
+2072	    c.eq("A-02-1 K2 rows", h2.alert_rows, ["Ground Beef", "Spinach", "Mozzarella Cheese"])
+2073	    c.eq("A-02-8 K2 cards", (h2.expiring, h2.low, h2.almost), (2, 4, 2))
+2074	    c.eq("A-04-5 K2 rows", len(kit["K2"]), 8)
+2075	    c.eq("A-04-6 search", [r.name for r in search_items(kit["K1"], "OIL", "pantry")], ["Olive Oil"])
+2076	    c.eq("K3 has the six mockup rows", [r.name for r in kit["K3"]], ["Tomatoes", "Eggs", "Spinach", "Pasta", "Olive Oil", "Chicken Breast"])
+2077	    c.eq("K3 expiry lines", [expiry_text(days_left(r.expiry, t)) for r in kit["K3"]],
+2078	         ["Exp: 2 days", "Exp: 5 days", "Exp: 1 day", "Exp: 6 months", "Exp: 1 year", "Exp: 3 days"])
+2079	    c.eq("K3 badges", [badge(days_left(r.expiry, t)) for r in kit["K3"]], ["Soon", None, "Soon", None, None, "Soon"])
+2080	    c.eq("A-12-1 K2 lines", [expires_in_text(days_left(r.expiry, t)) for r in sort_items(kit["K2"], t)[:3]],
+2081	         ["Expires in 1 day", "Expires in 1 day", "Expires in 2 days"])
+2082	
+2083	    # B-16 kitchen K7
+2084	    k7 = kit["K7"]
+2085	    props = propose_deductions(content, pasta, 3, {}, k7, t)
+2086	    got = [(p.kind, amount_text(p.amount, p.unit) if p.kind == "amount" else "Used up? off") for p in props]
+2087	    c.eq("A-16-1 proposals", got, [("amount", "300 g"), ("amount", "400 g"), ("amount", "30 ml"), ("presence", "Used up? off"),
+2088	                                    ("amount", "10 g"), ("amount", "1 g"), ("amount", "2 g")])
+2089	    after, events = apply_deductions(k7, props, [], t)
+2090	    got_after = {r.ingredient: amount_text(r.qty, r.unit) for r in after}
+2091	    c.eq("A-16-1 after apply", got_after, {"pasta": "200 g", "tomato": "50 g", "olive-oil": "0.97 L", "garlic": "1 pcs",
+2092	                                          "basil": "10 g", "salt": "499 g", "pepper": "48 g"})
+2093	    c.eq("A-16-1 no event", events, [])
+2094	    c.eq("A-16-1 starting quantity unchanged", {r.ingredient: dec(r.start) for r in after}["pasta"], "500")
+2095	    # tomatoes 300 g in stock -> proposal 300 g, row removed, one event of 300 g
+2096	    t300 = [replace(r, qty=F(300), start=F(300)) if r.ingredient == "tomato" else r for r in k7]
+2097	    props = propose_deductions(content, pasta, 3, {}, t300, t)
+2098	    tp = next(p for p in props if p.ingredient == "tomato")
+2099	    c.eq("A-16-2 proposal", amount_text(tp.amount, tp.unit), "300 g")
+2100	    after, events = apply_deductions(t300, props, [], t)
+2101	    c.eq("A-16-2 row removed", any(r.ingredient == "tomato" for r in after), False)
+2102	    c.eq("A-16-2 event", [(e.outcome, e.source, amount_text(e.qty, e.unit)) for e in events], [("used", "cook", "300 g")])
+2103	    # two rows 200 g (04-20) and 250 g (04-25), line 300 g
+2104	    two = [r for r in k7 if r.ingredient != "tomato"] + [
+2105	        _item(11, "tomato", content, 200, "g", "fridge", D("2026-04-20")), _item(12, "tomato", content, 250, "g", "fridge", D("2026-04-25"))]
+2106	    props = propose_deductions(content, replace(pasta, lines=(L("tomato", 300, "g"),)), 3, {}, two, t)
+2107	    after, events = apply_deductions(two, props, [], t)
+2108	    tom = sorted([(r.id, amount_text(r.qty, r.unit)) for r in after if r.ingredient == "tomato"])
+2109	    c.eq("A-16-3 rows after", tom, [("00000000-0000-4000-8000-000000000012", "150 g")])
+2110	    c.eq("A-16-3 event", [(e.outcome, amount_text(e.qty, e.unit)) for e in events], [("used", "200 g")])
+2111	    # rows are used by earliest expiry first, not by the order they were added; ties go to the earlier addedAt
+2112	    rev = [r for r in k7 if r.ingredient != "tomato"] + [
+2113	        _item(12, "tomato", content, 200, "g", "fridge", D("2026-04-20")), _item(11, "tomato", content, 250, "g", "fridge", D("2026-04-25"))]
+2114	    props = propose_deductions(content, replace(pasta, lines=(L("tomato", 300, "g"),)), 3, {}, rev, t)
+2115	    after, events = apply_deductions(rev, props, [], t)
+2116	    c.eq("B-16 earliest expiry first", sorted((r.id[-2:], amount_text(r.qty, r.unit)) for r in after if r.ingredient == "tomato"), [("11", "150 g")])
+2117	    tie = [_item(22, "tomato", content, 200, "g", "fridge", D("2026-04-20")), _item(21, "tomato", content, 250, "g", "fridge", D("2026-04-20"))]
+2118	    props = propose_deductions(content, replace(pasta, lines=(L("tomato", 300, "g"),)), 3, {}, tie, t)
+2119	    after, events = apply_deductions(tie, props, [], t)
+2120	    c.eq("B-16 tie goes to the earlier addedAt", sorted((r.id[-2:], amount_text(r.qty, r.unit)) for r in after if r.ingredient == "tomato"), [("22", "150 g")])
+2121	    # expired row never reduced
+2122	    exp_rows = [_item(1, "tomato", content, 450, "g", "fridge", D("2026-04-17"))]
+2123	    c.eq("A-16-4 expired never proposes", propose_deductions(content, pasta, 3, {}, exp_rows, t), [])
+2124	    # presence proposal switched on removes the row and writes an event
+2125	    props = propose_deductions(content, pasta, 3, {}, k7, t)
+2126	    gp = next(p for p in props if p.kind == "presence")
+2127	    after, events = apply_deductions(k7, props, [gp.row], t)
+2128	    c.eq("B-16 presence on", ([r.ingredient for r in after if r.ingredient == "garlic"], [e.ingredient for e in events]), ([], ["garlic"]))
+2129	
+2130	    # B-17 digest K2 (now 09:00)
+2131	    dg = digest_schedule(kit["K2"], t, 9 * 60)
+2132	    want_dg = [
+2133	        ("digest-2026-04-18", "Close to their date: Ground Beef, Spinach and Mozzarella Cheese."),
+2134	        ("digest-2026-04-19", "Close to their date: Ground Beef, Spinach, Mozzarella Cheese and 1 more."),
+2135	        ("digest-2026-04-20", "Close to their date: Mozzarella Cheese, Chicken Breast and Tomatoes."),
+2136	        ("digest-2026-04-21", "Close to their date: Chicken Breast, Tomatoes and Eggs."),
+2137	        ("digest-2026-04-22", "Close to their date: Tomatoes and Eggs."),
+2138	        ("digest-2026-04-23", "Close to its date: Eggs."),
+2139	    ]
+2140	    c.eq("B-17 K2 digest", [(i, b) for i, _, b in dg], want_dg)
+2141	    c.eq("B-17 title", {tt for _, tt, _ in dg}, {"Use these first"})
+2142	    c.eq("B-17 after 18:00 today is skipped", [i for i, _, _ in digest_schedule(kit["K2"], t, 18 * 60)][:1], ["digest-2026-04-19"])
+2143	    dup = kit["K2"] + [_item(20, "tomato", content, 100, "g", "fridge", D("2026-04-22"))]
+2144	    c.eq("B-17 distinct names", [b for i, _, b in digest_schedule(dup, t, 9 * 60) if i == "digest-2026-04-22"],
+2145	         ["Close to their date: Tomatoes and Eggs."])
+2146	    c.eq("B-17 one item makes three requests", len(digest_schedule([_item(30, "egg", content, 1, "pcs", "fridge", D("2026-06-01"))], D("2026-05-30"), 0)), 3)
+2147	    staggered = [_item(40 + k, "egg", content, 1, "pcs", "fridge", t + timedelta(days=k)) for k in range(16)]
+2148	    c.eq("B-17 at most 14 requests", len(digest_schedule(staggered, t, 0)), 14)
+2149	    c.eq("B-17 14 requests end on day 13", digest_schedule(staggered, t, 0)[-1][0], "digest-%s" % (t + timedelta(days=13)).isoformat())
+2150	    c.eq("B-17 a passed reminder time removes today only", len(digest_schedule(staggered, t, 1080)), 13)
+2151	    c.eq("B-17 the reminder time itself counts as passed", [i for i, _, _ in digest_schedule(kit["K2"], t, 1080)][:1], ["digest-2026-04-19"])
+2152	    c.eq("B-17 one minute before the reminder time keeps today", [i for i, _, _ in digest_schedule(kit["K2"], t, 1079)][:1], ["digest-2026-04-18"])
+2153	    shout = [_item(50, "egg", content, 6, "pcs", "fridge", D("2026-04-19")),
+2154	             Item("00000000-0000-4000-8000-000000000099", None, "eggs", F(3), F(3), "pcs", "fridge", D("2026-04-19"), 99),
+2155	             _item(51, "tomato", content, 1, "g", "fridge", D("2026-04-20"))]
+2156	    c.eq("B-17 names that differ only in case are one name, the capital letter first",
+2157	         [b for i, _, b in digest_schedule(shout, t, 9 * 60) if i == "digest-2026-04-18"], ["Close to their date: Eggs and Tomatoes."])
+2158	    c.eq("B-17 a name shared by two rows takes the place of its earliest row",
+2159	         [b for i, _, b in digest_schedule([_item(52, "tomato", content, 1, "g", "fridge", D("2026-04-18")), _item(53, "egg", content, 1, "pcs", "fridge", D("2026-04-19")),
+2160	                                            _item(54, "tomato", content, 1, "g", "fridge", D("2026-04-20"))], t, 9 * 60) if i == "digest-2026-04-18"],
+2161	         ["Close to their date: Tomatoes and Eggs."])
+2162	    c.eq("B-12 the typed text is trimmed", [r.id for r in search_items(kit["K1"], " oil ")], [r.id for r in search_items(kit["K1"], "oil")])
+2163	    c.eq("B-12 spaces alone show every row", len(search_items(kit["K1"], "   ")), len(kit["K1"]))
+2164	
+2165	    # B-18 tally
+2166	    now = datetime(2026, 4, 18, 12, 0)
+2167	    ev = [("used", 1, datetime(2026, 4, 3)), ("used", -1, datetime(2026, 4, 4)), ("thrownAway", -2, datetime(2026, 4, 5)),
+2168	          ("used", 0, datetime(2026, 3, 31)), ("used", 2, datetime(2026, 4, 17))]
+2169	    c.eq("B-18 tally", tally(ev, now), (2, 1))
+2170	
+2171	    # B-20 starter default
+2172	    spin = starter_item(content.ings["spinach"], t, "x")
+2173	    c.eq("B-20 starter row", (dec(spin.qty), dec(spin.start), spin.unit, spin.zone, spin.expiry.isoformat(), spin.estimate),
+2174	         ("250", "250", "g", "fridge", "2026-04-23", True))
+2175	
+2176	    # B-22 timers
+2177	    tm = start_timer(1000, 480)
+2178	    c.eq("B-22 start", (tm.started, tm.duration, tm.ends), (1000, 480, 1480))
+2179	    now2 = 1000 + 258
+2180	    c.eq("B-22 remaining", remaining(tm, now2), F(222))
+2181	    c.eq("B-22 label 03:42", timer_label(tm, now2), "03:42 left")
+2182	    c.eq("B-22 fill 0.5375", fill(tm, now2), F(5375, 10000))
+2183	    tp1 = plus_minute(tm)
+2184	    c.eq("B-22 +1 min duration", (tp1.duration, remaining(tp1, now2)), (540, F(282)))
+2185	    c.eq("B-22 +1 min label", timer_label(tp1, now2), "04:42 left")
+2186	    c.eq("B-22 +1 min fill", round(float(fill(tp1, now2)), 4), 0.4778)
+2187	    c.eq("B-22 idle 480", "Start timer · " + idle_text(480), "Start timer · 8 min")
+2188	    c.eq("B-22 idle 90", "Start timer · " + idle_text(90), "Start timer · 1 min 30 sec")
+2189	    c.eq("B-22 idle 3900", "Start timer · " + idle_text(3900), "Start timer · 1 h 5 min")
+2190	    c.eq("B-22 idle 45", idle_text(45), "45 sec")
+2191	    c.eq("B-22 idle 3600", idle_text(3600), "1 h")
+2192	    c.eq("B-22 label at an hour", timer_label(start_timer(0, 3600), 0), "1:00:00 left")
+2193	    c.eq("B-22 label below an hour", timer_label(start_timer(0, 3600), 1), "59:59 left")
+2194	    c.eq("B-22 label rounds seconds up", timer_label(start_timer(0, 10), F(99, 10)), "00:01 left")
+2195	    c.eq("B-22 label at zero", timer_label(tm, 1480), "Time's up")
+2196	    c.eq("B-22 label after end", timer_label(tm, 2000), "Time's up")
+2197	    c.eq("D-07-6 discard after 6 h", session_discarded(100000, 100000 - 6 * 3600 - 1, []), True)
+2198	    c.eq("D-07-6 kept while a timer runs", session_discarded(100000, 100000 - 6 * 3600 - 1, [Timer(0, 1, 100001)]), False)
+2199	    c.eq("D-07-6 kept at exactly 6 h", session_discarded(100000, 100000 - 6 * 3600, []), False)
+2200	
+2201	    # B-22 alarm plan: the typed expectations of ALARM_CASES against the function
+2202	    for name, now_, timers_, system_, auth_, want_ in ALARM_CASES:
+2203	        c.eq("B-22 alarm plan: " + name, alarm_plan(timers_, F(now_), system_, auth_), want_)
+2204	    for st_, rt_, want_ in ALARM_TITLE_CASES:
+2205	        c.eq("B-22 alarm title: " + st_, alarm_title(st_, rt_), want_)
+2206	    c.eq("B-22 alarm title uses the middle dot", alarm_title("a", "b"), "a · b")
+2207	    # the example of the document: the timer of SS1 (480 s) started at 1000 is extended by one minute at 1258
+2208	    pasta_timer = start_timer(1000, 480)
+2209	    extended = plus_minute(pasta_timer)
+2210	    c.eq("B-22 alarm after +1 min: old alarm is stale, a new one is scheduled at endsAt + 60",
+2211	         alarm_plan([AlarmTimer(2, F(extended.ends), _A1, _PASTA)], F(1258), [SysAlarm(_A1, F(pasta_timer.ends))], "authorized"),
+2212	         [("cancel", _A1), ("schedule", 2, F(1540), _PASTA)])
+2213	
+2214	    # B-23 share text
+2215	    shown = ["have", "missing", "have", "have", "missingOptional", "have", "have"]
+2216	    c.eq("B-23 / A-06-4", share_text(content, pasta, 3, shown), "For Tomato Pasta (3 servings):\n• Tomatoes — 400 g\n• Basil — 10 g (optional)")
+2217	    c.eq("B-23 one serving", share_text(content, pasta, 1, shown).splitlines()[0], "For Tomato Pasta (1 serving):")
+2218	    c.eq("B-23 nothing to share", share_text(content, pasta, 3, ["have"] * 7), None)
+2219	    c.eq("B-23 swapped line not included", share_text(content, lentil_soup, 4, ["swap", "have", "have", "have", "have", "have"]), None)
+2220	    c.eq("B-23 kept original is included", share_text(content, lentil_soup, 4, ["missing", "have", "have", "have", "have", "have"]),
+2221	         "For Lentil Soup (4 servings):\n• Chicken Breast — 200 g")
+2222	
+2223	    # B-24 stepper
+2224	    for v, unit, up, down in [(500, "g", 510, 490), (10, "g", 20, 9), (9, "g", 10, 8), (1, "g", 2, None), (15, "ml", 25, 5)]:
+2225	        c.eq("B-24 up %s%s" % (v, unit), stepper_up(F(v), unit), F(up))
+2226	        c.eq("B-24 down %s%s" % (v, unit), stepper_down(F(v), unit), None if down is None else F(down))
+2227	    c.eq("B-24 L up", stepper_up(F(1), "L"), F(11, 10))
+2228	    c.eq("B-24 L down at smallest", stepper_down(F(1, 10), "L"), None)
+2229	    c.eq("B-24 L down", stepper_down(F(1), "L"), F(9, 10))
+2230	    c.eq("B-24 pcs up", stepper_up(F(2), "pcs"), F(5, 2))
+2231	    c.eq("B-24 pcs down at smallest", stepper_down(F(1, 2), "pcs"), None)
+2232	
+2233	    # B-27 the add picker (S-15, A-15-1, A-15-4, A-15-6, A-15-7), the owned line (S-03) and the shelf text
+2234	    for d_, want_ in [(0, "about 1 day"), (1, "about 1 day"), (2, "about 2 days"), (5, "about 5 days"), (59, "about 59 days"), (60, "about 2 months"),
+2235	                      (89, "about 2 months"), (90, "about 3 months"), (364, "about 12 months"), (365, "about 1 year"), (729, "about 1 year"),
+2236	                      (730, "about 2 years")]:
+2237	        c.eq("B-27 about %d" % d_, about_text(d_), want_)
+2238	    c.eq("B-27 egg finds Eggs (A-15-1)", catalog_search(content, "egg"), ["egg"])
+2239	    c.eq("B-27 an empty query finds nothing", catalog_search(content, ""), [])
+2240	    c.eq("B-27 spaces alone find nothing", catalog_search(content, " \t\n "), [])
+2241	    c.eq("B-27 case does not matter", catalog_search(content, "EGG"), catalog_search(content, "egg"))
+2242	    c.eq("B-27 the ends of the query are trimmed", catalog_search(content, "  egg\n"), ["egg"])
+2243	    c.eq("B-27 a space inside the query is kept", catalog_search(content, "olive oil"), ["olive-oil"])
+2244	    c.eq("B-27 an alias finds its ingredient (A-15-6)", catalog_search(content, "mince"), ["ground-beef"])
+2245	    c.eq("B-27 a name and its own alias are one result", catalog_search(content, "beef"), ["ground-beef"])
+2246	    c.eq("B-27 an alias is found by a part of it", catalog_search(content, "ced"), ["ground-beef"])
+2247	    c.eq("B-27 starts with, then contains, then alias", catalog_search(content, "mi"), ["coconut-milk", "ground-beef"])
+2248	    c.eq("B-27 starts with first, each group A to Z", catalog_search(content, "s")[:3], ["salt", "soy-sauce", "spinach"])
+2249	    c.eq("B-27 the group of names that contain", catalog_search(content, "ch"), ["chicken", "mozzarella", "spinach"])
+2250	    c.eq("B-27 a category lists A to Z", catalog_category(content, "vegetables"), ["broccoli", "carrot", "garlic", "onion", "potato", "spinach", "tomato"])
+2251	    c.eq("B-27 a category without ingredients", catalog_category(content, "fruits"), [])
+2252	    c.eq("B-27 egg offers the custom row (no name equals egg)", custom_item_name(content, "egg"), "egg")
+2253	    c.eq("B-27 a name that equals the query offers no custom row", custom_item_name(content, "  EGGS "), None)
+2254	    c.eq("B-27 an alias that equals the query offers no custom row", custom_item_name(content, "Mince"), None)
+2255	    c.eq("B-27 zzz offers the custom row with the typed case (A-15-4)", custom_item_name(content, "  Zzz  "), "Zzz")
+2256	    c.eq("B-27 an empty query offers no custom row", custom_item_name(content, "   "), None)
+2257	
+2258	    def owned(n, ing, qty, unit, expiry="2026-04-25"):
+2259	        return _item(70 + n, ing, content, qty, unit, content.ings[ing].zone, D(expiry))
+2260	    c.eq("B-27 no row, no line", you_have_text([], "tomato"), None)
+2261	    c.eq("B-27 one row (A-15-7)", you_have_text([owned(1, "tomato", 500, "g")], "tomato"), "You have 500 g")
+2262	    c.eq("B-27 two rows add up", you_have_text([owned(1, "tomato", 200, "g"), owned(2, "tomato", 250, "g")], "tomato"), "You have 450 g")
+2263	    c.eq("B-27 litres first", you_have_text([owned(1, "olive-oil", 1, "L", "2026-05-01"), owned(2, "olive-oil", 250, "ml", "2026-06-01")], "olive-oil"), "You have 1.25 L")
+2264	    c.eq("B-27 millilitres first", you_have_text([owned(1, "olive-oil", 1, "L", "2026-06-01"), owned(2, "olive-oil", 250, "ml", "2026-05-01")], "olive-oil"), "You have 1250 ml")
+2265	    c.eq("B-27 two kinds", you_have_text([owned(1, "garlic", 2, "pcs", "2026-05-01"), owned(2, "garlic", 4, "cloves", "2026-06-01")], "garlic"), "You have 2 pcs and 4 cloves")
+2266	    c.eq("B-27 three kinds", you_have_text([owned(1, "tomato", 100, "g", "2026-05-01"), owned(2, "tomato", 50, "ml", "2026-05-02"), owned(3, "tomato", 2, "pcs", "2026-05-03")], "tomato"),
+2267	         "You have 100 g, 50 ml and 2 pcs")
+2268	    c.eq("B-27 an expired row counts", you_have_text([owned(1, "tomato", 450, "g", "2026-04-17")], "tomato"), "You have 450 g")
+2269	
+2270	    # B-26 the event log: the closed list, the lines, the date text
+2271	    c.eq("B-26 the closed list has 33 event codes", len(EVENT_CODES), 33)
+2272	    c.eq("B-26 event codes are unique", len(set(EVENT_CODE_NAMES)), len(EVENT_CODE_NAMES))
+2273	    c.eq("B-26 event codes are lowercase words joined by dots", all(re.fullmatch(r"[a-z]+(\.[a-z]+)+", n_) is not None for n_ in EVENT_CODE_NAMES), True)
+
+#### GAP: lines 2274..2419 missing ####
+
+2420	        ("a diagnostic line with a time that does not exist", lambda t: t.replace("2026-04-18T09:21:07Z", "2026-04-18T09:61:07Z", 1)),
+2421	        ("a diagnostic line whose version field is not `version (build)`", lambda t: t.replace("| 1.0.0 (57) | iPhone16,2 | iPhone OS 26.1 (23B85) | testflight no", "| 1.0.0 57 | iPhone16,2 | iPhone OS 26.1 (23B85) | testflight no", 1)),
+2422	        ("a diagnostic line whose sixth field is not testflight yes or no", lambda t: t.replace("testflight no", "testflight maybe", 1)),
+2423	        ("a diagnostic line with a bar inside a field", lambda t: t.replace("| iPhone16,2 | iPhone OS", "| iPhone|16,2 | iPhone OS", 1)),
+2424	        ("a diagnostic line with five extra fields", lambda t: t.replace("| signal=6", "| signal=6 | a=1 | b=2 | c=3", 1)),
+2425	        ("a diagnostic extra without an equals sign", lambda t: t.replace("| signal=6", "| signal", 1)),
+2426	        ("a diagnostic extra without a key", lambda t: t.replace("| signal=6", "| =6", 1)),
+2427	    ]
+2428	    for label_, mutate_ in mutations:
+2429	        c.raises("B-25 the reader refuses: " + label_, lambda m_=mutate_: parse_report(m_(example)), ReportFormatError)
+2430	    # B-25 the attached file: sizes checked by hand (the head is 48 bytes, the tail 3, an entry for 3 bytes and a one-digit number 33)
+2431	    one = compose_attachment([(1, b"abc")], REPORT_ATTACHMENT_MAX_BYTES)
+2432	    c.eq("B-25 attachment, three bytes: the whole text", one["text"], '{"format":"foodsafe-diagnostics-1","payloads":[\n{"base64":"YWJj","bytes":3,"n":1}\n]}\n')
+2433	    c.eq("B-25 attachment, three bytes: 48 + 33 + 1 + 3 bytes", (one["state"], one["bytes"], one["included"]), ("included", 85, [1]))
+2434	    two = compose_attachment([(5, b"abc"), (4, b"bbbb")], REPORT_ATTACHMENT_MAX_BYTES)
+2435	    c.eq("B-25 attachment, two payloads: 48 + 33 + 2 + 37 + 1 + 3 bytes", (two["bytes"], two["included"]), (124, [5, 4]))
+2436	    c.eq("B-25 attachment, an empty payload: 48 + 29 + 1 + 3 bytes", compose_attachment([(1, b"")], REPORT_ATTACHMENT_MAX_BYTES)["bytes"], 81)
+2437	    c.eq("B-25 attachment, none", compose_attachment([], REPORT_ATTACHMENT_MAX_BYTES), {"state": "none", "bytes": 0, "included": [], "text": ""})
+2438	    c.eq("B-25 attachment, limit equal to the size fits", compose_attachment([(1, b"abc")], 85)["state"], "included")
+2439	    c.eq("B-25 attachment, limit one byte less does not", compose_attachment([(1, b"abc")], 84)["state"], "too-large")
+2440	    three = [(3, b"abc"), (2, b"abc"), (1, b"abc")]
+2441	    c.eq("B-25 attachment, three payloads need 155 bytes and a limit of 154 keeps the newest two", (compose_attachment(three, 154)["included"], compose_attachment(three, 154)["bytes"]), ([3, 2], 120))
+2442	    c.eq("B-25 attachment, a limit of 155 keeps all three", compose_attachment(three, 155)["included"], [3, 2, 1])
+2443	    c.eq("B-25 attachment, no gap: a small older payload does not fill the room", compose_attachment([(3, b"abc"), (2, b"x" * 100), (1, b"abc")], 200)["included"], [3])
+2444	    c.eq("B-25 attachment, the newest too large and an older one small: too-large", compose_attachment([(9, b"x" * 200), (8, b"abc")], 200)["state"], "too-large")
+2445	    c.eq("B-25 attachment, the largest single payload (%d bytes) fits in 262142 bytes" % ATTACHMENT_MAX_SINGLE_PAYLOAD,
+2446	         (compose_attachment([(1, b"x" * ATTACHMENT_MAX_SINGLE_PAYLOAD)], REPORT_ATTACHMENT_MAX_BYTES)["state"], compose_attachment([(1, b"x" * ATTACHMENT_MAX_SINGLE_PAYLOAD)], REPORT_ATTACHMENT_MAX_BYTES)["bytes"]), ("included", 262142))
+2447	    c.eq("B-25 attachment, one byte more does not fit", compose_attachment([(1, b"x" * (ATTACHMENT_MAX_SINGLE_PAYLOAD + 1))], REPORT_ATTACHMENT_MAX_BYTES)["state"], "too-large")
+2448	    c.eq("B-25 the largest single payload never makes a file over the limit",
+2449	         all(compose_attachment([(n, b"x" * ATTACHMENT_MAX_SINGLE_PAYLOAD)], REPORT_ATTACHMENT_MAX_BYTES)["bytes"] <= REPORT_ATTACHMENT_MAX_BYTES for n in (1, 9, 99)), True)
+2450	    for name_, inp_, want_ in attachment_cases():
+2451	        got_ = compose_attachment(attachment_payloads(inp_["payloads"]), inp_["limit"])
+2452	        c.eq("B-25 attachment vector is deterministic: " + name_, (got_["state"], got_["bytes"], got_["included"]), (want_["state"], want_["bytes"], want_["included"]))
+2453	        c.eq("B-25 attachment never passes its limit: " + name_, got_["bytes"] <= inp_["limit"], True)
+2454	        if got_["state"] == "included":
+2455	            back_ = parse_attachment(got_["text"])
+2456	            c.eq("B-25 attachment round trip: " + name_, back_, [(n_, d_) for n_, d_ in attachment_payloads(inp_["payloads"])][:len(got_["included"])])
+2457	    for label_, bad_ in [("not JSON", "{"), ("a wrong format name", '{"format":"x","payloads":[]}\n'),
+2458	                         ("an entry without bytes", '{"format":"foodsafe-diagnostics-1","payloads":[\n{"base64":"YWJj","n":1}\n]}\n'),
+2459	                         ("a wrong length", '{"format":"foodsafe-diagnostics-1","payloads":[\n{"base64":"YWJj","bytes":4,"n":1}\n]}\n'),
+2460	                         ("bad base64", '{"format":"foodsafe-diagnostics-1","payloads":[\n{"base64":"YW*j","bytes":3,"n":1}\n]}\n'),
+2461	                         ("spaces: not the canonical form", '{"format": "foodsafe-diagnostics-1", "payloads": [{"base64": "YWJj", "bytes": 3, "n": 1}]}\n'),
+2462	                         ("an empty list", '{"format":"foodsafe-diagnostics-1","payloads":[]}\n'),
+2463	                         ("payload number 0", '{"format":"foodsafe-diagnostics-1","payloads":[\n{"base64":"YWJj","bytes":3,"n":0}\n]}\n')]:
+2464	        c.raises("B-25 the attachment reader refuses: " + label_, lambda b_=bad_: parse_attachment(b_), ReportFormatError)
+2465	    return c.n
+2466	
+2467	
+2468	# ============================================================================= EMISSION (golden files)
+2469	def _iso(d: date) -> str:
+2470	    return d.isoformat()
+2471	
+2472	
+2473	def item_json(r: Item) -> dict:
+2474	    out = {"id": r.id, "ingredientId": r.ingredient, "quantity": dec(r.qty), "startingQuantity": dec(r.start), "unit": r.unit,
+2475	           "zone": r.zone, "expiryDate": _iso(r.expiry), "expiryIsEstimate": r.estimate, "notes": "",
+2476	           "addedAt": "2026-04-10T%02d:%02d:00Z" % (8 + r.added // 60, r.added % 60)}  # r.added minutes after 08:00, so no minute is above 59
+2477	    if r.ingredient is None:
+2478	        out["customName"] = r.name
+2479	    return out
+2480	
+2481	
+2482	C1_REASONS = ["Both are a main protein in this fixture.", "Both cook in the same pot."]
+2483	
+2484	
+2485	def content_json(c: Content, reasons: Optional[Dict[str, List[str]]] = None) -> dict:
+2486	    return {
+2487	        "catalog": [{"id": i.id, "name": i.name, "category": i.category, "defaultUnit": i.unit, "defaultZone": i.zone,
+2488	                     "typicalShelfDays": i.shelf, "artId": "ingredient.%s" % i.id, "clusterId": i.cluster,
+2489	                     "defaultQuantity": dec(i.qty), "starter": i.starter, "aliases": list(i.aliases)} for i in c.ings.values()],
+2490	        "recipes": [{"id": r.id, "title": r.title, "heroArtId": "recipe.%s" % r.id, "totalMinutes": r.minutes, "baseServings": r.base,
+2491	                     "ingredients": [{"ingredientId": ln.ing, "amount": dec(ln.amount), "unit": ln.unit, "isOptional": ln.optional} for ln in r.lines],
+2492	                     "steps": [dict({"title": s.title, "instruction": s.instruction, "pictureId": s.picture, "ingredientIds": list(s.ings)},
+2493	                                    **({"timerSeconds": s.timer} if s.timer else {})) for s in r.steps]} for r in c.recipes],
+2494	        "swapClusters": [{"id": k, "memberIds": v, "reasons": (reasons or {}).get(k, C1_REASONS)} for k, v in c.clusters.items()],
+2495	        "swapFactors": [{"fromId": a, "fromUnit": u, "toId": b, "toUnit": tu, "toAmountPerFromUnit": dec(p)} for (a, u, b), (p, tu) in c.factors.items()],
+2496	    }
+2497	
+2498	
+2499	C2_REASONS = {"acid": ["Both add sourness in this fixture.", "Both are used in small amounts."],
+2500	              "milk": ["Both are a pourable drink in this fixture.", "Both go into the same dishes."],
+2501	              "garlic": ["Both give a garlic taste in this fixture.", "Both are used in small amounts."]}
+2502	
+2503	
+2504	def build_c2(with_factors: bool = True) -> Content:
+2505	    """C2: a second mini content for the swap cases that C1 cannot show. C1 has one cluster whose members share a UnitKind,
+2506	    so no SwapFactor of B-10 is ever used with C1. C2 has clusters that differ in kind (pieces and millilitres, cloves and grams)
+2507	    and one that does not (litres and millilitres). Test content only, never shipped; the factors are fixture numbers and make
+2508	    no cooking claim. build_c2(False) is the same content without any factor (the case invariant I-10 forbids)."""
+2509	    ings = [
+2510	        I("lemon", "Lemons", "fruits", "pcs", "fridge", 21, 4, False, "acid"),
+2511	        I("lime", "Limes", "fruits", "pcs", "fridge", 21, 4, False, "acid"),
+2512	        I("vinegar", "White Vinegar", "others", "ml", "pantry", 365, 500, False, "acid"),
+2513	        I("milk", "Milk", "dairy", "L", "fridge", 7, 1, True, "milk"),
+2514	        I("oat-drink", "Oat Drink", "others", "ml", "pantry", 180, 1000, False, "milk"),
+2515	        I("garlic", "Garlic", "vegetables", "pcs", "pantry", 30, 2, True, "garlic"),
+2516	        I("garlic-powder", "Garlic Powder", "others", "g", "pantry", 730, 50, False, "garlic"),
+2517	        I("pasta", "Pasta", "grains", "g", "pantry", 365, 500, True),
+2518	        I("salt", "Salt", "others", "g", "pantry", 730, 500, True),
+2519	    ]
+2520	    recipes = [Recipe("lemon-pasta", "Lemon Pasta", 20, 2, (L("pasta", 200, "g"), L("lemon", 2, "pcs"), L("salt", 1, "g")), (
+2521	        S("Cook the pasta", "Boil the pasta in salted water until tender.", "technique.boil", 600, ("pasta", "salt")),
+2522	        S("Add the lemon", "Squeeze the lemon over the pasta and serve.", "technique.season", None, ("lemon",))))]
+2523	    clusters = {"acid": ["lemon", "lime", "vinegar"], "milk": ["milk", "oat-drink"], "garlic": ["garlic", "garlic-powder"]}
+2524	    factors = {("lemon", "pcs", "vinegar"): (F(15), "ml"), ("lime", "pcs", "vinegar"): (F(10), "ml"),
+2525	               ("garlic", "cloves", "garlic-powder"): (F(1, 2), "g")} if with_factors else {}
+2526	    return Content({i.id: i for i in ings}, recipes, clusters, factors)
+2527	
+2528	
+2529	def vectors() -> dict:
+2530	    content = build_c1()
+2531	    kit = build_kitchens(content)
+2532	    t = TODAY
+2533	    V: Dict[str, list] = {}
+2534	
+2535	    def add(rule, name, inp, expected):
+2536	        V.setdefault(rule, []).append({"name": name, "input": inp, "expected": expected})
+2537	
+2538	    for exp in ["2026-04-20", "2026-04-18", "2026-04-17", "2026-05-18", "2027-04-18", "2026-12-31"]:
+2539	        add("B-01", "daysLeft " + exp, {"today": _iso(t), "expiry": exp}, days_left(date.fromisoformat(exp), t))
+2540	    for d_ in [-2, -1, 0, 1, 2, 3, 4, 5]:
+2541	        add("B-02", "policy %d" % d_, {"daysLeft": d_}, {"expiringSoonCard": in_expiring_card(d_), "alert": in_alert(d_), "badge": badge(d_)})
+2542	    for d_ in [-3, -1, 0, 1, 2, 59, 60, 179, 180, 364, 365, 729, 730, 1000]:
+2543	        add("B-03", "expiry line %d" % d_, {"kind": "expLine", "daysLeft": d_, "estimate": False}, expiry_text(d_))
+2544	    for d_ in [2, 180, 365, 0, -1]:
+2545	        add("B-03", "estimated line %d" % d_, {"kind": "expLine", "daysLeft": d_, "estimate": True}, expiry_text(d_, True))
+2546	    for d_ in [-2, -1, 0, 1, 2]:
+2547	        for est in (False, True):
+2548	            add("B-03", "expires-in line %d %s" % (d_, est), {"kind": "expiresIn", "daysLeft": d_, "estimate": est}, expires_in_text(d_, est))
+2549	    for amount, unit, base, servings in [("300", "g", 3, 4), ("400", "g", 3, 4), ("30", "ml", 3, 4), ("2", "cloves", 3, 4), ("10", "g", 3, 4),
+2550	                                          ("1", "g", 3, 4), ("2", "g", 3, 4), ("400", "g", 3, 2), ("10", "g", 3, 2), ("1", "g", 3, 2),
+2551	                                          ("2", "g", 3, 2), ("2", "cloves", 3, 2), ("1", "L", 1, 1), ("0.97", "L", 1, 1), ("2.25", "pcs", 1, 1),
+2552	                                          ("2.75", "pcs", 1, 1), ("9.95", "g", 1, 1), ("9.94", "g", 1, 1), ("10.5", "g", 1, 1), ("0.05", "g", 1, 1)]:
+2553	        add("B-05", "scaled %s %s base %d servings %d" % (amount, unit, base, servings),
+2554	            {"amount": amount, "unit": unit, "baseServings": base, "servings": servings},
+2555	            amount_text(scaled(F(amount), servings, base), unit))
+2556	    kinds = ["g", "ml", "L", "pcs", "cloves"]
+2557	    for a in kinds:
+2558	        for b in kinds:
+2559	            add("B-06", "comparable %s %s" % (a, b), {"a": a, "b": b}, comparable(a, b))
+2560	    # B-07: availability against kitchens
+2561	    for kname, ing, amount, unit in [("K7", "tomato", "400", "g"), ("K7", "tomato", "450", "g"), ("K7", "tomato", "450.01", "g"),
+2562	                                      ("K7", "garlic", "2", "cloves"), ("K7", "olive-oil", "30", "ml"), ("K7", "olive-oil", "1001", "ml"),
+2563	                                      ("K7", "chicken", "100", "g"), ("K6", "chicken", "200", "g"), ("K6", "lentil", "200", "g")]:
+2564	        add("B-07", "%s %s %s %s" % (kname, ing, amount, unit), {"kind": "kitchen", "kitchen": kname, "today": _iso(t), "ingredientId": ing, "amount": amount, "unit": unit},
+2565	            available(ing, F(amount), unit, kit[kname], t))
+2566	    # B-08 / B-09 / status lines: every recipe against K5, K6, K7, K8, K2, K1 and an empty kitchen
+2567	    for kname in ["K1", "K2", "K5", "K6", "K7", "K8", "EMPTY"]:
+2568	        items = kit.get(kname, [])
+2569	        for m in suggestions(content, items, t):
+2570	            add("B-08", "%s %s" % (kname, m.recipe.id), {"kind": "kitchen", "kitchen": kname, "today": _iso(t), "recipeId": m.recipe.id, "servings": m.servings},
+2571	                {"tier": m.tier, "lines": [s if sub is None else "swap:%s" % sub for s, sub in m.status], "rescueCount": len(m.rescue),
+2572	                 "statusLine": status_line(content, m)})
+2573	        add("B-09", "%s order" % kname, {"kitchen": kname, "today": _iso(t)}, [m.recipe.id for m in suggestions(content, items, t)])
+2574	        o = suggestions(content, items, t)
+2575	        cn = cook_next(o)
+2576	        add("B-21", "%s cook-next" % kname, {"kind": "cookNext", "kitchen": kname, "today": _iso(t)},
+2577	            None if cn is None else {"recipeId": cn.recipe.id, "line": cook_next_line(content, cn)})
+2578	    for q_, s_ in [(500, 500), (250, 500), (251, 500), (100, 500), (101, 500), (0.4, 1), (200, 500), (20, 125), (50, 300), (2, 6), (100, 400)]:
+2579	        add("B-11", "stock %s of %s" % (q_, s_), {"quantity": str(q_), "startingQuantity": str(s_)}, stock_state(F(str(q_)), F(str(s_))))
+2580	    for kname in ["K1", "K2", "K3"]:
+2581	        add("B-12", "%s order" % kname, {"kind": "order", "kitchen": kname, "today": _iso(t)}, [r.id for r in sort_items(kit[kname], t)])
+2582	    for kname in ["K1", "K2"]:
+2583	        h = home_model(kit[kname], t)
+2584	        add("B-21", "%s counts" % kname, {"kind": "counts", "kitchen": kname, "today": _iso(t)},
+2585	            {"alertCount": h.alert_count, "alertRows": h.alert_rows, "expiringSoon": h.expiring, "lowStock": h.low, "almostEmpty": h.almost})
+2586	    for text, zone in [("oil", None), ("OIL", "pantry"), (" oil ", None), ("e", "fridge"), ("zzz", None), ("", "freezer"), ("   ", None)]:
+2587	        add("B-12", "search %r %r" % (text, zone), {"kind": "search", "kitchen": "K1", "text": text, "zone": zone}, [r.id for r in search_items(kit["K1"], text, zone)])
+2588	    # B-07 with inline rows (the table of BUSINESS-RULES.md: line tomatoes 400 g, base 3 servings)
+2589	    def trow(n, q, u, exp="2026-04-25"):
+2590	        return _item(60 + n, "tomato", content, q, u, "fridge", date.fromisoformat(exp))
+2591	    for label, rows_, servings in [("450 g, 3 servings", [trow(1, 450, "g")], 3), ("450 g, 4 servings", [trow(1, 450, "g")], 4),
+2592	                                   ("533 g, 4 servings", [trow(1, 533, "g")], 4), ("two rows 200 g + 250 g", [trow(1, 200, "g"), trow(2, 250, "g")], 3),
+2593	                                   ("450 g expired yesterday", [trow(1, 450, "g", "2026-04-17")], 3), ("2 pcs against grams", [trow(1, 2, "pcs")], 3),
+2594	                                   ("no row", [], 3), ("expires today still counts", [trow(1, 450, "g", "2026-04-18")], 3)]:
+2595	        add("B-07", "inline " + label, {"kind": "rows", "today": _iso(t), "line": {"ingredientId": "tomato", "amount": "400", "unit": "g"}, "baseServings": 3,
+2596	                                        "servings": servings, "rows": [item_json(x) for x in rows_]},
+2597	            available("tomato", scaled(F(400), servings, 3), "g", rows_, t))
+2598	    # B-16 cook-and-deduct
+2599	    pasta = next(r for r in content.recipes if r.id == "tomato-pasta")
+2600	
+2601	    def b16(name, recipe, servings, rows_, presence_on=None, swaps=None, cont=None, cont_json=None):
+2602	        use = cont or content
+2603	        by_line = {}
+2604	        for orig, sub in (swaps or []):
+2605	            by_line[next(i for i, ln in enumerate(recipe.lines) if ln.ing == orig)] = sub
+2606	        props = propose_deductions(use, recipe, servings, by_line, rows_, t)
+2607	        presence = [p.row for p in props if p.kind == "presence"] if presence_on else []
+2608	        after, events = apply_deductions(rows_, props, presence, t)
+2609	        inp = {"today": _iso(t), "baseServings": recipe.base, "servings": servings,
+2610	               "lines": [{"ingredientId": ln.ing, "amount": dec(ln.amount), "unit": ln.unit, "isOptional": ln.optional} for ln in recipe.lines],
+2611	               "rows": [item_json(x) for x in rows_], "presenceOn": presence}
+2612	        if swaps:
+2613	            inp["swaps"] = [{"ingredientId": o, "substituteId": s_} for o, s_ in swaps]
+2614	        if cont_json is not None:
+2615	            inp["content"] = cont_json
+2616	        add("B-16", name, inp,
+2617	            {"proposals": [{"line": p.line, "kind": p.kind, "amount": dec(p.amount) if p.kind == "amount" else None, "unit": p.unit,
+2618	                            "youHave": stock_line(p, rows_, t)} for p in props],
+2619	             "after": sorted([{"id": r.id, "quantity": dec(r.qty), "unit": r.unit} for r in after], key=lambda x: x["id"]),
+2620	             "events": [{"outcome": e.outcome, "source": e.source, "ingredientId": e.ingredient, "quantity": dec(e.qty), "unit": e.unit,
+2621	                         "daysLeftAtEvent": e.days_left} for e in events]})
+2622	    b16("K7 tomato pasta x3", pasta, 3, kit["K7"])
+2623	    b16("K7 garlic used up", pasta, 3, kit["K7"], presence_on=True)
+2624	    b16("tomatoes 300 g in stock", pasta, 3, [replace(r, qty=F(300), start=F(300)) if r.ingredient == "tomato" else r for r in kit["K7"]])
+2625	    one_line = replace(pasta, lines=(L("tomato", 300, "g"),))
+2626	    b16("two tomato rows", one_line, 3, [_item(11, "tomato", content, 200, "g", "fridge", date(2026, 4, 20)), _item(12, "tomato", content, 250, "g", "fridge", date(2026, 4, 25))])
+2627	    b16("earliest expiry first", one_line, 3, [_item(12, "tomato", content, 200, "g", "fridge", date(2026, 4, 20)), _item(11, "tomato", content, 250, "g", "fridge", date(2026, 4, 25))])
+2628	    b16("expired row is never reduced", pasta, 3, [_item(1, "tomato", content, 450, "g", "fridge", date(2026, 4, 17))])
+2629	    # C2 and the swap cases: C1 has no SwapFactor, so the cross-kind branch of B-10 is shown only by these cases
+2630	    c2, c2n = build_c2(), build_c2(False)
+2631	    c2j, c2nj = content_json(c2, C2_REASONS), content_json(c2n, C2_REASONS)
+2632	    lemon_pasta = c2.recipes[0]
+2633	
+2634	    def c2row(n, ing, qty, unit, expiry="2026-06-01", cont=c2):
+2635	        return _item(n, ing, cont, qty, unit, cont.ings[ing].zone, date.fromisoformat(expiry))
+2636	    base_rows = [c2row(1, "pasta", 500, "g"), c2row(2, "salt", 500, "g")]
+2637	    for label, cj, cc, frm, unit, amount, sub in [
+2638	            ("lemon to lime keeps the unit", c2j, c2, "lemon", "pcs", "2", "lime"),
+2639	            ("lemon to vinegar uses the factor", c2j, c2, "lemon", "pcs", "2", "vinegar"),
+2640	            ("half a lemon to vinegar", c2j, c2, "lemon", "pcs", "0.5", "vinegar"),
+2641	            ("lime to vinegar uses its own factor", c2j, c2, "lime", "pcs", "2", "vinegar"),
+2642	            ("litres to a millilitre substitute keep the litre", c2j, c2, "milk", "L", "0.5", "oat-drink"),
+2643	            ("cloves to garlic powder", c2j, c2, "garlic", "cloves", "3", "garlic-powder"),
+2644	            ("the amount is not rounded", c2j, c2, "lemon", "pcs", "2.67", "vinegar"),
+2645	            ("no factor gives no amount", c2nj, c2n, "lemon", "pcs", "2", "vinegar")]:
+2646	        got = substitute_amount(cc, frm, unit, F(amount), sub)
+2647	        add("B-10", label, {"content": cj, "fromIngredientId": frm, "fromUnit": unit, "amount": amount, "substituteId": sub},
+2648	            None if got is None else {"amount": dec(got[0]), "unit": got[1]})
+2649	    for label, cj, cc, rows_, servings in [
+2650	            ("lemon in stock", c2j, c2, base_rows + [c2row(3, "lemon", 2, "pcs")], 2),
+2651	            ("vinegar 250 ml replaces the lemon", c2j, c2, base_rows + [c2row(3, "vinegar", 250, "ml")], 2),
+2652	            ("vinegar 30 ml is exactly enough", c2j, c2, base_rows + [c2row(3, "vinegar", 30, "ml")], 2),
+2653	            ("vinegar 29 ml is not enough", c2j, c2, base_rows + [c2row(3, "vinegar", 29, "ml")], 2),
+2654	            ("three servings need 45 ml: 44 ml is not enough", c2j, c2, base_rows + [c2row(3, "vinegar", 44, "ml")], 3),
+2655	            ("three servings need 45 ml: 45 ml is enough", c2j, c2, base_rows + [c2row(3, "vinegar", 45, "ml")], 3),
+2656	            ("the lime comes before the vinegar", c2j, c2, base_rows + [c2row(3, "lime", 2, "pcs"), c2row(4, "vinegar", 250, "ml")], 2),
+2657	            ("without a factor the vinegar is not offered", c2nj, c2n, base_rows + [c2row(3, "vinegar", 250, "ml", cont=c2n)], 2),
+2658	            ("the use-first vinegar counts as rescued", c2j, c2, base_rows + [c2row(3, "vinegar", 250, "ml", "2026-04-19")], 2)]:
+2659	        m = match_recipe(cc, lemon_pasta, servings, rows_, t)
+2660	        add("B-08", "inline " + label, {"kind": "inline", "content": cj, "rows": [item_json(x) for x in rows_], "today": _iso(t),
+2661	                                          "recipeId": "lemon-pasta", "servings": servings},
+2662	            {"tier": m.tier, "lines": [st if sub is None else "swap:%s" % sub for st, sub in m.status], "rescueCount": len(m.rescue),
+2663	             "statusLine": status_line(cc, m)})
+2664	    b16("swap: lemon replaced by vinegar", lemon_pasta, 2, base_rows + [c2row(3, "vinegar", 250, "ml")], swaps=[("lemon", "vinegar")], cont=c2, cont_json=c2j)
+2665	    b16("swap: the vinegar stock is below the amount", lemon_pasta, 2, base_rows + [c2row(3, "vinegar", 10, "ml")], swaps=[("lemon", "vinegar")], cont=c2, cont_json=c2j)
+2666	    b16("swap: no factor, no deduction for the line", lemon_pasta, 2, base_rows + [c2row(3, "vinegar", 250, "ml", cont=c2n)], swaps=[("lemon", "vinegar")], cont=c2n, cont_json=c2nj)
+2667	    soup = next(r for r in content.recipes if r.id == "lentil-soup")
+2668	    b16("swap: chicken replaced by lentils, same kind", soup, 4, [_item(1, "lentil", content, 500, "g", "pantry", date(2026, 6, 1))], swaps=[("chicken", "lentil")])
+2669	    # B-18 and B-20
+2670	    now = datetime(2026, 4, 18, 12, 0)
+2671	    ev = [("used", 1, datetime(2026, 4, 3)), ("used", -1, datetime(2026, 4, 4)), ("thrownAway", -2, datetime(2026, 4, 5)),
+2672	          ("used", 0, datetime(2026, 3, 31)), ("used", 2, datetime(2026, 4, 17))]
+2673	    used, thrown = tally(ev, now)
+2674	    add("B-18", "April tally", {"now": "2026-04-18T12:00:00", "events": [{"outcome": o, "daysLeftAtEvent": d_, "at": a.isoformat()} for o, d_, a in ev]},
+2675	        {"usedInTime": used, "thrownAway": thrown})
+2676	    for iid in ["spinach", "olive-oil", "egg", "garlic"]:
+2677	        row = starter_item(content.ings[iid], t, "x")
+2678	        add("B-20", "starter row " + iid, {"today": _iso(t), "ingredientId": iid},
+2679	            {"quantity": dec(row.qty), "startingQuantity": dec(row.start), "unit": row.unit, "zone": row.zone, "expiryDate": _iso(row.expiry), "expiryIsEstimate": row.estimate})
+2680	    # B-17
+2681	    def digest_json(rows_, now_minute, reminder_minute=1080):
+2682	        return [{"identifier": i, "title": tt, "body": b} for i, tt, b in digest_schedule(rows_, t, now_minute, reminder_minute)]
+2683	    for kname in ["K1", "K2"]:
+2684	        add("B-17", "%s digest at 09:00" % kname, {"kind": "kitchen", "kitchen": kname, "today": _iso(t), "nowMinuteOfDay": 540, "reminderMinuteOfDay": 1080},
+2685	            digest_json(kit[kname], 540))
+2686	    add("B-17", "K2 digest at 19:00", {"kind": "kitchen", "kitchen": "K2", "today": _iso(t), "nowMinuteOfDay": 1140, "reminderMinuteOfDay": 1080},
+2687	        digest_json(kit["K2"], 1140))
+2688	    add("B-17", "K2 digest one minute before the reminder time", {"kind": "kitchen", "kitchen": "K2", "today": _iso(t), "nowMinuteOfDay": 1079, "reminderMinuteOfDay": 1080},
+2689	        digest_json(kit["K2"], 1079))
+2690	    add("B-17", "K2 digest at the reminder time", {"kind": "kitchen", "kitchen": "K2", "today": _iso(t), "nowMinuteOfDay": 1080, "reminderMinuteOfDay": 1080},
+2691	        digest_json(kit["K2"], 1080))
+2692	    add("B-17", "K2 digest, reminder at 08:00, now 09:00", {"kind": "kitchen", "kitchen": "K2", "today": _iso(t), "nowMinuteOfDay": 540, "reminderMinuteOfDay": 480},
+2693	        digest_json(kit["K2"], 540, 480))
+2694	    add("B-17", "empty kitchen", {"kind": "kitchen", "kitchen": "EMPTY", "today": _iso(t), "nowMinuteOfDay": 540, "reminderMinuteOfDay": 1080}, digest_json([], 540))
+2695	
+2696	    def drow(n, ing, expiry):
+2697	        return _item(80 + n, ing, content, 1, content.ings[ing].unit, content.ings[ing].zone, date.fromisoformat(expiry))
+2698	    custom_eggs = Item("00000000-0000-4000-8000-000000000099", None, "eggs", F(3), F(3), "pcs", "fridge", date(2026, 4, 19), 99)
+2699	    for label, rows_ in [
+2700	            ("names that differ only in case are one name", [drow(1, "egg", "2026-04-19"), custom_eggs, drow(2, "tomato", "2026-04-20")]),
+2701	            ("a name shared by two rows is written once, at its earliest place", [drow(1, "tomato", "2026-04-18"), drow(2, "egg", "2026-04-19"), drow(3, "tomato", "2026-04-20")]),
+2702	            ("an expired row is never in the text", [drow(1, "tomato", "2026-04-17"), drow(2, "egg", "2026-04-19")]),
+2703	            ("the day of the date is the last day the row is in the text", [drow(1, "spinach", "2026-04-18")])]:
+2704	        add("B-17", "inline: " + label, {"kind": "rows", "today": _iso(t), "nowMinuteOfDay": 540, "reminderMinuteOfDay": 1080, "rows": [item_json(x) for x in rows_]},
+2705	            digest_json(rows_, 540))
+2706	    # B-22
+2707	    for seconds in [5, 45, 60, 90, 480, 600, 3599 - 59, 3600, 3900, 7200, 7500]:
+2708	        add("B-22", "idle %d" % seconds, {"kind": "idle", "seconds": seconds}, idle_text(seconds))
+2709	    for elapsed in [0, 1, 258, 479, 480, 481, 1000]:
+2710	        tm = start_timer(1000, 480)
+2711	        add("B-22", "timer 480 at +%d" % elapsed, {"kind": "reading", "startedAt": 1000, "durationSeconds": 480, "plusMinutes": 0, "now": 1000 + elapsed},
+2712	            {"label": timer_label(tm, 1000 + elapsed), "remaining": int(remaining(tm, 1000 + elapsed)), "fill": float(fill(tm, 1000 + elapsed))})
+2713	        tp1 = plus_minute(tm)
+2714	        add("B-22", "timer 480 +1 min at +%d" % elapsed, {"kind": "reading", "startedAt": 1000, "durationSeconds": 480, "plusMinutes": 1, "now": 1000 + elapsed},
+2715	            {"label": timer_label(tp1, 1000 + elapsed), "remaining": int(remaining(tp1, 1000 + elapsed)), "fill": float(fill(tp1, 1000 + elapsed))})
+2716	    for secs, last, ends_in in [(0, 6 * 3600, None), (1, 6 * 3600, None), (0, 6 * 3600 + 1, None), (0, 6 * 3600 + 1, 10), (0, 7 * 3600, -10)]:
+2717	        timers = [] if ends_in is None else [Timer(0, 1, ends_in)]
+2718	        add("B-22", "discard last touched %d s ago, timer ends in %s" % (last, ends_in),
+2719	            {"kind": "discard", "now": 0, "lastTouchedAt": -last, "timerEndsAt": ends_in}, session_discarded(0, -last, timers))
+2720	    for name, now_, timers_, system_, auth_, _want in ALARM_CASES:
+2721	        add("B-22", "alarm plan: " + name, alarm_case_input_json(now_, timers_, system_, auth_),
+2722	            [_step_json(x) for x in alarm_plan(timers_, F(now_), system_, auth_)])
+2723	    for st_, rt_, want_ in ALARM_TITLE_CASES:
+2724	        add("B-22", "alarm title: " + st_, {"kind": "alarmTitle", "stepTitle": st_, "recipeTitle": rt_}, alarm_title(st_, rt_))
+2725	    # B-23
+2726	    add("B-23", "pasta 3 servings", {"recipeId": "tomato-pasta", "servings": 3, "shown": ["have", "missing", "have", "have", "missingOptional", "have", "have"]},
+2727	        share_text(content, pasta, 3, ["have", "missing", "have", "have", "missingOptional", "have", "have"]))
+2728	    add("B-23", "pasta 1 serving", {"recipeId": "tomato-pasta", "servings": 1, "shown": ["missing"] + ["have"] * 6},
+2729	        share_text(content, pasta, 1, ["missing"] + ["have"] * 6))
+2730	    add("B-23", "nothing", {"recipeId": "tomato-pasta", "servings": 3, "shown": ["have"] * 7}, None)
+2731	    # B-24
+2732	    for unit, vals in [("g", ["1", "2", "9", "10", "11", "15", "500"]), ("ml", ["1", "9", "10", "250"]), ("L", ["0.1", "0.2", "1", "1.05"]), ("pcs", ["0.5", "1", "2.5"]), ("cloves", ["0.5", "1", "3"])]:
+2733	        for v in vals:
+2734	            down = stepper_down(F(v), unit)
+2735	            add("B-24", "stepper %s %s" % (v, unit), {"value": v, "unit": unit}, {"up": dec(stepper_up(F(v), unit)), "down": None if down is None else dec(down)})
+2736	    # B-27: the add picker, the owned line and the shelf text (S-15, S-03); the catalog is C1
+2737	    for q_ in ["", "   ", "e", "egg", "EGG", "  egg\n", "to", "s", "mi", "mince", "minced", "beef", "ced", "shoyu", "ch", "pe", "zzz", "milk", "a"]:
+2738	        add("B-27", "search %r" % q_, {"kind": "search", "query": q_}, catalog_search(content, q_))
+2739	    for cat_ in ["vegetables", "fruits", "dairy", "grains", "proteins", "others"]:
+2740	        add("B-27", "category " + cat_, {"kind": "category", "category": cat_}, catalog_category(content, cat_))
+2741	    for q_ in ["", "   ", "egg", "Eggs", "  eggs ", "mince", "MINCE", "shoyu", "zzz", "  Zzz  ", "Olive Oil", "olive oil ", "olive"]:
+2742	        add("B-27", "custom row %r" % q_, {"kind": "custom", "query": q_}, custom_item_name(content, q_))
+2743	    for d_ in [0, 1, 2, 5, 59, 60, 89, 90, 364, 365, 729, 730, 1095]:
+2744	        add("B-27", "about %d days" % d_, {"kind": "about", "shelfDays": d_}, about_text(d_))
+2745	
+2746	    def orow(n, ing, qty, unit, expiry="2026-04-25"):
+2747	        return _item(70 + n, ing, content, qty, unit, content.ings[ing].zone, date.fromisoformat(expiry))
+2748	    custom_row = Item("00000000-0000-4000-8000-000000000099", None, "Tomatoes", F(5), F(5), "pcs", "fridge", date(2026, 4, 25), 99)
+2749	    for label, ing, rows_ in [
+2750	            ("no row", "tomato", []),
+2751	            ("one row", "tomato", [orow(1, "tomato", 450, "g")]),
+2752	            ("two rows add up", "tomato", [orow(1, "tomato", 200, "g"), orow(2, "tomato", 250, "g")]),
+2753	            ("an expired row still counts", "tomato", [orow(1, "tomato", 450, "g", "2026-04-17")]),
+2754	            ("another ingredient is ignored", "tomato", [orow(1, "spinach", 100, "g")]),
+2755	            ("a custom row never matches", "tomato", [custom_row]),
+2756	            ("litres first", "olive-oil", [orow(1, "olive-oil", 1, "L", "2026-05-01"), orow(2, "olive-oil", 250, "ml", "2026-06-01")]),
+2757	            ("millilitres first", "olive-oil", [orow(1, "olive-oil", 1, "L", "2026-06-01"), orow(2, "olive-oil", 250, "ml", "2026-05-01")]),
+2758	            ("two kinds", "garlic", [orow(1, "garlic", 2, "pcs", "2026-05-01"), orow(2, "garlic", 4, "cloves", "2026-06-01")]),
+2759	            ("two kinds, the other order", "garlic", [orow(1, "garlic", 2, "pcs", "2026-06-01"), orow(2, "garlic", 4, "cloves", "2026-05-01")]),
+2760	            ("three kinds", "tomato", [orow(1, "tomato", 100, "g", "2026-05-01"), orow(2, "tomato", 50, "ml", "2026-05-02"), orow(3, "tomato", 2, "pcs", "2026-05-03")]),
+2761	            ("the total is written by B-05", "tomato", [orow(1, "tomato", "9.95", "g"), orow(2, "tomato", "0.05", "g")]),
+2762	            ("pieces to the nearest half", "egg", [orow(1, "egg", "2.25", "pcs"), orow(2, "egg", "0.5", "pcs")]),
+2763	            ("one date and one instant: the earlier added row decides the unit", "olive-oil", [orow(2, "olive-oil", 1, "L"), orow(1, "olive-oil", 500, "ml")])]:
+2764	        add("B-27", "you have: " + label, {"kind": "owned", "ingredientId": ing, "rows": [item_json(x) for x in rows_]}, you_have_text(rows_, ing))
+2765	    # B-25 / B-26: the problem report (the input of a report is the record described in FIELD-QUALITY.md section 8)
+2766	    for name, inp in report_cases():
+2767	        add("B-25", name, {"kind": "report", "report": inp}, {"text": build_report(inp)})
+2768	    for name, inp, want in piece_cases():
+2769	        add("B-26" if inp["kind"] in ("utc", "eventLine", "eventSection", "eventCodes", "errorDomain", "permission", "mailResult") else "B-25", name, inp, want)
+2770	    for name, inp, want in attachment_cases():
+2771	        add("B-25", "attachment: " + name, inp, want)
+2772	    return V
+2773	
+2774	
+2775	def emit_files() -> Dict[str, str]:
+2776	    content = build_c1()
+2777	    kit = build_kitchens(content)
+2778	    pasta = next(r for r in content.recipes if r.id == "tomato-pasta")
+2779	    ss1 = {"id": "SS1", "recipeId": "tomato-pasta", "servings": 3, "currentStep": 1, "appliedSwaps": [], "stepTimers": [],
+2780	           "note": "Opened from Start Cooking at the fixed test date; step 2 has timerSeconds 480; 7 steps."}
+2781	    assert len(pasta.steps) == 7 and pasta.steps[1].timer == 480
+2782	    files = {
+2783	        "c1.json": content_json(content),
+2784	        "kitchens.json": {"today": _iso(TODAY), "kitchens": {k: [item_json(r) for r in v] for k, v in kit.items()}},
+2785	        "session-ss1.json": ss1,
+2786	        "rules-vectors.json": {"schema": 1, "today": _iso(TODAY), "rules": vectors()},
+2787	    }
+2788	    return {name: json.dumps(obj, indent=2, sort_keys=True, ensure_ascii=False) + "\n" for name, obj in files.items()}
+2789	
+2790	
+2791	BEGIN_MARK = "<!-- BEGIN GENERATED FIXTURES (python3 tools/rules_reference.py --print-fixtures) -->"
+2792	END_MARK = "<!-- END GENERATED FIXTURES -->"
+2793	
+2794	KITCHEN_TITLES = {
+2795	    "K1": "the six rows of mockup 04 plus Ground Beef and Mozzarella Cheese; every quantity equals its starting quantity",
+2796	    "K2": "K1 with Tomatoes at 4 days left and six reduced quantities (the kitchen of the Home examples)",
+2797	    "K3": "exactly the six rows of mockup 04, for the look of the row",
+2798	    "K5": "Tomato Pasta complete; only soy sauce is missing for Chicken Stir-fry",
+2799	    "K6": "Lentil Soup is possible only by swapping chicken for lentils",
+2800	    "K7": "the cook-and-deduct kitchen: garlic is held in pcs while the recipe asks cloves",
+2801	    "K8": "K5 without pepper and without basil: Tomato Pasta misses one required line and one optional line; Chicken Stir-fry is still Ready Now",
+2802	}
+2803	
+2804	
+2805	def fixtures_markdown() -> str:
+2806	    content = build_c1()
+2807	    kit = build_kitchens(content)
+2808	    t = TODAY
+2809	    out = [BEGIN_MARK, "", "Fixed test date: **%s**. Row ids are `00000000-0000-4000-8000-` followed by the number `#` padded to twelve digits." % t.isoformat(), ""]
+2810	    for k in ["K1", "K2", "K3", "K5", "K6", "K7", "K8"]:
+2811	        out += ["#### %s: %s" % (k, KITCHEN_TITLES[k]), "",
+2812	                "| # | Ingredient id | Name | Quantity | Starting | Unit | Zone | Expiry | Days left |", "|---|---|---|---|---|---|---|---|---|"]
+2813	        for r in kit[k]:
+2814	            out.append("| %d | `%s` | %s | %s | %s | %s | %s | %s | %d |" % (
+2815	                r.added, r.ingredient, r.name, dec(r.qty), dec(r.start), r.unit, r.zone, r.expiry.isoformat(), days_left(r.expiry, t)))
+2816	        out.append("")
+2817	    out += ["#### C1: the catalog", "", "| Id | Name | Category | Unit | Zone | Shelf days | Default quantity | Starter | Cluster |", "|---|---|---|---|---|---|---|---|---|"]
+2818	    for i in content.ings.values():
+2819	        out.append("| `%s` | %s | %s | %s | %s | %d | %s | %s | %s |" % (i.id, i.name, i.category, i.unit, i.zone, i.shelf, dec(i.qty), "yes" if i.starter else "no", i.cluster or "none"))
+2820	    out += ["", "#### C1: the recipes (`*` marks an optional line)", "", "| Recipe | Base servings | Minutes | Lines |", "|---|---|---|---|"]
+2821	    for r in content.recipes:
+2822	        lines = "; ".join("%s %s `%s`%s" % (dec(ln.amount), ln.unit, ln.ing, " *" if ln.optional else "") for ln in r.lines)
+2823	        out.append("| %s (`%s`) | %d | %d | %s |" % (r.title, r.id, r.base, r.minutes, lines))
+2824	    out += ["", "#### C1: the steps", "", "| Recipe | # | Title | Timer (s) | Ingredient ids |", "|---|---|---|---|---|"]
+2825	    for r in content.recipes:
+2826	        for n, st in enumerate(r.steps, 1):
+2827	            out.append("| `%s` | %d | %s | %s | %s |" % (r.id, n, st.title, st.timer if st.timer else "none", ", ".join("`%s`" % x for x in st.ings)))
+2828	    out += ["", "#### C1: the swap cluster", "", "| Cluster | Members in authored order |", "|---|---|"]
+2829	    for k, v in content.clusters.items():
+2830	        out.append("| `%s` | %s |" % (k, ", ".join("`%s`" % m for m in v)))
+2831	    c2 = build_c2()
+2832	    out += ["", "#### C2: the swap content that C1 cannot show (inline in the cases of B-08, B-10 and B-16; test content, never shipped)", "",
+2833	            "| Id | Name | Unit | Cluster |", "|---|---|---|---|"]
+2834	    for i in c2.ings.values():
+2835	        out.append("| `%s` | %s | %s | %s |" % (i.id, i.name, i.unit, i.cluster or "none"))
+2836	    out += ["", "| Cluster | Members in authored order |", "|---|---|"]
+2837	    for k, v in c2.clusters.items():
+2838	        out.append("| `%s` | %s |" % (k, ", ".join("`%s`" % m for m in v)))
+2839	    out += ["", "| Swap factor (from, unit, to) | Meaning |", "|---|---|"]
+2840	    for (a, u, b), (per, tu) in c2.factors.items():
+2841	        out.append("| `%s`, `%s`, `%s` | 1 %s `%s` = %s %s `%s` |" % (a, u, b, u, a, dec(per), tu, b))
+2842	    rec = c2.recipes[0]
+2843	    out += ["", "One recipe, `%s` (%d servings, %d minutes): %s. The factors are fixture numbers and make no cooking claim. A case that needs no factor uses the same content with the factor list empty (the situation that invariant I-10 forbids in shipped content)." % (
+2844	        rec.id, rec.base, rec.minutes, "; ".join("%s %s `%s`" % (dec(ln.amount), ln.unit, ln.ing) for ln in rec.lines))]
+2845	    out += ["", END_MARK]
+2846	    return "\n".join(out)
+2847	
+2848	
+2849	def update_docs() -> int:
+2850	    """Replace every generated block of the documents with the text this file produces now. Returns the number of blocks changed."""
+2851	    eng = os.path.join(KIT, "03-ENGINEERING")
+2852	    jobs = [("TESTING.md", BEGIN_MARK, END_MARK, fixtures_markdown),
+2853	            ("COOKING-TIMERS-AND-ALARMS.md", ALARM_BEGIN, ALARM_END, alarm_cases_markdown),
+2854	            ("FIELD-QUALITY.md", REPORT_BEGIN, REPORT_END, report_example_markdown),
+2855	            ("FIELD-QUALITY.md", CODES_BEGIN, CODES_END, event_codes_markdown)]
+2856	    changed = 0
+2857	    for name, begin, end, make in jobs:
+2858	        path = os.path.join(eng, name)
+2859	        if not os.path.exists(path):
+2860	            print("skip (no file):", path)
+2861	            continue
+2862	        doc = open(path, encoding="utf-8").read()
+2863	        if doc.count(begin) != 1 or doc.count(end) != 1 or doc.index(begin) > doc.index(end):
+2864	            print("ERROR: %s must hold exactly one block from %r to %r" % (path, begin[:40], end[:40]))
+2865	            return -1
+2866	        i, j = doc.index(begin), doc.index(end) + len(end)
+2867	        fresh = make().strip()
+2868	        if doc[i:j].strip() != fresh:
+2869	            with open(path, "w", encoding="utf-8") as fh:
+2870	                fh.write(doc[:i] + fresh + doc[j:])
+2871	            print("updated a generated block in", path)
+2872	            changed += 1
+2873	    return changed
+2874	
+2875	
+2876	def main(argv: List[str]) -> int:
+2877	    if len(argv) >= 2 and argv[1] == "--print-fixtures":
+2878	        print(fixtures_markdown())
+2879	        return 0
+2880	    if len(argv) >= 2 and argv[1] == "--print-alarm-cases":
+2881	        print(alarm_cases_markdown())
+2882	        return 0
+2883	    if len(argv) >= 2 and argv[1] == "--print-report-example":
+2884	        print(report_example_markdown())
+2885	        return 0
+2886	    if len(argv) >= 2 and argv[1] == "--print-event-codes":
+2887	        print(event_codes_markdown())
+2888	        return 0
+2889	    if len(argv) >= 2 and argv[1] == "--update-docs":
+2890	        n = selftest()
+2891	        changed = update_docs()
+2892	        if changed < 0:
+2893	            return 1
+2894	        print("self-test: %d checks passed; %d generated block(s) rewritten" % (n, changed))
+2895	        return 0
+2896	    if len(argv) >= 3 and argv[1] in ("--emit", "--check"):
+2897	        out_dir = argv[2] if os.path.isabs(argv[2]) else os.path.join(KIT, argv[2])
+2898	        n = selftest()
+2899	        files = emit_files()
+2900	        if argv[1] == "--emit":
+2901	            os.makedirs(out_dir, exist_ok=True)
+2902	            for name, text in files.items():
+2903	                with open(os.path.join(out_dir, name), "w", encoding="utf-8") as fh:
+2904	                    fh.write(text)
+2905	                print("wrote", os.path.join(out_dir, name), len(text), "bytes")
+2906	            print("self-test: %d checks passed" % n)
+2907	            return 0
+2908	        bad = 0
+2909	        for name, text in files.items():
+2910	            p = os.path.join(out_dir, name)
+2911	            if not os.path.exists(p) or open(p, encoding="utf-8").read() != text:
+2912	                print("DIFFERENT:", p)
+2913	                bad += 1
+2914	        testing = os.path.join(KIT, "03-ENGINEERING", "TESTING.md")
+2915	        if os.path.exists(testing):
+2916	            doc = open(testing, encoding="utf-8").read()
+2917	            if BEGIN_MARK not in doc or END_MARK not in doc:
+2918	                print("MISSING generated fixtures block in", testing)
+2919	                bad += 1
+2920	            else:
+2921	                block = doc[doc.index(BEGIN_MARK):doc.index(END_MARK) + len(END_MARK)]
+2922	                if block.strip() != fixtures_markdown().strip():
+2923	                    print("DIFFERENT: generated fixtures block in", testing)
+2924	                    bad += 1
+2925	        alarms = os.path.join(KIT, "03-ENGINEERING", "COOKING-TIMERS-AND-ALARMS.md")
+2926	        if os.path.exists(alarms):
+2927	            doc = open(alarms, encoding="utf-8").read()
+2928	            if ALARM_BEGIN not in doc or ALARM_END not in doc:
+2929	                print("MISSING generated alarm cases block in", alarms)
+2930	                bad += 1
+2931	            else:
+2932	                block = doc[doc.index(ALARM_BEGIN):doc.index(ALARM_END) + len(ALARM_END)]
+2933	                if block.strip() != alarm_cases_markdown().strip():
+2934	                    print("DIFFERENT: generated alarm cases block in", alarms)
+2935	                    bad += 1
+2936	        field_doc = os.path.join(KIT, "03-ENGINEERING", "FIELD-QUALITY.md")
+2937	        if os.path.exists(field_doc):
+2938	            doc = open(field_doc, encoding="utf-8").read()
+2939	            for begin, end, make, what in [(REPORT_BEGIN, REPORT_END, report_example_markdown, "report example"),
+2940	                                           (CODES_BEGIN, CODES_END, event_codes_markdown, "event codes")]:
+2941	                if begin not in doc or end not in doc:
+2942	                    print("MISSING generated %s block in %s" % (what, field_doc))
+2943	                    bad += 1
+2944	                else:
+2945	                    block = doc[doc.index(begin):doc.index(end) + len(end)]
+2946	                    if block.strip() != make().strip():
+2947	                        print("DIFFERENT: generated %s block in %s" % (what, field_doc))
+2948	                        bad += 1
+2949	        print("self-test: %d checks passed; %d file(s) differ" % (n, bad))
+2950	        return 1 if bad else 0
+2951	    n = selftest()
+2952	    print("rules_reference: %d checks passed" % n)
+2953	    return 0
+2954	
+2955	
+2956	if __name__ == "__main__":
+2957	    sys.exit(main(sys.argv))
+2958	

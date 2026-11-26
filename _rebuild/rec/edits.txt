@@ -1,0 +1,207 @@
+=== idx 117 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+    return Content({i.id: i for i in ings}, recipes, clusters, factors)
+
+
+def vectors() -> dict:
+--- NEW:
+    return Content({i.id: i for i in ings}, recipes, clusters, factors)
+
+
+def build_c3(with_factors: bool = True) -> Content:
+    """C3: C2 with six more recipes, for the cases of B-08 and B-09 that need several recipes at once: the order of the list (a
+    title that begins with a small letter, an optional line that is missing, Almost Ready next to Smart Swap), two lines that end on
+    the same rescued ingredient, and a cluster whose first member cannot be offered. The `acid` cluster is written with the vinegar
+    first. Test content only, never shipped; the factors are fixture numbers and make no cooking claim. build_c3(False) is the same
+    content without any factor (the case that invariant I-10 forbids)."""
+    base = build_c2(with_factors)
+    one_step = (S("Cook the pasta", "Boil the pasta in salted water until tender.", "technique.boil", 600, ("pasta", "salt")),)
+    recipes = list(base.recipes) + [
+        Recipe("lime-pasta", "Lime Pasta", 20, 2, (L("pasta", 200, "g"), L("lime", 2, "pcs"), L("salt", 1, "g")), one_step),
+        Recipe("sour-pasta", "Sour Pasta", 20, 2, (L("pasta", 200, "g"), L("lemon", 1, "pcs"), L("lime", 1, "pcs"), L("salt", 1, "g")), one_step),
+        Recipe("plain-pasta", "Plain Pasta", 20, 2, (L("pasta", 200, "g"), L("salt", 1, "g")), one_step),
+        Recipe("fresh-pasta", "fresh Pasta", 20, 2, (L("pasta", 200, "g"), L("salt", 1, "g")), one_step),
+        Recipe("herb-pasta", "Herb Pasta", 10, 2, (L("pasta", 200, "g"), L("salt", 1, "g"), L("garlic", 2, "cloves", True)), one_step),
+        Recipe("garlic-pasta", "Garlic Pasta", 20, 2, (L("pasta", 200, "g"), L("salt", 1, "g"), L("garlic", 2, "cloves")), one_step),
+    ]
+    clusters = dict(base.clusters)
+    clusters["acid"] = ["vinegar", "lemon", "lime"]
+    return Content(dict(base.ings), recipes, clusters, dict(base.factors))
+
+
+def vectors() -> dict:
+
+=== idx 121 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+                                          ("2.75", "pcs", 1, 1), ("9.95", "g", 1, 1), ("9.94", "g", 1, 1), ("10.5", "g", 1, 1), ("0.05", "g", 1, 1)]:
+--- NEW:
+                                          ("2.75", "pcs", 1, 1), ("9.95", "g", 1, 1), ("9.94", "g", 1, 1), ("10.5", "g", 1, 1), ("0.05", "g", 1, 1),
+                                          ("1.75", "pcs", 3, 3)]:  # the last: 1.75 x 3 / 3 is exactly 1.75, and 1.75 / 3 is not a short decimal
+
+=== idx 125 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+    # B-07 with inline rows (the table of BUSINESS-RULES.md: line tomatoes 400 g, base 3 servings)
+    def trow(n, q, u, exp="2026-04-25"):
+        return _item(60 + n, "tomato", content, q, u, "fridge", date.fromisoformat(exp))
+    for label, rows_, servings in [("450 g, 3 servings", [trow(1, 450, "g")], 3), ("450 g, 4 servings", [trow(1, 450, "g")], 4),
+                                   ("533 g, 4 servings", [trow(1, 533, "g")], 4), ("two rows 200 g + 250 g", [trow(1, 200, "g"), trow(2, 250, "g")], 3),
+                                   ("450 g expired yesterday", [trow(1, 450, "g", "2026-04-17")], 3), ("2 pcs against grams", [trow(1, 2, "pcs")], 3),
+                                   ("no row", [], 3), ("expires today still counts", [trow(1, 450, "g", "2026-04-18")], 3)]:
+--- NEW:
+    # B-12 with inline rows: the whole order (days left, the name without regard to capital letters, addedAt, id)
+    def crow(n, name, expiry, added, qty=1, unit="pcs", zone="pantry"):
+        return Item("00000000-0000-4000-8000-%012d" % n, None, name, F(qty), F(qty), unit, zone, date.fromisoformat(expiry), added)
+    for label, rows_ in [
+            ("names are ordered without regard to capital letters", [crow(31, "cherries", "2026-05-01", 1), crow(32, "Banana", "2026-05-01", 2), crow(33, "apple", "2026-05-01", 3)]),
+            ("the same name and day: the earlier addedAt first, even with the larger id", [crow(40, "Eggs", "2026-05-01", 9), crow(41, "eggs", "2026-05-01", 5)]),
+            ("the same name, day and addedAt: the smaller id first", [crow(51, "eggs", "2026-05-01", 7), crow(50, "eggs", "2026-05-01", 7)]),
+            ("fewer days left first, whatever the name", [crow(61, "Apple", "2026-04-18", 1), crow(62, "Zucchini", "2026-04-17", 2), crow(63, "banana", "2026-04-18", 3)])]:
+        add("B-12", "orderRows: " + label, {"kind": "orderRows", "today": _iso(t), "rows": [item_json(x) for x in rows_]}, [r.id for r in sort_items(rows_, t)])
+    # B-07 with inline rows (the table of BUSINESS-RULES.md: line tomatoes 400 g, base 3 servings)
+    def trow(n, q, u, exp="2026-04-25"):
+        return _item(60 + n, "tomato", content, q, u, "fridge", date.fromisoformat(exp))
+    custom_tomatoes = Item("00000000-0000-4000-8000-000000000098", None, "Tomatoes", F(500), F(500), "g", "fridge", date(2026, 4, 25), 98)
+    for label, rows_, servings in [("450 g, 3 servings", [trow(1, 450, "g")], 3), ("450 g, 4 servings", [trow(1, 450, "g")], 4),
+                                   ("533 g, 4 servings", [trow(1, 533, "g")], 4), ("two rows 200 g + 250 g", [trow(1, 200, "g"), trow(2, 250, "g")], 3),
+                                   ("450 g expired yesterday", [trow(1, 450, "g", "2026-04-17")], 3), ("2 pcs against grams", [trow(1, 2, "pcs")], 3),
+                                   ("no row", [], 3), ("expires today still counts", [trow(1, 450, "g", "2026-04-18")], 3),
+                                   ("100 g and 2 pcs: one row in another kind makes the line present", [trow(1, 100, "g"), trow(2, 2, "pcs")], 3),
+                                   ("a custom row named Tomatoes never matches", [custom_tomatoes], 3)]:
+
+=== idx 129 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+             "after": sorted([{"id": r.id, "quantity": dec(r.qty), "unit": r.unit} for r in after], key=lambda x: x["id"]),
+--- NEW:
+             "after": sorted([{"id": r.id, "quantity": dec(r.qty), "startingQuantity": dec(r.start), "unit": r.unit} for r in after], key=lambda x: x["id"]),
+
+=== idx 131 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+    b16("expired row is never reduced", pasta, 3, [_item(1, "tomato", content, 450, "g", "fridge", date(2026, 4, 17))])
+--- NEW:
+    b16("expired row is never reduced", pasta, 3, [_item(1, "tomato", content, 450, "g", "fridge", date(2026, 4, 17))])
+    four = replace(pasta, lines=(L("tomato", 400, "g"),))
+    b16("four servings of a three-serving recipe: 533 g is proposed, not 533.33 g", four, 4, [_item(1, "tomato", content, 600, "g", "fridge", date(2026, 5, 20))])
+    tie_x = replace(_item(22, "tomato", content, 200, "g", "fridge", date(2026, 4, 20)), added=3)
+    tie_y = replace(_item(21, "tomato", content, 250, "g", "fridge", date(2026, 4, 20)), added=9)
+    b16("rows with the same expiry: the earlier addedAt first, even with the larger id", one_line, 3, [tie_y, tie_x])
+    garlic_a = _item(4, "garlic", content, 1, "pcs", "pantry", date(2026, 5, 18))
+    garlic_b = _item(14, "garlic", content, 1, "pcs", "pantry", date(2026, 5, 8))
+    garlic_x = _item(3, "garlic", content, 3, "pcs", "pantry", date(2026, 4, 17))
+    b16("presence: the row that expires first is offered, and an expired row is not in the line",
+        pasta, 3, [r for r in kit["K7"] if r.ingredient != "garlic"] + [garlic_a, garlic_b, garlic_x], presence_on=True)
+
+=== idx 138 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+        add("B-09", "%s order" % kname, {"kitchen": kname, "today": _iso(t)}, [m.recipe.id for m in suggestions(content, items, t)])
+--- NEW:
+        add("B-09", "%s order" % kname, {"kind": "kitchen", "kitchen": kname, "today": _iso(t)}, [m.recipe.id for m in suggestions(content, items, t)])
+
+=== idx 140 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+    b16("swap: lemon replaced by vinegar", lemon_pasta, 2, base_rows + [c2row(3, "vinegar", 250, "ml")], swaps=[("lemon", "vinegar")], cont=c2, cont_json=c2j)
+--- NEW:
+    # C3: the cases that need several recipes at once (the order of the list, a rescued ingredient shared by two lines)
+    c3, c3n = build_c3(), build_c3(False)
+    c3j, c3nj = content_json(c3, C2_REASONS), content_json(c3n, C2_REASONS)
+
+    def c3row(n, ing, qty, unit, expiry="2026-06-01"):
+        return _item(n, ing, c3, qty, unit, c3.ings[ing].zone, date.fromisoformat(expiry))
+    pantry3 = [c3row(1, "pasta", 500, "g"), c3row(2, "salt", 500, "g")]
+    for label, cj, cc, rid, rows_ in [
+            ("two lines swapped to one vinegar that is use-first: it is rescued once", c3j, c3, "sour-pasta", pantry3 + [c3row(3, "vinegar", 250, "ml", "2026-04-19")]),
+            ("an expired row does not make the pasta use-first, the fresh row has the line", c3j, c3, "plain-pasta",
+             [c3row(1, "pasta", 500, "g", "2026-04-17"), c3row(4, "pasta", 500, "g")] + pantry3[1:]),
+            ("the first member cannot be offered, the second can", c3nj, c3n, "lime-pasta", pantry3 + [c3row(3, "lemon", 2, "pcs")])]:
+        m = match_recipe(cc, next(r for r in cc.recipes if r.id == rid), 2, rows_, t)
+        add("B-08", "inline " + label, {"kind": "inline", "content": cj, "rows": [item_json(x) for x in rows_], "today": _iso(t), "recipeId": rid, "servings": 2},
+            {"tier": m.tier, "lines": [st if sub is None else "swap:%s" % sub for st, sub in m.status], "rescueCount": len(m.rescue),
+             "statusLine": status_line(cc, m)})
+    for label, rows_ in [
+            ("the titles are compared in lower case and a missing optional line counts", pantry3),
+            ("Almost Ready comes before Smart Swap", pantry3 + [c3row(3, "vinegar", 250, "ml")])]:
+        add("B-09", "inline: " + label, {"kind": "inline", "content": c3j, "rows": [item_json(x) for x in rows_], "today": _iso(t)},
+            [m.recipe.id for m in suggestions(c3, rows_, t)])
+    b16("swap: lemon replaced by vinegar", lemon_pasta, 2, base_rows + [c2row(3, "vinegar", 250, "ml")], swaps=[("lemon", "vinegar")], cont=c2, cont_json=c2j)
+
+=== idx 144 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+    add("B-18", "April tally", {"now": "2026-04-18T12:00:00", "events": [{"outcome": o, "daysLeftAtEvent": d_, "at": a.isoformat()} for o, d_, a in ev]},
+        {"usedInTime": used, "thrownAway": thrown})
+--- NEW:
+    add("B-18", "April tally", {"now": "2026-04-18T12:00:00", "events": [{"outcome": o, "daysLeftAtEvent": d_, "at": a.isoformat()} for o, d_, a in ev]},
+        {"usedInTime": used, "thrownAway": thrown})
+    now_end = datetime(2026, 4, 30, 23, 59, 59)
+    ev_end = [("used", 0, datetime(2026, 4, 1, 0, 0, 0)), ("used", 1, datetime(2025, 4, 15, 10, 0, 0)), ("thrownAway", -1, datetime(2025, 4, 15, 11, 0, 0)),
+              ("thrownAway", 5, datetime(2026, 4, 30, 23, 59, 0)), ("used", -1, datetime(2026, 4, 12, 9, 0, 0)), ("used", 2, datetime(2026, 3, 31, 23, 59, 59))]
+    used_end, thrown_end = tally(ev_end, now_end)
+    add("B-18", "last second of April: the first instant, the year before, the month before, used on its last day",
+        {"now": now_end.isoformat(), "events": [{"outcome": o, "daysLeftAtEvent": d_, "at": a.isoformat()} for o, d_, a in ev_end]},
+        {"usedInTime": used_end, "thrownAway": thrown_end})
+
+=== idx 146 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+    for text, zone in [("oil", None), ("OIL", "pantry"), (" oil ", None), ("e", "fridge"), ("zzz", None), ("", "freezer"), ("   ", None)]:
+--- NEW:
+    rescue_rows = [replace(r, expiry=t + timedelta(days=1)) if r.ingredient in ("pasta", "tomato", "garlic") else r for r in kit["K5"]]
+    cn_rows = cook_next(suggestions(content, rescue_rows, t))
+    add("B-21", "cook-next with three rescued ingredients", {"kind": "cookNextRows", "today": _iso(t), "rows": [item_json(x) for x in rescue_rows]},
+        {"recipeId": cn_rows.recipe.id, "line": cook_next_line(content, cn_rows)})
+    for text, zone in [("oil", None), ("OIL", "pantry"), (" oil ", None), ("e", "fridge"), ("zzz", None), ("", "freezer"), ("   ", None)]:
+
+=== idx 148 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+            ("the day of the date is the last day the row is in the text", [drow(1, "spinach", "2026-04-18")])]:
+--- NEW:
+            ("the day of the date is the last day the row is in the text", [drow(1, "spinach", "2026-04-18")]),
+            ("a row 15 days away is in the text of the last planned day only", [drow(1, "egg", "2026-05-03")])]:
+
+=== idx 152 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+    for secs, last, ends_in in [(0, 6 * 3600, None), (1, 6 * 3600, None), (0, 6 * 3600 + 1, None), (0, 6 * 3600 + 1, 10), (0, 7 * 3600, -10)]:
+--- NEW:
+    for duration, elapsed in [(480, F("479.25")), (480, F("100.5")), (3600, 0), (3600, 1), (5400, 0), (7200, 0)]:
+        tm = start_timer(1000, duration)
+        add("B-22", "timer %d at +%s" % (duration, _num(F(elapsed))),
+            {"kind": "reading", "startedAt": 1000, "durationSeconds": duration, "plusMinutes": 0, "now": _num(1000 + F(elapsed))},
+            {"label": timer_label(tm, 1000 + F(elapsed)), "remaining": _num(remaining(tm, 1000 + F(elapsed))), "fill": float(fill(tm, 1000 + F(elapsed)))})
+    for secs, last, ends_in in [(0, 6 * 3600, None), (1, 6 * 3600, None), (0, 6 * 3600 + 1, None), (0, 6 * 3600 + 1, 10), (0, 7 * 3600, -10), (0, 7 * 3600, 0)]:
+
+=== idx 156 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+    add("B-23", "nothing", {"recipeId": "tomato-pasta", "servings": 3, "shown": ["have"] * 7}, None)
+--- NEW:
+    add("B-23", "nothing", {"recipeId": "tomato-pasta", "servings": 3, "shown": ["have"] * 7}, None)
+    swap_shown = ["have", "swap", "have", "have", "missingOptional", "have", "have"]
+    add("B-23", "a swapped line is not listed", {"recipeId": "tomato-pasta", "servings": 3, "shown": swap_shown}, share_text(content, pasta, 3, swap_shown))
+    add("B-23", "nothing but a swapped line: nothing to share", {"recipeId": "tomato-pasta", "servings": 3, "shown": ["have", "swap"] + ["have"] * 5},
+        share_text(content, pasta, 3, ["have", "swap"] + ["have"] * 5))
+
+=== idx 158 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+    for unit, vals in [("g", ["1", "2", "9", "10", "11", "15", "500"]), ("ml", ["1", "9", "10", "250"]), ("L", ["0.1", "0.2", "1", "1.05"]), ("pcs", ["0.5", "1", "2.5"]), ("cloves", ["0.5", "1", "3"])]:
+--- NEW:
+    for unit, vals in [("g", ["1", "2", "9", "10", "11", "15", "500"]), ("ml", ["1", "9", "10", "250"]), ("L", ["0.1", "0.15", "0.2", "1", "1.05"]),
+                       ("pcs", ["0.5", "0.7", "1", "2.5"]), ("cloves", ["0.5", "1", "3"])]:
+
+=== idx 160 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+    for q_ in ["", "   ", "e", "egg", "EGG", "  egg\n", "to", "s", "mi", "mince", "minced", "beef", "ced", "shoyu", "ch", "pe", "zzz", "milk", "a"]:
+--- NEW:
+    for q_ in ["", "   ", "e", "egg", "EGG", "  egg\n", "to", "s", "mi", "in", "mince", "minced", "beef", "ced", "shoyu", "ch", "pe", "zzz", "milk", "a"]:
+
+=== idx 186 Edit /home/claude/foodsafe/kit/FoodSafe-Build-Kit/tools/rules_reference.py replace_all=False
+--- OLD:
+        rec.id, rec.base, rec.minutes, "; ".join("%s %s `%s`" % (dec(ln.amount), ln.unit, ln.ing) for ln in rec.lines))]
+    out += ["", END_MARK]
+--- NEW:
+        rec.id, rec.base, rec.minutes, "; ".join("%s %s `%s`" % (dec(ln.amount), ln.unit, ln.ing) for ln in rec.lines))]
+    c3 = build_c3()
+    out += ["", "#### C3: C2 with six more recipes (inline in the cases of B-08 and B-09 that need several recipes at once; test content, never shipped)", "",
+            "The ingredients, the clusters and the swap factors are those of C2, except that the cluster `acid` is written `%s`. `optional` lines are marked `*`." % (
+                ", ".join("`%s`" % m for m in c3.clusters["acid"])), "",
+            "| Recipe | Base servings | Minutes | Lines |", "|---|---|---|---|"]
+    for r in c3.recipes:
+        lines = "; ".join("%s %s `%s`%s" % (dec(ln.amount), ln.unit, ln.ing, " *" if ln.optional else "") for ln in r.lines)
+        out.append("| %s (`%s`) | %d | %d | %s |" % (r.title, r.id, r.base, r.minutes, lines))
+    out += ["", "Two titles are meant to be compared in lower case (`Plain Pasta` and `fresh Pasta`). A case that needs no factor uses C3 with the factor list empty (the situation that invariant I-10 forbids in shipped content).",
+            "", END_MARK]
