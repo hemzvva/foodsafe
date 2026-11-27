@@ -1,0 +1,225 @@
+#!/usr/bin/env python3
+"""Generates FoodSafe's illustrations through the Supervibes AI cloud.
+
+Usage: python3 tools/gen_art.py [only-name ...]
+Writes imagesets into ios/Sources/Assets.xcassets/Art/.
+Cutouts (ingredients, categories, spot art) get their cream paper keyed to
+alpha so they sit on any card; dishes and the paper texture stay full bleed.
+"""
+import base64, io, json, os, sys, urllib.request, concurrent.futures as cf
+from PIL import ImageChops, ImageFilter
+from PIL import Image
+
+ROOT = os.path.join(os.path.dirname(__file__), "..", "ios", "Sources", "Assets.xcassets", "Art")
+URL = os.environ["SUPERVIBES_AI_OPENROUTER_URL"] + "/images"
+KEY = os.environ["SUPERVIBES_AI_KEY"]
+MODEL = "google/gemini-nano-banana-2.1"
+
+CUT = ("Hand-painted watercolor and ink illustration of {s}, loose confident brown ink outlines, "
+       "soft watercolor washes, charming cookbook sketchbook style. A single centered subject on a plain "
+       "flat warm cream paper background (#F7F0DD), generous empty margin on every side. "
+       "No text, no lettering, no border, no frame, no cast shadow.")
+DISH = ("Hand-painted watercolor and ink illustration of {s}, seen from a three-quarter overhead angle, "
+        "on a rustic wooden board with a folded linen napkin and a few scattered fresh ingredients. "
+        "Warm cookbook sketchbook style with loose brown ink lines and rich, appetizing watercolor washes. "
+        "The food fills most of the frame and the scene runs edge to edge. No text, no lettering, no border.")
+
+INGREDIENTS = {
+    "tomato": "three ripe red tomatoes on the vine",
+    "egg": "three brown eggs nestled together",
+    "spinach": "a loose bunch of fresh dark green spinach leaves",
+    "pasta": "a small bundle of dry spaghetti tied with twine",
+    "olive_oil": "a small glass bottle of golden olive oil with a cork",
+    "chicken_breast": "two raw chicken breast fillets on a small piece of butcher paper",
+    "garlic": "a whole garlic bulb with two loose cloves",
+    "basil": "a sprig of fresh green basil leaves",
+    "salt": "a small wooden bowl of coarse sea salt",
+    "black_pepper": "a small wooden bowl of black peppercorns",
+    "onion": "a golden brown onion with a halved onion beside it",
+    "carrot": "two orange carrots with green leafy tops",
+    "celery": "three stalks of pale green celery with leaves",
+    "lentils": "a small linen sack spilling brown lentils",
+    "broth": "a glass jar of clear golden vegetable broth",
+    "rice": "a small ceramic bowl of white rice grains",
+    "soy_sauce": "a small glass bottle of dark soy sauce",
+    "bell_pepper": "a glossy red bell pepper and a yellow bell pepper",
+    "ground_beef": "a mound of raw ground beef on butcher paper",
+    "mozzarella": "a fresh white ball of mozzarella with a slice cut off",
+    "milk": "a glass bottle of milk with a paper cap",
+    "butter": "a block of pale yellow butter partly unwrapped",
+    "cheddar": "a wedge of orange cheddar cheese",
+    "lemon": "a bright yellow lemon with a lemon half",
+    "lime": "a green lime with a lime half",
+    "vinegar": "a small glass cruet of amber vinegar",
+    "orange": "a round orange with a green leaf",
+    "potato": "three russet potatoes",
+    "flour": "a small paper bag of flour with a scoop",
+    "yogurt": "a small ceramic pot of thick white yogurt with a spoon",
+    "chickpeas": "a small bowl of beige chickpeas",
+    "coconut_milk": "a halved brown coconut with white flesh beside a small jar of coconut milk",
+    "curry_paste": "a small open jar of red curry paste",
+    "ginger": "a knobbly piece of fresh ginger root",
+    "peas": "a small pile of green peas with two open pea pods",
+    "parsley": "a bunch of flat leaf parsley",
+    "cilantro": "a bunch of fresh cilantro",
+    "bread": "a rustic sourdough loaf with a slice cut",
+    "banana": "two ripe yellow bananas",
+    "apple": "a shiny red apple with a leaf",
+    "oats": "a small bowl of rolled oats",
+    "honey": "a small glass honey jar with a wooden dipper",
+    "mushroom": "three brown cremini mushrooms",
+    "zucchini": "two green zucchini",
+    "salmon": "a raw pink salmon fillet",
+    "tortilla": "a small stack of soft flour tortillas",
+    "black_beans": "a small bowl of black beans",
+    "cumin": "a small dish of ground cumin and a few cumin seeds",
+    "sugar": "a small bowl of white sugar cubes and granules",
+    "cream": "a small ceramic pitcher of heavy cream",
+    "broccoli": "a fresh green head of broccoli",
+    "shrimp": "a few pink cooked shrimp",
+    "avocado": "a whole avocado and an avocado half with pit",
+    "tofu": "a block of white tofu with one cube cut",
+    "kale": "a bunch of curly green kale",
+    "feta": "a block of crumbly white feta cheese",
+    "chili_flakes": "a small dish of red chili flakes",
+    "jar": "an empty small glass storage jar with a wooden lid",
+}
+CATEGORIES = {
+    "cat_vegetables": "a little bunch of broccoli, a carrot and leafy greens",
+    "cat_fruits": "a red apple with a small green leaf",
+    "cat_dairy": "a small glass milk bottle",
+    "cat_grains": "a sheaf of golden wheat stalks",
+    "cat_proteins": "a small pile of red kidney beans",
+    "cat_others": "a small glass spice jar with a cork",
+}
+SPOTS = {
+    "spot_welcome": ("a cheerful reusable cream cloth grocery tote bag with a cute simple smiling face and rosy cheeks, "
+                     "overflowing with leafy greens, a carrot, red tomatoes, a yellow bell pepper and a baguette, "
+                     "with a few tiny leaf sprigs and sparkle doodles floating around it"),
+    "spot_empty_kitchen": "an open empty wooden pantry shelf with a single small glass jar and a sprig of basil",
+    "spot_no_recipes": "a small copper cooking pot with a wooden spoon resting on it and a little curl of steam",
+    "spot_done": "a steaming ceramic bowl of soup with a tiny heart drawn in the steam and a sprig of parsley",
+    "spot_bell": "a small golden bell with a sprig of green leaves",
+    "spot_tips": "a glowing yellow light bulb with a tiny green leaf growing from it",
+}
+DISHES = {
+    "dish_tomato_pasta": "a plate of spaghetti in a glossy tomato sauce topped with fresh basil leaves",
+    "dish_chicken_stir_fry": "a black wok of chicken stir-fry with red bell peppers, broccoli and sesame",
+    "dish_lentil_soup": "a rustic ceramic bowl of hearty orange lentil soup with carrots and a parsley garnish",
+    "dish_vegetable_curry": "a bowl of golden coconut vegetable curry with chickpeas and spinach next to rice",
+    "dish_spinach_egg_skillet": "a cast iron skillet of wilted spinach, cherry tomatoes and two sunny side up eggs",
+    "dish_chickpea_salad": "a bowl of chickpea salad with tomatoes, cucumber, feta and parsley",
+    "dish_mushroom_risotto": "a shallow bowl of creamy mushroom risotto with parmesan and thyme",
+    "dish_fried_rice": "a bowl of egg fried rice with peas, carrots and scallions",
+    "dish_beef_tacos": "three soft ground beef tacos with tomato, avocado and cilantro",
+    "dish_omelette": "a folded golden cheese omelette with herbs on a plate",
+    "dish_banana_oat_pancakes": "a stack of banana oat pancakes drizzled with honey and banana slices",
+    "dish_minestrone": "a bowl of minestrone soup with pasta, beans, zucchini and carrots",
+    "dish_lemon_salmon": "a roasted salmon fillet with lemon slices on a bed of rice with broccoli",
+    "dish_shakshuka": "a cast iron pan of shakshuka with eggs poached in red pepper tomato sauce and cilantro",
+    "dish_garlic_shrimp_pasta": "a plate of garlic butter shrimp spaghetti with parsley and chili flakes",
+    "dish_potato_frittata": "a thick golden potato and onion frittata with one wedge cut out",
+    "dish_bean_quesadillas": "crispy black bean and cheddar quesadillas cut into triangles with avocado",
+    "dish_broccoli_cheddar_soup": "a bowl of creamy broccoli cheddar soup with a slice of bread",
+    "dish_yogurt_parfait": "a glass of yogurt parfait layered with oats, honey and sliced apple",
+    "dish_caprese_toast": "toasted sourdough topped with mozzarella, tomato slices and basil",
+    "dish_tofu_stir_fry": "a wok of crispy tofu stir-fry with broccoli, bell peppers and soy glaze",
+    "dish_kale_white_bean_soup": "a bowl of kale and chickpea soup with garlic toast",
+}
+TEXTURE = {"paper": "Seamless flat macro texture of warm cream handmade watercolor paper with subtle fibers "
+                    "and soft tooth, perfectly even soft lighting, no objects, no shadows, no text, edge to edge."}
+
+
+def call(prompt, aspect):
+    body = json.dumps({"model": MODEL, "prompt": prompt, "aspect_ratio": aspect}).encode()
+    req = urllib.request.Request(URL, data=body, headers={"Authorization": f"Bearer {KEY}", "Content-Type": "application/json", "User-Agent": "foodsafe-artgen/1.0"})
+    with urllib.request.urlopen(req, timeout=240) as r:
+        d = json.load(r)
+    return Image.open(io.BytesIO(base64.b64decode(d["data"][0]["b64_json"]))).convert("RGB")
+
+
+def color_to_alpha(img):
+    """Key the paper colour out so ink and watercolour washes keep a soft edge."""
+    w, h = img.size
+    strips = [img.crop((0, 0, w, 6)), img.crop((0, h - 6, w, h)), img.crop((0, 0, 6, h)), img.crop((w - 6, 0, w, h))]
+    px = [c for st in strips for c in st.getdata()]
+    bg = tuple(sorted(c[i] for c in px)[len(px) // 2] for i in range(3))
+    diff = ImageChops.difference(img, Image.new("RGB", img.size, bg))
+    r, g, b = diff.split()
+    m = ImageChops.lighter(ImageChops.lighter(r, g), b)
+    # distance from paper -> alpha: ignore grain under 14, full opacity by ~70
+    alpha = m.point(lambda v: 0 if v < 14 else min(255, int((v - 14) * 255 / 56)))
+    alpha = alpha.filter(ImageFilter.GaussianBlur(0.6))
+    # un-premultiply against the paper so light washes don't look milky on dark cards
+    def unmix(ch, bgv, a):
+        return Image.merge("L", [ch]) if False else ch
+    im = img.convert("RGBA")
+    im.putalpha(alpha)
+    box = alpha.point(lambda v: 255 if v > 40 else 0).getbbox()
+    if box:
+        x0, y0, x1, y1 = box
+        side = max(x1 - x0, y1 - y0)
+        half = side // 2 + int(side * 0.06)
+        cx, cy = (x0 + x1) // 2, (y0 + y1) // 2
+        canvas = Image.new("RGBA", (half * 2, half * 2), (0, 0, 0, 0))
+        canvas.paste(im.crop((cx - half, cy - half, cx + half, cy + half)), (0, 0))
+        im = canvas
+    return im
+
+
+def write_set(name, img, ext):
+    d = os.path.join(ROOT, f"{name}.imageset")
+    os.makedirs(d, exist_ok=True)
+    fn = f"{name}.{ext}"
+    if ext == "png":
+        img.save(os.path.join(d, fn), optimize=True)
+    else:
+        img.save(os.path.join(d, fn), quality=82, optimize=True, progressive=True)
+    json.dump({"images": [{"filename": fn, "idiom": "universal"}], "info": {"author": "xcode", "version": 1}},
+              open(os.path.join(d, "Contents.json"), "w"))
+
+
+def job(name, prompt, kind):
+    for attempt in range(3):
+        try:
+            if kind == "cut":
+                im = color_to_alpha(call(CUT.format(s=prompt), "1:1"))
+                im.thumbnail((360, 360), Image.LANCZOS)
+                write_set(name, im, "png")
+            elif kind == "spot":
+                im = color_to_alpha(call(CUT.format(s=prompt), "1:1"))
+                im.thumbnail((720, 720), Image.LANCZOS)
+                write_set(name, im, "png")
+            elif kind == "dish":
+                im = call(DISH.format(s=prompt), "4:3")
+                im.thumbnail((960, 720), Image.LANCZOS)
+                write_set(name, im, "jpg")
+            else:
+                im = call(prompt, "1:1")
+                im.thumbnail((768, 768), Image.LANCZOS)
+                write_set(name, im, "jpg")
+            return f"ok {name}"
+        except Exception as e:  # retry transient failures
+            err = e
+    return f"FAIL {name}: {err}"
+
+
+def main():
+    os.makedirs(ROOT, exist_ok=True)
+    json.dump({"info": {"author": "xcode", "version": 1}, "properties": {"provides-namespace": False}},
+              open(os.path.join(ROOT, "Contents.json"), "w"))
+    jobs = [(k, v, "cut") for k, v in INGREDIENTS.items()] + [(k, v, "cut") for k, v in CATEGORIES.items()] \
+         + [(k, v, "spot") for k, v in SPOTS.items()] + [(k, v, "dish") for k, v in DISHES.items()] \
+         + [(k, v, "tex") for k, v in TEXTURE.items()]
+    only = set(sys.argv[1:])
+    if only:
+        jobs = [j for j in jobs if j[0] in only]
+    else:
+        jobs = [j for j in jobs if not os.path.isdir(os.path.join(ROOT, f"{j[0]}.imageset"))]
+    with cf.ThreadPoolExecutor(8) as ex:
+        for r in ex.map(lambda j: job(*j), jobs):
+            print(r, flush=True)
+
+
+if __name__ == "__main__":
+    main()

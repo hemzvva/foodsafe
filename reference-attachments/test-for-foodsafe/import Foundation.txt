@@ -1,0 +1,84 @@
+import Foundation
+
+/// A cluster of ingredients that do the same job in a recipe. Each member has a
+/// portion: the amount that plays the same role as every other member's portion,
+/// so 1 lemon can become 1½ limes or 20 ml vinegar.
+struct SwapGroup: Identifiable, Sendable {
+    let id: String
+    let title: String
+    let reasons: [String]
+    let portions: [String: Double]
+}
+
+struct SwapCandidate: Hashable, Sendable {
+    let ingredientID: String
+    /// Multiply the original amount by this to get the substitute amount.
+    let factor: Double
+    let groupID: String
+}
+
+enum SwapGroups {
+    static let all: [SwapGroup] = [
+        SwapGroup(id: "citrus", title: "Citrus & sharp acids",
+                  reasons: ["Similar acidity and flavor profile.", "Works in the same type of recipes."],
+                  portions: ["lemon": 1, "lime": 1.5, "orange": 1, "vinegar": 20]),
+        SwapGroup(id: "leafy", title: "Tender greens",
+                  reasons: ["Wilts down in the same few minutes.", "Same earthy, green flavor."],
+                  portions: ["spinach": 100, "kale": 100]),
+        SwapGroup(id: "melting_cheese", title: "Melting cheese",
+                  reasons: ["Melts and browns the same way.", "Mild and creamy once cooked."],
+                  portions: ["cheddar": 100, "mozzarella": 100]),
+        SwapGroup(id: "salty_cheese", title: "Salty crumbly cheese",
+                  reasons: ["Adds the same salty bite.", "Works scattered on top of salads and eggs."],
+                  portions: ["feta": 100, "cheddar": 80]),
+        SwapGroup(id: "fat", title: "Cooking fats",
+                  reasons: ["Both carry flavor when sautéing.", "Use butter on gentle heat so it doesn't burn."],
+                  portions: ["olive_oil": 10, "butter": 10]),
+        SwapGroup(id: "creamy", title: "Creamy liquids",
+                  reasons: ["Gives sauces and soups the same body.", "Coconut milk adds a gentle sweetness."],
+                  portions: ["milk": 100, "cream": 60, "coconut_milk": 100]),
+        SwapGroup(id: "herbs", title: "Fresh soft herbs",
+                  reasons: ["Adds freshness right at the end.", "Same leafy texture as a garnish."],
+                  portions: ["basil": 1, "parsley": 1, "cilantro": 1]),
+        SwapGroup(id: "quick_protein", title: "Quick-cooking proteins",
+                  reasons: ["Cooks in about the same time.", "Soaks up sauce the same way."],
+                  portions: ["chicken_breast": 100, "tofu": 100, "shrimp": 100, "chickpeas": 100]),
+        SwapGroup(id: "legumes", title: "Beans & lentils",
+                  reasons: ["Same hearty, starchy bite.", "Thickens soups and stews in the same way."],
+                  portions: ["lentils": 60, "chickpeas": 100, "black_beans": 100]),
+        SwapGroup(id: "mince", title: "Hearty fillings",
+                  reasons: ["Gives the same rich, crumbly filling.", "Takes on spices just as well."],
+                  portions: ["ground_beef": 100, "black_beans": 100, "lentils": 60]),
+        SwapGroup(id: "crunchy_veg", title: "Crunchy vegetables",
+                  reasons: ["Keeps a similar bite in a hot pan.", "Cooks through in the same time."],
+                  portions: ["bell_pepper": 1, "broccoli": 150, "zucchini": 0.75, "mushroom": 150]),
+        SwapGroup(id: "sweetener", title: "Sweeteners",
+                  reasons: ["Same sweetness, spoon for spoon.", "Honey adds a softer floral note."],
+                  portions: ["honey": 15, "sugar": 12]),
+        SwapGroup(id: "seafood", title: "Seafood",
+                  reasons: ["Cooks quickly over high heat.", "Pairs with the same lemon and garlic."],
+                  portions: ["salmon": 100, "shrimp": 100]),
+        SwapGroup(id: "flatbread", title: "Bread & wraps",
+                  reasons: ["Works as the same base to pile toppings on."],
+                  portions: ["bread": 40, "tortilla": 1]),
+    ]
+
+    static func group(_ id: String) -> SwapGroup? { all.first { $0.id == id } }
+
+    /// Every ingredient that can stand in for `id`, with the amount ratio. When an
+    /// ingredient appears in several groups, the first group listed wins.
+    static func candidates(for id: String) -> [SwapCandidate] {
+        var seen = Set<String>()
+        var result: [SwapCandidate] = []
+        for group in all {
+            guard let original = group.portions[id] else { continue }
+            for (other, portion) in group.portions where other != id && !seen.contains(other) {
+                seen.insert(other)
+                result.append(SwapCandidate(ingredientID: other, factor: portion / original, groupID: group.id))
+            }
+        }
+        return result.sorted { Catalog.name($0.ingredientID) < Catalog.name($1.ingredientID) }
+    }
+
+    static func canSwap(_ id: String) -> Bool { !candidates(for: id).isEmpty }
+}

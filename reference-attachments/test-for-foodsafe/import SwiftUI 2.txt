@@ -1,0 +1,272 @@
+import SwiftUI
+
+/// Pen-on-paper path builder working on a 24 × 24 grid. Straight lines bow
+/// very slightly, the way a real pen stroke does.
+struct GlyphPen {
+    private(set) var path = Path()
+    private var strokeIndex = 0
+
+    mutating func m(_ x: CGFloat, _ y: CGFloat) {
+        path.move(to: CGPoint(x: x, y: y))
+    }
+
+    mutating func l(_ x: CGFloat, _ y: CGFloat) {
+        let start = path.currentPoint ?? .zero
+        let end = CGPoint(x: x, y: y)
+        let dx = end.x - start.x, dy = end.y - start.y
+        let length = max((dx * dx + dy * dy).squareRoot(), 0.001)
+        strokeIndex += 1
+        let bow = (strokeIndex.isMultiple(of: 2) ? 1 : -1) * min(length * 0.025, 0.35)
+        let control = CGPoint(x: (start.x + end.x) / 2 - dy / length * bow,
+                              y: (start.y + end.y) / 2 + dx / length * bow)
+        path.addQuadCurve(to: end, control: control)
+    }
+
+    mutating func q(_ cx: CGFloat, _ cy: CGFloat, _ x: CGFloat, _ y: CGFloat) {
+        path.addQuadCurve(to: CGPoint(x: x, y: y), control: CGPoint(x: cx, y: cy))
+    }
+
+    mutating func c(_ c1x: CGFloat, _ c1y: CGFloat, _ c2x: CGFloat, _ c2y: CGFloat, _ x: CGFloat, _ y: CGFloat) {
+        path.addCurve(to: CGPoint(x: x, y: y), control1: CGPoint(x: c1x, y: c1y), control2: CGPoint(x: c2x, y: c2y))
+    }
+
+    mutating func close() { path.closeSubpath() }
+
+    mutating func circle(_ cx: CGFloat, _ cy: CGFloat, _ r: CGFloat) {
+        path.addPath(SketchCircle(seed: UInt64(cx * 10 + cy)).path(in: CGRect(x: cx - r, y: cy - r, width: r * 2, height: r * 2)))
+    }
+
+    mutating func dot(_ cx: CGFloat, _ cy: CGFloat) {
+        path.addEllipse(in: CGRect(x: cx - 0.55, y: cy - 0.55, width: 1.1, height: 1.1))
+    }
+
+    mutating func rect(_ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat, _ r: CGFloat) {
+        path.addPath(SketchRect(radius: r, seed: UInt64(x * 7 + y * 3 + w), wobble: 0.14)
+            .path(in: CGRect(x: x, y: y, width: w, height: h)))
+    }
+}
+
+/// FoodSafe's own icon set, drawn as ink strokes so it matches the sketchbook UI.
+enum Glyph: String, CaseIterable, Sendable {
+    case home, inventory, recipes, plan, plus, minus, search, back, forward, chevron, chevronDown
+    case heart, heartFill, fridge, pantry, freezer, clock, calendar, alert, check, checkCircle
+    case bell, gear, leaf, chefHat, timer, swap, trash, pencil, lock, info, sparkle, bowl
+    case offline, sort, person, close, box, bottle, bulb, play, pause, reset, cutlery, tag, ruler
+
+    var isFilled: Bool {
+        switch self {
+        case .heartFill, .play: true
+        default: false
+        }
+    }
+
+    func draw(_ p: inout GlyphPen) {
+        switch self {
+        case .home:
+            p.m(3, 11.5); p.l(12, 3.8); p.l(21, 11.5)
+            p.m(5.6, 9.6); p.l(5.6, 20); p.l(18.4, 20); p.l(18.4, 9.6)
+            p.m(10, 20); p.l(10, 14.6); p.l(14, 14.6); p.l(14, 20)
+        case .inventory:
+            p.rect(5, 4.6, 14, 16.4, 2.2)
+            p.rect(9, 2.8, 6, 3.4, 1.2)
+            p.m(8.4, 10.8); p.l(15.6, 10.8)
+            p.m(8.4, 14.3); p.l(15.6, 14.3)
+            p.m(8.4, 17.8); p.l(13, 17.8)
+        case .recipes:
+            p.m(12, 6.6); p.q(7.5, 4, 3, 5); p.l(3, 18.6); p.q(8, 17.4, 12, 19.6)
+            p.m(12, 6.6); p.q(16.5, 4, 21, 5); p.l(21, 18.6); p.q(16, 17.4, 12, 19.6)
+            p.m(12, 6.6); p.l(12, 19.6)
+        case .plan:
+            p.rect(3.6, 5, 16.8, 15.6, 2.4)
+            p.m(3.6, 9.8); p.l(20.4, 9.8)
+            p.m(8, 3); p.l(8, 6.8); p.m(16, 3); p.l(16, 6.8)
+            p.m(8, 15.2); p.l(10.6, 17.4); p.l(15.8, 12.6)
+        case .plus:
+            p.m(12, 5); p.l(12, 19); p.m(5, 12); p.l(19, 12)
+        case .minus:
+            p.m(5, 12); p.l(19, 12)
+        case .search:
+            p.circle(10.5, 10.5, 6.2); p.m(15.2, 15.2); p.l(20.2, 20.2)
+        case .back:
+            p.m(19.5, 12); p.l(4.8, 12); p.m(10.4, 6.4); p.l(4.8, 12); p.l(10.4, 17.6)
+        case .forward:
+            p.m(4.5, 12); p.l(19.2, 12); p.m(13.6, 6.4); p.l(19.2, 12); p.l(13.6, 17.6)
+        case .chevron:
+            p.m(9, 5.5); p.l(15.6, 12); p.l(9, 18.5)
+        case .chevronDown:
+            p.m(6, 9); p.l(12, 15.2); p.l(18, 9)
+        case .heart, .heartFill:
+            p.m(12, 20); p.c(5, 15.2, 2.4, 11, 3.5, 7.5); p.c(4.6, 4, 9.6, 3.4, 12, 7.6)
+            p.c(14.4, 3.4, 19.4, 4, 20.5, 7.5); p.c(21.6, 11, 19, 15.2, 12, 20); p.close()
+        case .fridge:
+            p.rect(6, 2.6, 12, 18.8, 2.2)
+            p.m(6, 9.6); p.l(18, 9.6)
+            p.m(9, 4.8); p.l(9, 7.6); p.m(9, 12); p.l(9, 15.6)
+        case .pantry:
+            p.rect(7, 3, 10, 3.2, 1.1)
+            p.m(7.6, 6.2); p.q(5.4, 8, 5.6, 11); p.l(5.6, 18.6); p.q(5.6, 21, 8, 21)
+            p.l(16, 21); p.q(18.4, 21, 18.4, 18.6); p.l(18.4, 11); p.q(18.6, 8, 16.4, 6.2)
+            p.rect(8.6, 11.6, 6.8, 5, 1)
+        case .freezer:
+            p.m(12, 3); p.l(12, 21)
+            p.m(4.2, 7.5); p.l(19.8, 16.5); p.m(4.2, 16.5); p.l(19.8, 7.5)
+            p.m(9.8, 4.8); p.l(12, 6.9); p.l(14.2, 4.8)
+            p.m(9.8, 19.2); p.l(12, 17.1); p.l(14.2, 19.2)
+        case .clock:
+            p.circle(12, 12, 8.6); p.m(12, 7); p.l(12, 12); p.l(15.6, 14.2)
+        case .calendar:
+            p.rect(3.6, 5, 16.8, 15.6, 2.4)
+            p.m(3.6, 9.8); p.l(20.4, 9.8)
+            p.m(8, 3); p.l(8, 6.8); p.m(16, 3); p.l(16, 6.8)
+            p.dot(8, 13.6); p.dot(12, 13.6); p.dot(16, 13.6); p.dot(8, 17); p.dot(12, 17)
+        case .alert:
+            p.m(12, 3.6); p.l(21, 19.6); p.l(3, 19.6); p.close()
+            p.m(12, 9.4); p.l(12, 14); p.dot(12, 16.8)
+        case .check:
+            p.m(5, 12.6); p.l(10, 17.6); p.l(19.2, 6.8)
+        case .checkCircle:
+            p.circle(12, 12, 8.8); p.m(7.6, 12.4); p.l(10.8, 15.4); p.l(16.4, 9)
+        case .bell:
+            p.m(6, 16.6); p.q(7, 15, 7, 11); p.q(7, 5.6, 12, 5.6); p.q(17, 5.6, 17, 11)
+            p.q(17, 15, 18, 16.6); p.close()
+            p.m(10, 19.2); p.q(12, 21.2, 14, 19.2); p.m(12, 3.4); p.l(12, 5.6)
+        case .gear:
+            p.circle(12, 12, 3.2); p.circle(12, 12, 7)
+            for i in 0..<8 {
+                let a = Double(i) / 8 * 2 * .pi
+                p.m(12 + cos(a) * 7, 12 + sin(a) * 7); p.l(12 + cos(a) * 9.6, 12 + sin(a) * 9.6)
+            }
+        case .leaf:
+            p.m(5, 19); p.q(4, 8, 19.4, 4.6); p.q(19.4, 17, 5, 19); p.close()
+            p.m(5, 19); p.q(11, 13, 15.4, 8.6)
+        case .chefHat:
+            p.m(7, 14); p.q(3, 13, 4, 9); p.q(5, 5.6, 9, 6.6); p.q(10.6, 3, 14, 4)
+            p.q(17.6, 4.6, 17.6, 7); p.q(21, 7.6, 20, 11.6); p.q(19, 14, 17, 14)
+            p.m(7, 14); p.l(7, 19.6); p.l(17, 19.6); p.l(17, 14)
+            p.m(7, 16.8); p.l(17, 16.8)
+        case .timer:
+            p.circle(12, 13.6, 7.6); p.m(12, 13.6); p.l(12, 9.4)
+            p.m(9.8, 2.8); p.l(14.2, 2.8); p.m(12, 2.8); p.l(12, 6)
+            p.m(18, 6.6); p.l(19.6, 5)
+        case .swap:
+            p.m(4, 8.4); p.l(18.4, 8.4); p.m(14.8, 4.8); p.l(18.4, 8.4); p.l(14.8, 12)
+            p.m(20, 15.6); p.l(5.6, 15.6); p.m(9.2, 12); p.l(5.6, 15.6); p.l(9.2, 19.2)
+        case .trash:
+            p.m(4.4, 7); p.l(19.6, 7)
+            p.m(9.4, 7); p.l(10, 4.4); p.l(14, 4.4); p.l(14.6, 7)
+            p.m(6.4, 7); p.l(7.6, 20.2); p.l(16.4, 20.2); p.l(17.6, 7)
+            p.m(10, 10.6); p.l(10.3, 16.6); p.m(14, 10.6); p.l(13.7, 16.6)
+        case .pencil:
+            p.m(4, 20); p.l(5, 15.4); p.l(15.6, 4.8); p.l(19.2, 8.4); p.l(8.6, 19); p.close()
+            p.m(13.4, 7); p.l(17, 10.6)
+        case .lock:
+            p.rect(5.4, 10.6, 13.2, 10, 2.2)
+            p.m(8.4, 10.6); p.l(8.4, 7.6); p.q(8.4, 3.8, 12, 3.8); p.q(15.6, 3.8, 15.6, 7.6); p.l(15.6, 10.6)
+            p.dot(12, 15.4)
+        case .info:
+            p.circle(12, 12, 8.8); p.m(12, 11); p.l(12, 16.6); p.dot(12, 7.8)
+        case .sparkle:
+            p.m(12, 3); p.q(13, 11, 21, 12); p.q(13, 13, 12, 21); p.q(11, 13, 3, 12); p.q(11, 11, 12, 3); p.close()
+        case .bowl:
+            p.m(3.4, 11.4); p.l(20.6, 11.4)
+            p.m(3.4, 11.4); p.q(4, 19.4, 12, 19.8); p.q(20, 19.4, 20.6, 11.4)
+            p.m(9, 8.4); p.q(7.8, 6.4, 9.4, 4.2); p.m(14.4, 8.4); p.q(13.2, 6.4, 14.8, 4.2)
+        case .offline:
+            p.m(7, 18); p.q(3, 18, 3, 14.6); p.q(3, 11, 7, 11); p.q(7.6, 6, 12.6, 6)
+            p.q(17.2, 6, 17.6, 10.6); p.q(21, 11, 21, 14.6); p.q(21, 18, 17, 18); p.close()
+            p.m(4, 4); p.l(20, 20)
+        case .sort:
+            p.m(4.6, 7); p.l(19.4, 7); p.m(7, 12); p.l(17, 12); p.m(9.6, 17); p.l(14.4, 17)
+        case .person:
+            p.circle(12, 8, 3.6); p.m(5, 20.2); p.q(5, 13.6, 12, 13.6); p.q(19, 13.6, 19, 20.2)
+        case .close:
+            p.m(6.4, 6.4); p.l(17.6, 17.6); p.m(17.6, 6.4); p.l(6.4, 17.6)
+        case .box:
+            p.m(4, 8); p.l(12, 4); p.l(20, 8); p.l(20, 16.6); p.l(12, 20.6); p.l(4, 16.6); p.close()
+            p.m(4, 8); p.l(12, 12); p.l(20, 8); p.m(12, 12); p.l(12, 20.6)
+        case .bottle:
+            p.m(9.8, 2.8); p.l(14.2, 2.8)
+            p.m(10.4, 2.8); p.l(10.4, 7); p.q(7, 8.6, 7, 12); p.l(7, 19.6); p.q(7, 21.2, 8.6, 21.2)
+            p.l(15.4, 21.2); p.q(17, 21.2, 17, 19.6); p.l(17, 12); p.q(17, 8.6, 13.6, 7); p.l(13.6, 2.8)
+            p.m(7, 17.4); p.q(12, 15.6, 17, 17.4)
+        case .bulb:
+            p.m(9, 17); p.q(9, 14.6, 7.6, 13); p.q(5, 10.6, 6, 7.6); p.q(7.6, 3.6, 12, 3.6)
+            p.q(16.4, 3.6, 18, 7.6); p.q(19, 10.6, 16.4, 13); p.q(15, 14.6, 15, 17); p.close()
+            p.m(9.6, 19.6); p.l(14.4, 19.6); p.m(10.6, 21.6); p.l(13.4, 21.6)
+        case .play:
+            p.m(8, 5); p.q(8, 4.2, 9, 4.8); p.l(19, 11.2); p.q(19.8, 12, 19, 12.8); p.l(9, 19.2)
+            p.q(8, 19.8, 8, 19); p.close()
+        case .pause:
+            p.m(9, 5.6); p.l(9, 18.4); p.m(15, 5.6); p.l(15, 18.4)
+        case .reset:
+            p.m(5, 12); p.q(5, 5, 12, 5); p.q(19, 5, 19, 12); p.q(19, 19, 12, 19); p.q(8, 19, 6.2, 16.4)
+            p.m(4.6, 19.2); p.l(6.2, 16.4); p.l(9.2, 17.2)
+        case .cutlery:
+            p.m(7, 3); p.l(7, 9); p.q(7, 11.2, 9, 11.2); p.q(11, 11.2, 11, 9); p.l(11, 3)
+            p.m(9, 3.4); p.l(9, 21)
+            p.m(16.6, 21); p.l(16.6, 3); p.q(20.2, 5, 20.2, 11); p.l(16.6, 12.2)
+        case .tag:
+            p.m(3.6, 12); p.l(11.6, 4); p.l(20, 4); p.l(20, 12.4); p.l(12, 20.4); p.close()
+            p.circle(15.8, 8.2, 1.3)
+        case .ruler:
+            p.rect(3, 8, 18, 8, 1.6)
+            p.m(7, 8); p.l(7, 11); p.m(11, 8); p.l(11, 12.4); p.m(15, 8); p.l(15, 11); p.m(19, 8); p.l(19, 12.4)
+        }
+    }
+}
+
+struct GlyphShape: Shape {
+    let glyph: Glyph
+
+    func path(in rect: CGRect) -> Path {
+        var pen = GlyphPen()
+        glyph.draw(&pen)
+        let s = min(rect.width, rect.height) / 24
+        let transform = CGAffineTransform(scaleX: s, y: s)
+            .concatenating(CGAffineTransform(translationX: rect.midX - 12 * s, y: rect.midY - 12 * s))
+        return pen.path.applying(transform)
+    }
+}
+
+/// An icon drawn in ink, with a faint second pass for a pencil-on-paper feel.
+struct GlyphView: View {
+    let glyph: Glyph
+    var size: CGFloat = 22
+    var weight: CGFloat = 1.8
+    @ScaledMetric(relativeTo: .body) private var scale = 1.0
+
+    var body: some View {
+        let side = size * min(scale, 1.6)
+        let width = weight * side / 22
+        ZStack {
+            if glyph.isFilled {
+                GlyphShape(glyph: glyph).fill()
+            } else {
+                GlyphShape(glyph: glyph)
+                    .stroke(style: StrokeStyle(lineWidth: width, lineCap: .round, lineJoin: .round))
+                GlyphShape(glyph: glyph)
+                    .stroke(style: StrokeStyle(lineWidth: width * 0.45, lineCap: .round, lineJoin: .round))
+                    .offset(x: side * 0.025, y: side * 0.02)
+                    .opacity(0.35)
+            }
+        }
+        .frame(width: side, height: side)
+        .accessibilityHidden(true)
+    }
+}
+
+/// A glyph inside a tinted, hand-drawn circle, used for overview rows and settings.
+struct GlyphBadge: View {
+    let glyph: Glyph
+    var tint: Color = Palette.green
+    var wash: Color = Palette.greenWash
+    var size: CGFloat = 44
+
+    var body: some View {
+        GlyphView(glyph: glyph, size: size * 0.5)
+            .foregroundStyle(tint)
+            .frame(width: size, height: size)
+            .background(SketchCircle(seed: stableSeed(glyph.rawValue)).fill(wash))
+            .overlay(SketchCircle(seed: stableSeed(glyph.rawValue) &+ 3).stroke(tint.opacity(0.35), lineWidth: 1))
+    }
+}

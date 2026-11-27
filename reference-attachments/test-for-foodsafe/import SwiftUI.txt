@@ -1,0 +1,324 @@
+import SwiftUI
+
+// MARK: - Deterministic wobble
+
+/// Small seeded generator so every hand-drawn edge looks the same on every launch.
+struct SplitMix64 {
+    private var state: UInt64
+
+    init(seed: UInt64) { state = seed &* 0x9E37_79B9_7F4A_7C15 &+ 0x2545_F491 }
+
+    mutating func next() -> UInt64 {
+        state &+= 0x9E37_79B9_7F4A_7C15
+        var z = state
+        z = (z ^ (z >> 30)) &* 0xBF58_476D_1CE4_E5B9
+        z = (z ^ (z >> 27)) &* 0x94D0_49BB_1331_11EB
+        return z ^ (z >> 31)
+    }
+
+    /// A value in -1...1.
+    mutating func jitter() -> CGFloat {
+        CGFloat(Double(next() >> 11) / Double(1 << 53)) * 2 - 1
+    }
+}
+
+/// FNV-1a, stable across launches unlike `hashValue`.
+func stableSeed(_ text: String) -> UInt64 {
+    var hash: UInt64 = 0xCBF2_9CE4_8422_2325
+    for byte in text.utf8 {
+        hash ^= UInt64(byte)
+        hash = hash &* 0x0000_0100_0000_01B3
+    }
+    return hash
+}
+
+// MARK: - Shapes
+
+/// A rounded rectangle drawn by hand: edges bow slightly and corners are never quite equal.
+struct SketchRect: Shape {
+    var radius: CGFloat = 16
+    var seed: UInt64 = 7
+    var wobble: CGFloat = 1
+
+    func path(in rect: CGRect) -> Path {
+        var rng = SplitMix64(seed: seed)
+        func j(_ scale: CGFloat = 1) -> CGFloat { rng.jitter() * wobble * scale }
+        let r = min(radius, rect.width / 2, rect.height / 2)
+        let x0 = rect.minX, y0 = rect.minY, x1 = rect.maxX, y1 = rect.maxY
+        let bowX = min(rect.width * 0.02, 6.0)
+        let bowY = min(rect.height * 0.02, 5.0)
+
+        var p = Path()
+        p.move(to: CGPoint(x: x0 + r, y: y0 + j(0.4)))
+        p.addQuadCurve(to: CGPoint(x: x1 - r, y: y0 + j(0.4)),
+                       control: CGPoint(x: rect.midX + j(bowX), y: y0 + j(1.1)))
+        p.addQuadCurve(to: CGPoint(x: x1 + j(0.4), y: y0 + r), control: CGPoint(x: x1, y: y0))
+        p.addQuadCurve(to: CGPoint(x: x1 + j(0.4), y: y1 - r),
+                       control: CGPoint(x: x1 + j(1.1), y: rect.midY + j(bowY)))
+        p.addQuadCurve(to: CGPoint(x: x1 - r, y: y1 + j(0.4)), control: CGPoint(x: x1, y: y1))
+        p.addQuadCurve(to: CGPoint(x: x0 + r, y: y1 + j(0.4)),
+                       control: CGPoint(x: rect.midX + j(bowX), y: y1 + j(1.1)))
+        p.addQuadCurve(to: CGPoint(x: x0 + j(0.4), y: y1 - r), control: CGPoint(x: x0, y: y1))
+        p.addQuadCurve(to: CGPoint(x: x0 + j(0.4), y: y0 + r),
+                       control: CGPoint(x: x0 + j(1.1), y: rect.midY + j(bowY)))
+        p.addQuadCurve(to: CGPoint(x: x0 + r, y: y0), control: CGPoint(x: x0, y: y0))
+        p.closeSubpath()
+        return p
+    }
+}
+
+/// A slightly lopsided circle.
+struct SketchCircle: Shape {
+    var seed: UInt64 = 3
+
+    func path(in rect: CGRect) -> Path {
+        var rng = SplitMix64(seed: seed)
+        let c = CGPoint(x: rect.midX, y: rect.midY)
+        let r = min(rect.width, rect.height) / 2
+        var p = Path()
+        let steps = 8
+        var points: [CGPoint] = []
+        for i in 0..<steps {
+            let a = Double(i) / Double(steps) * 2 * .pi
+            let rr = r * (1 + rng.jitter() * 0.025)
+            points.append(CGPoint(x: c.x + cos(a) * rr, y: c.y + sin(a) * rr))
+        }
+        // Catmull-Rom through the points for a smooth, hand-turned outline.
+        p.move(to: points[0])
+        for i in 0..<steps {
+            let p0 = points[(i - 1 + steps) % steps], p1 = points[i]
+            let p2 = points[(i + 1) % steps], p3 = points[(i + 2) % steps]
+            p.addCurve(to: p2,
+                       control1: CGPoint(x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6),
+                       control2: CGPoint(x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6))
+        }
+        p.closeSubpath()
+        return p
+    }
+}
+
+/// A loose marker underline.
+struct ScribbleUnderline: Shape {
+    func path(in rect: CGRect) -> Path {
+        var p = Path()
+        p.move(to: CGPoint(x: rect.minX + 2, y: rect.midY + 1))
+        p.addQuadCurve(to: CGPoint(x: rect.maxX - 2, y: rect.midY - 0.5),
+                       control: CGPoint(x: rect.midX, y: rect.maxY))
+        return p
+    }
+}
+
+// MARK: - Card
+
+struct SketchCardModifier: ViewModifier {
+    var fill: Color
+    var stroke: Color
+    var radius: CGFloat
+    var seed: UInt64
+    var lineWidth: CGFloat
+
+    func body(content: Content) -> some View {
+        content.background {
+            ZStack {
+                SketchRect(radius: radius, seed: seed).fill(fill)
+                SketchRect(radius: radius, seed: seed).stroke(stroke.opacity(0.55), lineWidth: lineWidth)
+                SketchRect(radius: radius, seed: seed &+ 97, wobble: 1.6)
+                    .stroke(stroke.opacity(0.16), lineWidth: lineWidth * 0.7)
+            }
+        }
+    }
+}
+
+extension View {
+    func sketchCard(
+        fill: Color = Palette.card,
+        stroke: Color = Palette.line,
+        radius: CGFloat = 16,
+        seed: UInt64 = 1,
+        lineWidth: CGFloat = 1.2
+    ) -> some View {
+        modifier(SketchCardModifier(fill: fill, stroke: stroke, radius: radius, seed: seed, lineWidth: lineWidth))
+    }
+}
+
+// MARK: - Buttons
+
+struct SketchButtonStyle: ButtonStyle {
+    enum Kind { case primary, secondary, quiet, danger }
+    var kind: Kind = .primary
+    var fullWidth = true
+
+    func makeBody(configuration: Configuration) -> some View {
+        SketchButtonBody(configuration: configuration, kind: kind, fullWidth: fullWidth)
+    }
+}
+
+private struct SketchButtonBody: View {
+    let configuration: ButtonStyleConfiguration
+    let kind: SketchButtonStyle.Kind
+    let fullWidth: Bool
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
+        configuration.label
+            .font(.fsButton)
+            .foregroundStyle(foreground)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .padding(.horizontal, 18)
+            .padding(.vertical, 10)
+            .frame(maxWidth: fullWidth ? .infinity : nil, minHeight: 50)
+            .background {
+                ZStack {
+                    SketchRect(radius: 14, seed: 11).fill(background)
+                    SketchRect(radius: 14, seed: 12, wobble: 1.3).stroke(border, lineWidth: 1.3)
+                }
+            }
+            .contentShape(.rect)
+            .opacity(isEnabled ? 1 : 0.45)
+            .scaleEffect(configuration.isPressed ? 0.97 : 1)
+            .animation(.snappy(duration: 0.14), value: configuration.isPressed)
+    }
+
+    private var foreground: Color {
+        switch kind {
+        case .primary: Palette.onGreen
+        case .secondary: Palette.green
+        case .quiet: Palette.ink
+        case .danger: Palette.coral
+        }
+    }
+
+    private var background: Color {
+        switch kind {
+        case .primary: configuration.isPressed ? Palette.greenDeep : Palette.green
+        case .secondary: Palette.greenWash
+        case .quiet: Palette.card
+        case .danger: Palette.coralWash
+        }
+    }
+
+    private var border: Color {
+        switch kind {
+        case .primary: Palette.greenDeep
+        case .secondary: Palette.green.opacity(0.6)
+        case .quiet: Palette.line.opacity(0.5)
+        case .danger: Palette.coral.opacity(0.6)
+        }
+    }
+}
+
+/// Press feedback for plain tappable cards and rows.
+struct PressableStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .contentShape(.rect)
+            .scaleEffect(configuration.isPressed ? 0.98 : 1)
+            .opacity(configuration.isPressed ? 0.88 : 1)
+            .animation(.snappy(duration: 0.14), value: configuration.isPressed)
+    }
+}
+
+// MARK: - Chips & segmented
+
+/// A pill you can tap; filled green when selected, like the mockup's zone tabs.
+struct SketchChip: View {
+    let title: String
+    var glyph: Glyph?
+    var selected: Bool
+    var compact = false
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 6) {
+                if let glyph {
+                    GlyphView(glyph: glyph, size: compact ? 16 : 18)
+                }
+                Text(title)
+                    .font(compact ? .fsCallout : .fsHeadline)
+                    .lineLimit(1)
+            }
+            .foregroundStyle(selected ? Palette.onGreen : Palette.ink)
+            .padding(.horizontal, compact ? 12 : 16)
+            .frame(minHeight: compact ? 36 : 42)
+            .background {
+                ZStack {
+                    SketchRect(radius: 21, seed: stableSeed(title)).fill(selected ? Palette.green : Palette.card)
+                    SketchRect(radius: 21, seed: stableSeed(title) &+ 1)
+                        .stroke(selected ? Palette.greenDeep : Palette.line.opacity(0.45), lineWidth: 1.2)
+                }
+            }
+            .frame(minHeight: 44)
+            .contentShape(.rect)
+        }
+        .buttonStyle(PressableStyle())
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+}
+
+/// Hand-drawn segmented control for two or three options.
+struct SketchSegmented<Option: Hashable>: View {
+    let options: [Option]
+    @Binding var selection: Option
+    let title: (Option) -> String
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach(options, id: \.self) { option in
+                let isOn = option == selection
+                Button {
+                    selection = option
+                } label: {
+                    Text(title(option))
+                        .font(.fsHeadline)
+                        .foregroundStyle(isOn ? Palette.ink : Palette.inkSoft)
+                        .frame(maxWidth: .infinity, minHeight: 40)
+                        .background {
+                            if isOn {
+                                SketchRect(radius: 11, seed: 4).fill(Palette.card)
+                                    .overlay(SketchRect(radius: 11, seed: 5).stroke(Palette.line.opacity(0.45), lineWidth: 1))
+                            }
+                        }
+                        .contentShape(.rect)
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(isOn ? .isSelected : [])
+            }
+        }
+        .padding(4)
+        .background(SketchRect(radius: 14, seed: 3).fill(Palette.cardSunk))
+        .sensoryFeedback(.selection, trigger: selection)
+    }
+}
+
+// MARK: - Toggle
+
+struct SketchToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Button {
+            configuration.isOn.toggle()
+        } label: {
+            HStack {
+                configuration.label
+                Spacer(minLength: 12)
+                ZStack(alignment: configuration.isOn ? .trailing : .leading) {
+                    SketchRect(radius: 15, seed: 21)
+                        .fill(configuration.isOn ? Palette.green : Palette.cardSunk)
+                        .overlay(SketchRect(radius: 15, seed: 22).stroke(Palette.line.opacity(0.5), lineWidth: 1.2))
+                        .frame(width: 52, height: 30)
+                    SketchCircle(seed: 9)
+                        .fill(Palette.card)
+                        .overlay(SketchCircle(seed: 9).stroke(Palette.line.opacity(0.5), lineWidth: 1))
+                        .frame(width: 22, height: 22)
+                        .padding(.horizontal, 4)
+                }
+                .animation(.snappy(duration: 0.2), value: configuration.isOn)
+            }
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .accessibilityValue(configuration.isOn ? "On" : "Off")
+        .sensoryFeedback(.selection, trigger: configuration.isOn)
+    }
+}

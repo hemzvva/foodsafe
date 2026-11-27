@@ -1,0 +1,362 @@
+import Foundation
+
+enum IngredientRole: String, Sendable {
+    /// The dish doesn't work without it.
+    case core
+    /// Finishing touches. Missing ones make a recipe "Almost Ready".
+    case garnish
+    /// Salt, pepper and spices, used to taste.
+    case seasoning
+
+    var isOptional: Bool { self != .core }
+}
+
+struct RecipeItem: Hashable, Sendable {
+    let ingredientID: String
+    /// Amount for the recipe's base servings, in the ingredient's base unit.
+    let amount: Double
+    let role: IngredientRole
+}
+
+struct RecipeStep: Hashable, Sendable {
+    let title: String
+    /// Text with `{ingredient_id}` tokens, filled with scaled amounts at runtime.
+    let text: String
+    let timerMinutes: Int?
+}
+
+struct Recipe: Identifiable, Hashable, Sendable {
+    let id: String
+    let name: String
+    let summary: String
+    let minutes: Int
+    let servings: Int
+    let ingredients: [RecipeItem]
+    let steps: [RecipeStep]
+    let tip: String
+
+    var art: String { "dish_\(id)" }
+    var coreItems: [RecipeItem] { ingredients.filter { $0.role == .core } }
+
+    func uses(_ ingredientID: String) -> Bool { ingredients.contains { $0.ingredientID == ingredientID } }
+}
+
+private func c(_ id: String, _ amount: Double) -> RecipeItem { RecipeItem(ingredientID: id, amount: amount, role: .core) }
+private func g(_ id: String, _ amount: Double) -> RecipeItem { RecipeItem(ingredientID: id, amount: amount, role: .garnish) }
+private func s(_ id: String, _ amount: Double) -> RecipeItem { RecipeItem(ingredientID: id, amount: amount, role: .seasoning) }
+private func step(_ title: String, _ text: String, timer: Int? = nil) -> RecipeStep {
+    RecipeStep(title: title, text: text, timerMinutes: timer)
+}
+
+enum RecipeBook {
+    static let all: [Recipe] = [
+        Recipe(
+            id: "tomato_pasta", name: "Tomato Pasta",
+            summary: "Fresh tomatoes cooked down with garlic into a glossy sauce.",
+            minutes: 20, servings: 3,
+            ingredients: [c("pasta", 300), c("tomato", 400), c("olive_oil", 30), c("garlic", 2),
+                          g("basil", 10), s("salt", 1), s("black_pepper", 2)],
+            steps: [
+                step("Prep the tomatoes", "Dice {tomato} and thinly slice {garlic}."),
+                step("Cook the pasta", "Bring a large pot of salted water to a boil. Add {pasta} and cook for 8–10 minutes (or according to package instructions).", timer: 9),
+                step("Make the sauce", "Warm {olive_oil} in a wide pan over medium heat. Cook the garlic for 1 minute, then add the tomatoes and simmer until saucy.", timer: 8),
+                step("Toss together", "Drain the pasta, saving a splash of the cooking water. Toss it through the sauce with {salt} and {black_pepper}, loosening with the water."),
+                step("Serve", "Tear over {basil} and serve straight away."),
+            ],
+            tip: "Riper, softer tomatoes make the sweetest sauce, so this is the place for the ones that need using."
+        ),
+        Recipe(
+            id: "chicken_stir_fry", name: "Chicken Stir-fry",
+            summary: "Juicy chicken, crisp peppers and broccoli in a ginger-soy glaze.",
+            minutes: 25, servings: 2,
+            ingredients: [c("chicken_breast", 300), c("bell_pepper", 2), c("broccoli", 150), c("garlic", 2),
+                          c("ginger", 10), c("soy_sauce", 30), c("olive_oil", 15), c("rice", 150),
+                          g("cilantro", 5), g("chili_flakes", 1)],
+            steps: [
+                step("Start the rice", "Rinse {rice} and simmer it with twice its volume of water, covered.", timer: 15),
+                step("Prep", "Slice {chicken_breast} into strips. Cut {bell_pepper} and {broccoli} into bite-size pieces. Grate {ginger} and mince {garlic}."),
+                step("Sear the chicken", "Heat {olive_oil} in a wok until shimmering. Stir-fry the chicken until golden and cooked through.", timer: 6),
+                step("Add vegetables", "Add the peppers and broccoli with the ginger and garlic. Toss over high heat until just tender.", timer: 4),
+                step("Glaze & serve", "Pour in {soy_sauce} and toss to coat. Serve over the rice with {cilantro} and {chili_flakes}."),
+            ],
+            tip: "Keep the heat high and the pan uncrowded so everything sears instead of steaming."
+        ),
+        Recipe(
+            id: "lentil_soup", name: "Lentil Soup",
+            summary: "A thick, warming soup that turns pantry lentils into dinner.",
+            minutes: 40, servings: 4,
+            ingredients: [c("lentils", 200), c("onion", 1), c("carrot", 2), c("celery", 2), c("garlic", 2),
+                          c("broth", 1000), c("olive_oil", 15), s("cumin", 2), s("salt", 2), g("parsley", 5)],
+            steps: [
+                step("Prep vegetables", "Chop {onion}, {carrot} and {celery}. Mince {garlic}."),
+                step("Sauté", "Cook the vegetables in {olive_oil} over medium heat until soft.", timer: 5),
+                step("Add lentils & broth", "Stir in {cumin}, then add {lentils} and {broth}. Bring to a boil."),
+                step("Simmer", "Lower the heat and simmer until the lentils are completely tender.", timer: 25),
+                step("Season", "Season with {salt}, blend half if you like it thicker, and finish with {parsley}."),
+            ],
+            tip: "This soup freezes well. Cook the full batch and freeze leftovers in single portions."
+        ),
+        Recipe(
+            id: "vegetable_curry", name: "Vegetable Curry",
+            summary: "Creamy coconut curry with chickpeas and a handful of greens.",
+            minutes: 35, servings: 3,
+            ingredients: [c("coconut_milk", 400), c("curry_paste", 40), c("chickpeas", 240), c("spinach", 100),
+                          c("onion", 1), c("garlic", 2), c("ginger", 10), c("rice", 200), c("olive_oil", 15),
+                          g("cilantro", 5)],
+            steps: [
+                step("Start the rice", "Simmer {rice} with twice its volume of water, covered.", timer: 15),
+                step("Build the base", "Soften chopped {onion} in {olive_oil}, then add {garlic}, {ginger} and {curry_paste}. Fry for a minute until fragrant.", timer: 6),
+                step("Simmer", "Pour in {coconut_milk} and add {chickpeas}. Simmer until slightly thickened.", timer: 12),
+                step("Wilt the greens", "Stir through {spinach} until just wilted."),
+                step("Serve", "Spoon over the rice and scatter with {cilantro}."),
+            ],
+            tip: "Almost any tired vegetable can go in with the chickpeas."
+        ),
+        Recipe(
+            id: "spinach_egg_skillet", name: "Spinach & Egg Skillet",
+            summary: "Eggs baked into garlicky spinach and blistered tomatoes.",
+            minutes: 16, servings: 2,
+            ingredients: [c("spinach", 150), c("egg", 4), c("tomato", 150), c("garlic", 1), c("olive_oil", 10),
+                          g("feta", 40), g("chili_flakes", 1), s("salt", 1), s("black_pepper", 1)],
+            steps: [
+                step("Blister the tomatoes", "Warm {olive_oil} in a skillet. Add halved {tomato} and sliced {garlic} and cook until they soften.", timer: 3),
+                step("Wilt the spinach", "Add {spinach} by the handful, letting each batch wilt before adding more."),
+                step("Add the eggs", "Make small wells and crack in {egg}. Season with {salt} and {black_pepper}."),
+                step("Cover & cook", "Cover and cook on low until the whites are set and the yolks are as you like them.", timer: 5),
+                step("Finish", "Crumble over {feta} and {chili_flakes}. Serve from the pan."),
+            ],
+            tip: "A lid traps the steam so the egg whites set before the yolks overcook."
+        ),
+        Recipe(
+            id: "chickpea_salad", name: "Chickpea Salad",
+            summary: "A bright, no-cook salad that's ready in ten minutes.",
+            minutes: 10, servings: 2,
+            ingredients: [c("chickpeas", 240), c("tomato", 200), c("onion", 0.5), c("lemon", 1), c("olive_oil", 20),
+                          g("feta", 60), g("parsley", 10), s("salt", 1)],
+            steps: [
+                step("Prep", "Drain and rinse {chickpeas}. Chop {tomato} and very finely slice {onion}."),
+                step("Dress", "Whisk the juice of {lemon} with {olive_oil} and {salt}."),
+                step("Toss & serve", "Toss everything together and top with {feta} and {parsley}."),
+            ],
+            tip: "Let the onion sit in the dressing for five minutes to soften its bite."
+        ),
+        Recipe(
+            id: "mushroom_risotto", name: "Mushroom Risotto",
+            summary: "Slow-stirred, creamy rice with golden mushrooms.",
+            minutes: 35, servings: 3,
+            ingredients: [c("rice", 240), c("mushroom", 300), c("onion", 1), c("garlic", 2), c("broth", 900),
+                          c("butter", 30), g("cream", 60), g("parsley", 5), s("salt", 1)],
+            steps: [
+                step("Brown the mushrooms", "Melt half of {butter} and fry sliced {mushroom} until golden. Set aside.", timer: 6),
+                step("Toast the rice", "Soften chopped {onion} and {garlic} in the remaining butter. Stir in {rice} for 1 minute."),
+                step("Add the broth slowly", "Add {broth} a ladle at a time, stirring until each is absorbed.", timer: 18),
+                step("Finish", "Fold in the mushrooms, {cream} and {salt}. Rest for 2 minutes, then scatter with {parsley}."),
+            ],
+            tip: "Keep the broth warm in a small pot so the rice never stops simmering."
+        ),
+        Recipe(
+            id: "fried_rice", name: "Egg Fried Rice",
+            summary: "The best use for leftover rice, eggs and frozen peas.",
+            minutes: 15, servings: 2,
+            ingredients: [c("rice", 200), c("egg", 3), c("peas", 100), c("carrot", 1), c("garlic", 2),
+                          c("soy_sauce", 30), c("olive_oil", 15), g("chili_flakes", 1)],
+            steps: [
+                step("Cook the rice", "Cook {rice} and spread it out to cool. Day-old rice works best.", timer: 12),
+                step("Scramble", "Heat {olive_oil} in a wok, scramble {egg} softly and set aside."),
+                step("Fry", "Stir-fry diced {carrot}, {peas} and minced {garlic} for 2 minutes, then add the rice.", timer: 3),
+                step("Season & serve", "Return the eggs, add {soy_sauce} and toss. Finish with {chili_flakes}."),
+            ],
+            tip: "Cold rice fries up separate and crisp instead of clumping."
+        ),
+        Recipe(
+            id: "beef_tacos", name: "Beef Tacos",
+            summary: "Spiced beef in warm tortillas with fresh toppings.",
+            minutes: 20, servings: 3,
+            ingredients: [c("tortilla", 6), c("ground_beef", 400), c("onion", 1), c("garlic", 2), c("tomato", 150),
+                          s("cumin", 3), s("salt", 2), g("avocado", 1), g("cilantro", 5), g("lime", 1)],
+            steps: [
+                step("Brown the beef", "Cook {ground_beef} with chopped {onion} and {garlic}, breaking it up, until browned.", timer: 8),
+                step("Season", "Stir in {cumin} and {salt} and cook for one more minute."),
+                step("Prep toppings", "Dice {tomato} and {avocado}. Cut {lime} into wedges."),
+                step("Assemble", "Warm {tortilla} in a dry pan. Fill with the beef and toppings and finish with {cilantro}."),
+            ],
+            tip: "Warm the tortillas last so they stay soft."
+        ),
+        Recipe(
+            id: "omelette", name: "Cheese Omelette",
+            summary: "A tender, folded omelette for one in ten minutes.",
+            minutes: 10, servings: 1,
+            ingredients: [c("egg", 3), c("cheddar", 40), c("butter", 10), c("milk", 20),
+                          g("parsley", 3), s("salt", 1), s("black_pepper", 1)],
+            steps: [
+                step("Whisk", "Whisk {egg} with {milk}, {salt} and {black_pepper}."),
+                step("Cook", "Melt {butter} in a non-stick pan over medium-low heat. Add the eggs and stir gently until barely set.", timer: 2),
+                step("Fill & fold", "Scatter over {cheddar}, fold in half and slide onto a plate. Top with {parsley}."),
+            ],
+            tip: "Low heat keeps the omelette pale and tender."
+        ),
+        Recipe(
+            id: "banana_oat_pancakes", name: "Banana Oat Pancakes",
+            summary: "Soft pancakes that rescue the spottiest bananas.",
+            minutes: 20, servings: 2,
+            ingredients: [c("banana", 2), c("oats", 100), c("egg", 2), c("milk", 120), c("butter", 15), g("honey", 20)],
+            steps: [
+                step("Blend", "Blend {banana}, {oats}, {egg} and {milk} until smooth. Rest for 5 minutes.", timer: 5),
+                step("Cook", "Melt a little of {butter} in a pan and cook small pancakes for 2 minutes per side.", timer: 8),
+                step("Serve", "Stack and drizzle with {honey}."),
+            ],
+            tip: "The spottier the banana, the sweeter the pancakes."
+        ),
+        Recipe(
+            id: "minestrone", name: "Minestrone",
+            summary: "A big pot of vegetable soup with pasta and beans.",
+            minutes: 45, servings: 4,
+            ingredients: [c("pasta", 100), c("zucchini", 1), c("carrot", 2), c("celery", 2), c("onion", 1),
+                          c("garlic", 2), c("tomato", 400), c("black_beans", 240), c("broth", 1200),
+                          c("olive_oil", 20), g("basil", 5), s("salt", 2)],
+            steps: [
+                step("Soften the vegetables", "Cook chopped {onion}, {carrot}, {celery} and {garlic} in {olive_oil}.", timer: 8),
+                step("Simmer", "Add chopped {tomato}, {zucchini}, {black_beans} and {broth}. Simmer.", timer: 15),
+                step("Add pasta", "Stir in {pasta} and cook until tender.", timer: 10),
+                step("Serve", "Season with {salt} and top with {basil}."),
+            ],
+            tip: "Minestrone is the soup for odds and ends, so swap in whatever vegetables need using."
+        ),
+        Recipe(
+            id: "lemon_salmon", name: "Lemon Garlic Salmon",
+            summary: "Buttery roast salmon with broccoli and rice.",
+            minutes: 25, servings: 2,
+            ingredients: [c("salmon", 300), c("lemon", 1), c("garlic", 2), c("butter", 20), c("rice", 150),
+                          c("broccoli", 200), g("parsley", 5), s("salt", 1)],
+            steps: [
+                step("Start the rice", "Simmer {rice} with twice its volume of water, covered.", timer: 15),
+                step("Prepare the salmon", "Heat the oven to 200°C. Place {salmon} on a tray with {broccoli}. Dot with {butter}, {garlic} and {salt}."),
+                step("Roast", "Squeeze over half of {lemon} and roast until the fish flakes.", timer: 12),
+                step("Serve", "Serve over the rice with the remaining lemon and {parsley}."),
+            ],
+            tip: "Salmon is done when it just turns opaque in the middle."
+        ),
+        Recipe(
+            id: "shakshuka", name: "Shakshuka",
+            summary: "Eggs poached in a smoky pepper and tomato sauce.",
+            minutes: 30, servings: 3,
+            ingredients: [c("egg", 5), c("tomato", 600), c("bell_pepper", 1), c("onion", 1), c("garlic", 3),
+                          c("olive_oil", 20), s("cumin", 3), g("cilantro", 5), g("feta", 50), g("bread", 120)],
+            steps: [
+                step("Soften", "Cook sliced {onion} and {bell_pepper} in {olive_oil} until soft.", timer: 8),
+                step("Make the sauce", "Add {garlic}, {cumin} and chopped {tomato}. Simmer until thick.", timer: 10),
+                step("Poach the eggs", "Make wells and crack in {egg}. Cover and cook until set.", timer: 7),
+                step("Serve", "Top with {feta} and {cilantro}. Serve with {bread}."),
+            ],
+            tip: "Very ripe tomatoes give the deepest sauce."
+        ),
+        Recipe(
+            id: "garlic_shrimp_pasta", name: "Garlic Shrimp Pasta",
+            summary: "Spaghetti tossed with garlic butter shrimp and lemon.",
+            minutes: 20, servings: 2,
+            ingredients: [c("pasta", 200), c("shrimp", 250), c("garlic", 4), c("butter", 30), c("lemon", 1),
+                          g("chili_flakes", 1), g("parsley", 5)],
+            steps: [
+                step("Cook the pasta", "Boil {pasta} in salted water until al dente.", timer: 9),
+                step("Cook the shrimp", "Melt {butter}, add sliced {garlic} and {shrimp}. Cook until pink.", timer: 3),
+                step("Toss & serve", "Toss with the pasta, the juice of {lemon}, {chili_flakes} and {parsley}."),
+            ],
+            tip: "Frozen shrimp thaw in 10 minutes in a bowl of cold water."
+        ),
+        Recipe(
+            id: "potato_frittata", name: "Potato Frittata",
+            summary: "A thick, golden frittata that's good warm or cold.",
+            minutes: 35, servings: 4,
+            ingredients: [c("potato", 400), c("egg", 6), c("onion", 1), c("olive_oil", 30), g("cheddar", 50), s("salt", 2)],
+            steps: [
+                step("Cook the potatoes", "Slice {potato} thinly and cook gently with {onion} in {olive_oil} until tender.", timer: 15),
+                step("Add the eggs", "Beat {egg} with {salt} and pour over the potatoes. Scatter with {cheddar}."),
+                step("Set", "Cook on low until the edges set, then finish under the grill until golden.", timer: 10),
+            ],
+            tip: "Leftover wedges make a great packed lunch."
+        ),
+        Recipe(
+            id: "bean_quesadillas", name: "Bean Quesadillas",
+            summary: "Crisp, cheesy tortillas filled with spiced black beans.",
+            minutes: 15, servings: 2,
+            ingredients: [c("tortilla", 4), c("black_beans", 240), c("cheddar", 120), c("bell_pepper", 1),
+                          c("butter", 10), s("cumin", 2), g("avocado", 1), g("lime", 1)],
+            steps: [
+                step("Make the filling", "Mash {black_beans} with {cumin}. Finely dice {bell_pepper}."),
+                step("Fill", "Spread the beans over half of each of {tortilla}. Add the pepper and {cheddar}, then fold."),
+                step("Crisp", "Cook in {butter} until golden on both sides.", timer: 5),
+                step("Serve", "Cut into wedges and serve with {avocado} and {lime}."),
+            ],
+            tip: "Press down with a spatula so the cheese melts evenly."
+        ),
+        Recipe(
+            id: "broccoli_cheddar_soup", name: "Broccoli Cheddar Soup",
+            summary: "Velvety soup with sharp cheddar and plenty of broccoli.",
+            minutes: 30, servings: 4,
+            ingredients: [c("broccoli", 400), c("cheddar", 150), c("onion", 1), c("carrot", 1), c("butter", 30),
+                          c("flour", 30), c("milk", 500), c("broth", 500), g("bread", 160)],
+            steps: [
+                step("Make the base", "Melt {butter} and soften chopped {onion}. Stir in {flour} for 1 minute.", timer: 5),
+                step("Add liquids", "Slowly whisk in {milk} and {broth}. Add {broccoli} and grated {carrot}.", timer: 15),
+                step("Finish", "Blend partly, then stir in {cheddar} off the heat until melted. Serve with {bread}."),
+            ],
+            tip: "Take the pot off the heat before adding cheese so it stays smooth."
+        ),
+        Recipe(
+            id: "yogurt_parfait", name: "Yogurt Parfait",
+            summary: "Layers of yogurt, oats, honey and fruit in five minutes.",
+            minutes: 5, servings: 2,
+            ingredients: [c("yogurt", 300), c("oats", 60), c("apple", 1), c("honey", 20), g("banana", 1)],
+            steps: [
+                step("Prep the fruit", "Dice {apple} and slice {banana}."),
+                step("Layer", "Layer {yogurt}, {oats} and the fruit in glasses, finishing with {honey}."),
+            ],
+            tip: "Toast the oats in a dry pan for extra crunch."
+        ),
+        Recipe(
+            id: "caprese_toast", name: "Caprese Toast",
+            summary: "Crunchy toast with mozzarella, tomato and basil.",
+            minutes: 10, servings: 2,
+            ingredients: [c("bread", 160), c("mozzarella", 125), c("tomato", 200), c("olive_oil", 15),
+                          g("basil", 5), s("salt", 1), s("black_pepper", 1)],
+            steps: [
+                step("Toast", "Toast {bread} until golden.", timer: 3),
+                step("Top", "Layer with sliced {mozzarella} and {tomato}."),
+                step("Finish", "Drizzle with {olive_oil}, season with {salt} and {black_pepper}, and top with {basil}."),
+            ],
+            tip: "Salt the tomatoes a few minutes ahead to bring out their flavor."
+        ),
+        Recipe(
+            id: "tofu_stir_fry", name: "Crispy Tofu Stir-fry",
+            summary: "Golden tofu and vegetables in a sticky soy-honey sauce.",
+            minutes: 25, servings: 2,
+            ingredients: [c("tofu", 350), c("broccoli", 200), c("bell_pepper", 1), c("soy_sauce", 40), c("ginger", 10),
+                          c("garlic", 2), c("honey", 15), c("olive_oil", 20), c("rice", 150), g("chili_flakes", 1)],
+            steps: [
+                step("Start the rice", "Simmer {rice} with twice its volume of water, covered.", timer: 15),
+                step("Crisp the tofu", "Press and cube {tofu}. Fry in {olive_oil} until crisp on all sides.", timer: 8),
+                step("Cook vegetables", "Add {broccoli}, {bell_pepper}, {garlic} and {ginger}. Stir-fry until tender.", timer: 4),
+                step("Glaze & serve", "Add {soy_sauce} and {honey} and toss until sticky. Serve with the rice and {chili_flakes}."),
+            ],
+            tip: "Pat tofu very dry before frying so it gets truly crisp."
+        ),
+        Recipe(
+            id: "kale_white_bean_soup", name: "Kale & Chickpea Soup",
+            summary: "A garlicky, brothy soup with greens and chickpeas.",
+            minutes: 30, servings: 4,
+            ingredients: [c("kale", 150), c("chickpeas", 480), c("onion", 1), c("carrot", 2), c("garlic", 3),
+                          c("broth", 1000), c("olive_oil", 20), g("lemon", 1), g("bread", 160), s("salt", 2)],
+            steps: [
+                step("Soften", "Cook chopped {onion}, {carrot} and {garlic} in {olive_oil}.", timer: 6),
+                step("Simmer", "Add {chickpeas} and {broth}. Simmer gently.", timer: 15),
+                step("Add greens", "Stir in torn {kale} until tender. Season with {salt}.", timer: 4),
+                step("Serve", "Finish with a squeeze of {lemon} and serve with {bread}."),
+            ],
+            tip: "Mash a few chickpeas against the pot to thicken the broth."
+        ),
+    ]
+
+    private static let byID: [String: Recipe] = Dictionary(uniqueKeysWithValues: all.map { ($0.id, $0) })
+
+    static func recipe(_ id: String) -> Recipe? { byID[id] }
+}

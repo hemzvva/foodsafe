@@ -1,0 +1,221 @@
+import Foundation
+
+enum Zone: String, CaseIterable, Codable, Identifiable, Sendable {
+    case fridge, pantry, freezer
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .fridge: "Fridge"
+        case .pantry: "Pantry"
+        case .freezer: "Freezer"
+        }
+    }
+
+    var glyph: Glyph {
+        switch self {
+        case .fridge: .fridge
+        case .pantry: .pantry
+        case .freezer: .freezer
+        }
+    }
+}
+
+enum FoodCategory: String, CaseIterable, Codable, Identifiable, Sendable {
+    case vegetables, fruits, dairy, grains, proteins, others
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .vegetables: "Vegetables"
+        case .fruits: "Fruits"
+        case .dairy: "Dairy"
+        case .grains: "Grains"
+        case .proteins: "Proteins"
+        case .others: "Others"
+        }
+    }
+
+    var art: String { "cat_\(rawValue)" }
+}
+
+/// What an ingredient is measured in. Amounts are always stored in the base unit:
+/// grams, millilitres or pieces.
+enum Dimension: String, Codable, Sendable {
+    case mass, volume, count
+}
+
+enum EntryUnit: String, CaseIterable, Identifiable, Sendable {
+    case g, kg, ml, l, pcs
+
+    var id: String { rawValue }
+
+    var dimension: Dimension {
+        switch self {
+        case .g, .kg: .mass
+        case .ml, .l: .volume
+        case .pcs: .count
+        }
+    }
+
+    /// Multiply an entered value by this to get base units.
+    var factor: Double {
+        switch self {
+        case .kg, .l: 1000
+        default: 1
+        }
+    }
+
+    var label: String {
+        switch self {
+        case .g: "g"
+        case .kg: "kg"
+        case .ml: "ml"
+        case .l: "L"
+        case .pcs: "pcs"
+        }
+    }
+
+    static func units(for dimension: Dimension) -> [EntryUnit] {
+        allCases.filter { $0.dimension == dimension }
+    }
+}
+
+struct IngredientInfo: Identifiable, Hashable, Sendable {
+    let id: String
+    /// Display name, plural for counted things ("Eggs", "Onions").
+    let name: String
+    /// Singular for counted things, used in sentences ("1 onion").
+    let one: String?
+    let category: FoodCategory
+    let zone: Zone
+    let dimension: Dimension
+    /// Typical shelf life in days, per storage zone.
+    let fridgeDays: Int
+    let pantryDays: Int
+    let freezerDays: Int
+    /// Noun for counted amounts ("clove", "stalk"); nil prints "pcs".
+    let countNoun: String?
+
+    var art: String { id }
+
+    func shelfLife(in zone: Zone) -> Int {
+        switch zone {
+        case .fridge: fridgeDays
+        case .pantry: pantryDays
+        case .freezer: freezerDays
+        }
+    }
+
+    var defaultUnit: EntryUnit {
+        switch dimension {
+        case .mass: .g
+        case .volume: .ml
+        case .count: .pcs
+        }
+    }
+
+    /// The word to use in step text: "basil", "onion", "eggs".
+    func word(for amount: Double) -> String {
+        if dimension == .count, let one, amount <= 1.0001 { return one }
+        return name.lowercased()
+    }
+}
+
+enum Catalog {
+    // swiftlint:disable line_length
+    private static func i(
+        _ id: String, _ name: String, _ category: FoodCategory, _ zone: Zone, _ dimension: Dimension,
+        fridge: Int, pantry: Int, freezer: Int, one: String? = nil, noun: String? = nil
+    ) -> IngredientInfo {
+        IngredientInfo(id: id, name: name, one: one, category: category, zone: zone, dimension: dimension,
+                       fridgeDays: fridge, pantryDays: pantry, freezerDays: freezer, countNoun: noun)
+    }
+
+    static let all: [IngredientInfo] = [
+        // Vegetables
+        i("tomato", "Tomatoes", .vegetables, .fridge, .mass, fridge: 7, pantry: 5, freezer: 180),
+        i("spinach", "Spinach", .vegetables, .fridge, .mass, fridge: 5, pantry: 1, freezer: 240),
+        i("onion", "Onions", .vegetables, .pantry, .count, fridge: 30, pantry: 30, freezer: 240, one: "onion"),
+        i("garlic", "Garlic", .vegetables, .pantry, .count, fridge: 30, pantry: 60, freezer: 300, one: "garlic clove", noun: "clove"),
+        i("carrot", "Carrots", .vegetables, .fridge, .count, fridge: 21, pantry: 5, freezer: 300, one: "carrot"),
+        i("celery", "Celery", .vegetables, .fridge, .count, fridge: 14, pantry: 2, freezer: 240, one: "celery stalk", noun: "stalk"),
+        i("bell_pepper", "Bell peppers", .vegetables, .fridge, .count, fridge: 10, pantry: 4, freezer: 240, one: "bell pepper"),
+        i("potato", "Potatoes", .vegetables, .pantry, .mass, fridge: 21, pantry: 30, freezer: 300),
+        i("mushroom", "Mushrooms", .vegetables, .fridge, .mass, fridge: 6, pantry: 1, freezer: 240),
+        i("zucchini", "Zucchini", .vegetables, .fridge, .count, fridge: 7, pantry: 3, freezer: 240, one: "zucchini"),
+        i("broccoli", "Broccoli", .vegetables, .fridge, .mass, fridge: 6, pantry: 2, freezer: 300),
+        i("kale", "Kale", .vegetables, .fridge, .mass, fridge: 6, pantry: 1, freezer: 240),
+        i("peas", "Peas", .vegetables, .freezer, .mass, fridge: 4, pantry: 1, freezer: 300),
+        i("avocado", "Avocados", .vegetables, .pantry, .count, fridge: 6, pantry: 4, freezer: 120, one: "avocado"),
+        i("ginger", "Ginger", .vegetables, .fridge, .mass, fridge: 21, pantry: 10, freezer: 180),
+        // Fruits
+        i("lemon", "Lemons", .fruits, .fridge, .count, fridge: 21, pantry: 7, freezer: 120, one: "lemon"),
+        i("lime", "Limes", .fruits, .fridge, .count, fridge: 21, pantry: 7, freezer: 120, one: "lime"),
+        i("orange", "Oranges", .fruits, .pantry, .count, fridge: 21, pantry: 10, freezer: 120, one: "orange"),
+        i("banana", "Bananas", .fruits, .pantry, .count, fridge: 7, pantry: 5, freezer: 90, one: "banana"),
+        i("apple", "Apples", .fruits, .fridge, .count, fridge: 30, pantry: 10, freezer: 240, one: "apple"),
+        // Dairy
+        i("egg", "Eggs", .dairy, .fridge, .count, fridge: 28, pantry: 7, freezer: 120, one: "egg"),
+        i("milk", "Milk", .dairy, .fridge, .volume, fridge: 7, pantry: 1, freezer: 90),
+        i("butter", "Butter", .dairy, .fridge, .mass, fridge: 60, pantry: 3, freezer: 270),
+        i("cheddar", "Cheddar", .dairy, .fridge, .mass, fridge: 28, pantry: 2, freezer: 180),
+        i("mozzarella", "Mozzarella", .dairy, .fridge, .mass, fridge: 7, pantry: 1, freezer: 90),
+        i("feta", "Feta", .dairy, .fridge, .mass, fridge: 14, pantry: 1, freezer: 90),
+        i("yogurt", "Yogurt", .dairy, .fridge, .mass, fridge: 14, pantry: 1, freezer: 60),
+        i("cream", "Cream", .dairy, .fridge, .volume, fridge: 10, pantry: 1, freezer: 90),
+        // Grains
+        i("pasta", "Pasta", .grains, .pantry, .mass, fridge: 365, pantry: 365, freezer: 365),
+        i("rice", "Rice", .grains, .pantry, .mass, fridge: 540, pantry: 540, freezer: 540),
+        i("oats", "Oats", .grains, .pantry, .mass, fridge: 365, pantry: 365, freezer: 365),
+        i("flour", "Flour", .grains, .pantry, .mass, fridge: 240, pantry: 240, freezer: 365),
+        i("bread", "Bread", .grains, .pantry, .mass, fridge: 7, pantry: 4, freezer: 90),
+        i("tortilla", "Tortillas", .grains, .pantry, .count, fridge: 21, pantry: 10, freezer: 180, one: "tortilla"),
+        // Proteins
+        i("chicken_breast", "Chicken breast", .proteins, .fridge, .mass, fridge: 2, pantry: 0, freezer: 270),
+        i("ground_beef", "Ground beef", .proteins, .fridge, .mass, fridge: 2, pantry: 0, freezer: 120),
+        i("salmon", "Salmon", .proteins, .fridge, .mass, fridge: 2, pantry: 0, freezer: 90),
+        i("shrimp", "Shrimp", .proteins, .freezer, .mass, fridge: 2, pantry: 0, freezer: 180),
+        i("tofu", "Tofu", .proteins, .fridge, .mass, fridge: 7, pantry: 1, freezer: 120),
+        i("lentils", "Lentils", .proteins, .pantry, .mass, fridge: 365, pantry: 365, freezer: 365),
+        i("chickpeas", "Chickpeas", .proteins, .pantry, .mass, fridge: 4, pantry: 540, freezer: 90),
+        i("black_beans", "Black beans", .proteins, .pantry, .mass, fridge: 4, pantry: 540, freezer: 90),
+        // Others
+        i("olive_oil", "Olive oil", .others, .pantry, .volume, fridge: 365, pantry: 365, freezer: 365),
+        i("broth", "Broth", .others, .pantry, .volume, fridge: 4, pantry: 365, freezer: 120),
+        i("soy_sauce", "Soy sauce", .others, .pantry, .volume, fridge: 540, pantry: 365, freezer: 540),
+        i("vinegar", "Vinegar", .others, .pantry, .volume, fridge: 730, pantry: 730, freezer: 730),
+        i("coconut_milk", "Coconut milk", .others, .pantry, .volume, fridge: 4, pantry: 365, freezer: 60),
+        i("curry_paste", "Curry paste", .others, .fridge, .mass, fridge: 30, pantry: 365, freezer: 180),
+        i("honey", "Honey", .others, .pantry, .mass, fridge: 730, pantry: 730, freezer: 730),
+        i("sugar", "Sugar", .others, .pantry, .mass, fridge: 730, pantry: 730, freezer: 730),
+        i("salt", "Salt", .others, .pantry, .mass, fridge: 1825, pantry: 1825, freezer: 1825),
+        i("black_pepper", "Black pepper", .others, .pantry, .mass, fridge: 730, pantry: 730, freezer: 730),
+        i("cumin", "Cumin", .others, .pantry, .mass, fridge: 730, pantry: 730, freezer: 730),
+        i("chili_flakes", "Chili flakes", .others, .pantry, .mass, fridge: 730, pantry: 730, freezer: 730),
+        i("basil", "Basil", .others, .fridge, .mass, fridge: 6, pantry: 2, freezer: 120),
+        i("parsley", "Parsley", .others, .fridge, .mass, fridge: 10, pantry: 2, freezer: 120),
+        i("cilantro", "Cilantro", .others, .fridge, .mass, fridge: 8, pantry: 2, freezer: 120),
+    ]
+    // swiftlint:enable line_length
+
+    private static let byID: [String: IngredientInfo] = Dictionary(uniqueKeysWithValues: all.map { ($0.id, $0) })
+
+    static func info(_ id: String) -> IngredientInfo? { byID[id] }
+
+    static func name(_ id: String) -> String { byID[id]?.name ?? id }
+
+    /// Best catalog match for free text, used when someone types a grocery name.
+    static func search(_ text: String) -> [IngredientInfo] {
+        let query = text.trimmingCharacters(in: .whitespaces).lowercased()
+        guard !query.isEmpty else { return all }
+        return all
+            .filter { $0.name.lowercased().contains(query) || ($0.one?.contains(query) ?? false) }
+            .sorted { lhs, rhs in
+                let l = lhs.name.lowercased().hasPrefix(query), r = rhs.name.lowercased().hasPrefix(query)
+                return l != r ? l : lhs.name < rhs.name
+            }
+    }
+}

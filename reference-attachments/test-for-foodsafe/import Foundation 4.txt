@@ -1,0 +1,188 @@
+
+
+import Foundation
+import SwiftData
+
+@Model
+final class InventoryItem {
+    var uuid: UUID = UUID()
+    /// Catalog id, or `custom` for groceries the catalog doesn't know.
+    var ingredientID: String = "custom"
+    var customName: String?
+    var categoryRaw: String = FoodCategory.others.rawValue
+    var dimensionRaw: String = Dimension.mass.rawValue
+    var zoneRaw: String = Zone.fridge.rawValue
+    /// Amount left, in base units (g, ml, pieces).
+    var amount: Double = 0
+    /// Amount when it was logged, used for the low-stock signals.
+    var initialAmount: Double = 0
+    var expiresAt: Date = Date.now
+    var addedAt: Date = Date.now
+    var notes: String = ""
+
+    init(ingredientID: String, customName: String? = nil, category: FoodCategory, dimension: Dimension,
+         zone: Zone, amount: Double, initialAmount: Double? = nil, expiresAt: Date, notes: String = "") {
+        self.uuid = UUID()
+        self.ingredientID = ingredientID
+        self.customName = customName
+        self.categoryRaw = category.rawValue
+        self.dimensionRaw = dimension.rawValue
+        self.zoneRaw = zone.rawValue
+        self.amount = amount
+        self.initialAmount = initialAmount ?? amount
+        self.expiresAt = expiresAt
+        self.addedAt = Date.now
+        self.notes = notes
+    }
+
+    var info: IngredientInfo? { Catalog.info(ingredientID) }
+    var name: String { customName ?? info?.name ?? "Item" }
+    var category: FoodCategory { FoodCategory(rawValue: categoryRaw) ?? .others }
+    var dimension: Dimension { Dimension(rawValue: dimensionRaw) ?? .mass }
+    var zone: Zone {
+        get { Zone(rawValue: zoneRaw) ?? .fridge }
+        set { zoneRaw = newValue.rawValue }
+    }
+
+    var art: String { info?.art ?? category.art }
+    var remainingFraction: Double { initialAmount > 0 ? amount / initialAmount : 1 }
+}
+
+@Model
+final class PlannedMeal {
+    var uuid: UUID = UUID()
+    var recipeID: String = ""
+    var day: Date = Date.now
+    var servings: Int = 2
+    var cooked: Bool = false
+
+    init(recipeID: String, day: Date, servings: Int) {
+        self.uuid = UUID()
+        self.recipeID = recipeID
+        self.day = Calendar.current.startOfDay(for: day)
+        self.servings = servings
+    }
+}
+
+@Model
+final class CookLog {
+    var uuid: UUID = UUID()
+    var recipeID: String = ""
+    var servings: Int = 1
+    var cookedAt: Date = Date.now
+    /// Ingredients used within their "use soon" window.
+    var rescuedCount: Int = 0
+
+    init(recipeID: String, servings: Int, rescuedCount: Int) {
+        self.uuid = UUID()
+        self.recipeID = recipeID
+        self.servings = servings
+        self.cookedAt = Date.now
+        self.rescuedCount = rescuedCount
+    }
+}
+
+@Model
+final class FavoriteRecipe {
+    var recipeID: String = ""
+    var addedAt: Date = Date.now
+
+    init(recipeID: String) {
+        self.recipeID = recipeID
+        self.addedAt = Date.now
+    }
+}
+
+
+
+
+
+
+import SwiftUI
+
+// MARK: - Colour
+
+extension UIColor {
+    convenience init(rgb: UInt32, alpha: CGFloat = 1) {
+        self.init(
+            red: CGFloat((rgb >> 16) & 0xFF) / 255,
+            green: CGFloat((rgb >> 8) & 0xFF) / 255,
+            blue: CGFloat(rgb & 0xFF) / 255,
+            alpha: alpha
+        )
+    }
+}
+
+extension Color {
+    /// A colour that follows the system appearance: warm paper by day, a dim kitchen at night.
+    init(light: UInt32, dark: UInt32) {
+        self.init(uiColor: UIColor { traits in
+            UIColor(rgb: traits.userInterfaceStyle == .dark ? dark : light)
+        })
+    }
+}
+
+/// FoodSafe's palette, sampled from the sketchbook mockup.
+enum Palette {
+    static let paper = Color(light: 0xF3ECDC, dark: 0x1A1F1B)
+    static let card = Color(light: 0xFBF7EE, dark: 0x242B26)
+    static let cardSunk = Color(light: 0xEEE6D3, dark: 0x2C342E)
+    static let ink = Color(light: 0x2C3830, dark: 0xEEE7D7)
+    static let inkSoft = Color(light: 0x6F6B5D, dark: 0xB2AB9A)
+    static let line = Color(light: 0x3A4337, dark: 0xD6CEBA)
+    static let green = Color(light: 0x3D6B4C, dark: 0x8DC097)
+    static let greenDeep = Color(light: 0x2F5A3D, dark: 0x74A981)
+    static let onGreen = Color(light: 0xFBF7EE, dark: 0x13201A)
+    static let greenWash = Color(light: 0xDCE7D1, dark: 0x2E4335)
+    static let coral = Color(light: 0xC4523B, dark: 0xF0937D)
+    static let coralWash = Color(light: 0xF7DBCE, dark: 0x4A2B24)
+    static let amber = Color(light: 0xA86D17, dark: 0xEAB75E)
+    static let amberWash = Color(light: 0xF5E4C1, dark: 0x463A22)
+    static let blue = Color(light: 0x4C6B83, dark: 0x9DB9CE)
+    static let blueWash = Color(light: 0xDCE5EA, dark: 0x27333B)
+}
+
+// MARK: - Type
+
+/// Bundled handwritten faces. Kalam is the marker used for headings and buttons,
+/// Patrick Hand the neat print used for everything you read, Caveat Brush the brand.
+enum FontName {
+    static let marker = "Kalam-Bold"
+    static let markerRegular = "Kalam-Regular"
+    static let hand = "PatrickHand-Regular"
+    static let brush = "CaveatBrush-Regular"
+}
+
+extension Font {
+    static var fsDisplay: Font { .custom(FontName.marker, size: 31, relativeTo: .largeTitle) }
+    static var fsTitle: Font { .custom(FontName.marker, size: 25, relativeTo: .title) }
+    static var fsTitle3: Font { .custom(FontName.marker, size: 20, relativeTo: .title3) }
+    static var fsHeadline: Font { .custom(FontName.marker, size: 17, relativeTo: .headline) }
+    static var fsBody: Font { .custom(FontName.hand, size: 18, relativeTo: .body) }
+    static var fsCallout: Font { .custom(FontName.hand, size: 16, relativeTo: .callout) }
+    static var fsCaption: Font { .custom(FontName.hand, size: 14, relativeTo: .caption) }
+    static var fsButton: Font { .custom(FontName.marker, size: 18, relativeTo: .headline) }
+    static var fsNumber: Font { .custom(FontName.markerRegular, size: 18, relativeTo: .body) }
+    static func fsBrand(_ size: CGFloat) -> Font { .custom(FontName.brush, size: size, relativeTo: .largeTitle) }
+}
+
+// MARK: - Paper
+
+/// The sheet of watercolour paper every screen sits on.
+struct PaperBackground: View {
+    @Environment(\.colorScheme) private var scheme
+
+    var body: some View {
+        Palette.paper
+            .overlay {
+                Image(.paper)
+                    .resizable(resizingMode: .tile)
+                    .blendMode(scheme == .dark ? .overlay : .multiply)
+                    .opacity(scheme == .dark ? 0.10 : 0.55)
+                    .allowsHitTesting(false)
+            }
+            .ignoresSafeArea()
+            .accessibilityHidden(true)
+    }
+}
+

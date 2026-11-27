@@ -44,3 +44,12 @@ Not started or unfinished: task cards T-04..T-26 (T-09, T-10, T-10b next); missi
 5. App Store docs and owner guide.
 6. Prompts, checks, final zip, master prompt.
 Keep it lean: one precise doc per topic, no duplicated rules, every id defined once.
+
+## 8. Added after the rebuild began (read this too)
+Owner messages received during the rebuild, in force:
+- "recheck every prompt i sent u beside the continuation messages for any rules and other stuff i told u, mark them intelligently into a file in github" -> write `OWNER-RULES.md` (repo root). The earliest prompts no longer exist verbatim; the ledger is rebuilt from notes, summaries, memory and this repo, and says so.
+- The owner attached a zip, "test_for_foodsafe.zip", made on another iOS app-builder platform: "i liked the things it generated so much, learn from it, use it if u can or want". It is mostly ART (22 watercolor dish illustrations, 64 transparent cutouts, a paper texture) plus 7 text files of SwiftUI/Python code (sketch UI shapes, a drawn icon set, ingredient catalog, 22 recipes, swap groups, SwiftData models, an art-generation script). Unzipped copy: `reference-attachments/test-for-foodsafe/`. Review notes: `_rebuild/review/`.
+- The owner wants a variety of fonts, not one: Patrick Hand Regular, Caveat Brush Regular, Kalam Regular, Kalam Light, Kalam Bold. Fetched from Google's font repository (SIL OFL 1.1, embedding allowed) into `FoodSafe-Build-Kit/assets/fonts/` with licences; facts in `_rebuild/review/fonts/probe.json`. The mockup font (Purisa) is replaced.
+- "upload everything into github, with zip unzipped, and push everything u made": every zip that is received or built also lives unzipped in this repo. Push after every finished group.
+- "resume with doubt driven development for better quality content": write each doubt before the claim, give it a test (run it, read a primary source, compile it) or mark the claim `confirm`, and log it in `DOUBT-LOG.md` (repo root). Distilled results go to the kit's facts file.
+State: Stage 0 done and pushed. Stage 1 (rules oracle) has its segments in `_rebuild/segs/` (not yet stitched or run). Tasks #66 (rules ledger) and #67 (test-app and fonts review) are in progress. The kit has no zip yet.
